@@ -7,7 +7,7 @@ package sortingbot;
 
 /**
  *
- * @author Demy
+ * @author Demy Patrick Gielesen
  */
 public class Main {
 
