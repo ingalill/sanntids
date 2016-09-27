@@ -9,6 +9,12 @@ package sortingbot;
  *
  * @author Demy
  */
+import org.opencv.core.Mat;
+
 public class ImageHandler {
     
+    
+    public void processFrame(Mat frame){
+        
+    }
 }

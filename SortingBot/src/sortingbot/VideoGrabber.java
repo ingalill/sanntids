@@ -9,6 +9,14 @@ package sortingbot;
  *
  * @author Demy
  */
+import org.opencv.core.Mat;
+
 public class VideoGrabber {
+    
+    
+    
+    public void sendFrame(Mat frame){
+        
+    }
     
 }
