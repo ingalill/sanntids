@@ -9,7 +9,10 @@ package sortingbot;
  *
  * @author Demy
  */
-import org.opencv.highgui.VideoCapture;
+//import org.opencv.highgui.VideoCapture;
+//import org.opencv.imgcodecs.Imgcodecs;
+import org.opencv.videoio.VideoCapture;
+
 
 public class Camera {
     

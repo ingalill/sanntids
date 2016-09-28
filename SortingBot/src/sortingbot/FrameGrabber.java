@@ -10,7 +10,10 @@ package sortingbot;
  * @author Demy
  */
 
-import org.opencv.highgui.VideoCapture;
+//import org.opencv.imgcodecs.Imgcodecs;
+import org.opencv.videoio.VideoCapture;
+
+//import org.opencv.highgui.VideoCapture;
 import org.opencv.core.Mat;
 
 public class FrameGrabber extends Thread {

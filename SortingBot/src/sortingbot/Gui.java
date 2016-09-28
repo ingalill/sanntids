@@ -13,8 +13,11 @@ import javax.imageio.ImageIO;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfByte;
-import org.opencv.highgui.Highgui;
-import org.opencv.highgui.VideoCapture;
+//import org.opencv.highgui.Highgui;
+//import org.opencv.highgui.VideoCapture;
+import org.opencv.imgcodecs.Imgcodecs;
+import org.opencv.videoio.VideoCapture;
+
 /**
  *
  * @author Demy
@@ -47,7 +50,7 @@ public class Gui extends javax.swing.JFrame {
 		    	try
                         {
                             webSource.retrieve(frame);
-			    Highgui.imencode(".bmp", frame, mem);
+			    Imgcodecs.imencode(".bmp", frame, mem);
 			    Image im = ImageIO.read(new ByteArrayInputStream(mem.toArray()));
 
 			    BufferedImage buff = (BufferedImage) im;
