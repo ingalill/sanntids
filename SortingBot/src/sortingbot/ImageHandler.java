@@ -17,7 +17,7 @@ import org.opencv.imgproc.Imgproc;
 
 public class ImageHandler {
     
-    Thresholds names;
+    private Thresholds names;
     
     public void processFrame(Mat frame){
         Mat blurredImage = new Mat();

@@ -9,11 +9,16 @@ package sortingbot;
  *
  * @author Demy Patrick Gielesen
  */
+import org.opencv.core.Core;
+
 public class Main {
 
     /**
      * @param args the command line arguments
      */
+    private static Camera camera;
+
+    
     public static void main(String[] args) {
         //explaination of classes:
         // Camera() : class that starts a connection with a camera
@@ -26,11 +31,12 @@ public class Main {
         // MORE TO COME
         
         
-        
+         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         
         //TODO for the main() class
-        
         //1. start camera from Camera class
+        camera = new Camera();
+        camera.startCamera();
         //2. start a network server
         //3. start a connection with arduino
         //4. create a timer
