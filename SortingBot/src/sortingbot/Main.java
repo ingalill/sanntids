@@ -19,7 +19,7 @@ public class Main {
         // Camera() : class that starts a connection with a camera
         // FrameGrabber() : a thread that takes a single frame from the opened camera for each run (can be used for both camera feedback to the gui and image processing)
         // ImageHandler() : processes an image(in our case a single frame) and finds the specified physical object from the image
-        // Thresholds() : an Enum that holds the values for specified colors for use with OpenCV
+        // Thresholds() : an enum that holds the values for specified colors for use with OpenCV
         // Server() : creates sockets for each client and sends info
         // VideoGrabber() : Handles the total input stream from the camera by use of a FrameGrabber class and sends the video stream to the client
         // ArduinoHandler() : creates an Serial connection with arduino board

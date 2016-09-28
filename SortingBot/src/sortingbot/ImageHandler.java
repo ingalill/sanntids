@@ -9,12 +9,30 @@ package sortingbot;
  *
  * @author Demy
  */
+import org.opencv.core.Core;
 import org.opencv.core.Mat;
+import org.opencv.core.Size;
+import org.opencv.core.Scalar;
+import org.opencv.imgproc.Imgproc;
 
 public class ImageHandler {
     
+    Thresholds names;
     
     public void processFrame(Mat frame){
+        Mat blurredImage = new Mat();
+        Mat hsvImage = new Mat();
+        Mat mask = new Mat();
+        
+        //remove some noise
+        Imgproc.blur(frame, blurredImage, new Size(7, 7));
+        //convert the frame to HSV
+        Imgproc.cvtColor(blurredImage, hsvImage, Imgproc.COLOR_BGR2HSV);
+        //setup the limits for the color blue
+        Scalar upperLimit = new Scalar(names.BLUEUPPER.hue(),names.BLUEUPPER.sat(),names.BLUEUPPER.val());
+        Scalar lowerLimit = new Scalar(names.BLUELOWER.hue(),names.BLUELOWER.sat(),names.BLUELOWER.val());
+        //filter the image and remove everything that is NOT blue
+        Core.inRange(hsvImage, upperLimit, lowerLimit, mask);
         
     }
 }
