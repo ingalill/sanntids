@@ -58,7 +58,7 @@ public class Gui extends javax.swing.JFrame {
 
                         if(runnable == false)
                         {
-                            System.out.println("Going to wait()");
+                            System.out.println("GUI is going to wait()");
                             this.wait();
                         }
                      }

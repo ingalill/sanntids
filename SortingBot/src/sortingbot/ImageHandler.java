@@ -19,7 +19,7 @@ public class ImageHandler {
     
     private Thresholds names;
     
-    public void processFrame(Mat frame){
+    public Mat processFrame(Mat frame){
         Mat blurredImage = new Mat();
         Mat hsvImage = new Mat();
         Mat mask = new Mat();
@@ -34,5 +34,11 @@ public class ImageHandler {
         //filter the image and remove everything that is NOT blue
         Core.inRange(hsvImage, upperLimit, lowerLimit, mask);
         
+        
+        Mat morphOutput = new Mat();
+        Mat erodeElement = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(12, 12));
+        Imgproc.erode(mask, morphOutput, erodeElement);
+        Imgproc.erode(mask, morphOutput, erodeElement);
+        return morphOutput;
     }
 }

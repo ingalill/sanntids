@@ -18,6 +18,7 @@ public class Main {
      */
     private static Camera camera;
     private static VideoGrabber grabber;
+    private static ImageHandler handler;
     private static FrameGrabber vGrabber;//framegrabber for video
     
     public static void main(String[] args) {
@@ -31,15 +32,17 @@ public class Main {
         // ArduinoHandler() : creates an Serial connection with arduino board
         // MORE TO COME
         
-        
-         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-        
+        //load the necessary libraries:
+        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         
         //start camera from Camera class
         camera = new Camera();
         //start videograbber as an storagebox for frames
         grabber = new VideoGrabber();
+        //start imageHandler to prosess images
+        handler = new ImageHandler();
         //start a framegrabber for the gui
+        //vGrabber = new FrameGrabber(camera,handler,grabber); //for use for testing the processing
         vGrabber = new FrameGrabber(camera,grabber);
         //start gui
         java.awt.EventQueue.invokeLater(

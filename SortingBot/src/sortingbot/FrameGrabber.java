@@ -25,10 +25,11 @@ public class FrameGrabber implements Runnable {
     private Mat currentFrame;
     private int frameGrabberMode;//is this thread going to generate a video stream(1) or process an image(0)?
     
-    public FrameGrabber(Camera cam, ImageHandler imgH){
+    public FrameGrabber(Camera cam, ImageHandler imgH, VideoGrabber vidG){
         this.camera = cam.getCam();
         currentFrame = new Mat();
         this.handler = imgH;
+        this.grabber = vidG;
         frameGrabberMode = 0;
         //implement runnable
         frameGrabber = new Thread(this); // create a thread
@@ -65,7 +66,7 @@ public class FrameGrabber implements Runnable {
                 grabber.putFrame(currentFrame);
             }
             else{
-                handler.processFrame(currentFrame);
+                grabber.putFrame(handler.processFrame(currentFrame));
             }
         }
     }
