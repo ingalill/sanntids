@@ -25,9 +25,10 @@ import org.opencv.videoio.VideoCapture;
 public class Gui extends javax.swing.JFrame {
     
     // definitions
- private DaemonThread myThread = null;
+    private DaemonThread myThread = null;
     int count = 0;
-    VideoCapture webSource = null;
+    //VideoCapture webSource = null;
+    VideoGrabber grabber = null;
 
     Mat frame = new Mat();
     MatOfByte mem = new MatOfByte();
@@ -36,48 +37,52 @@ public class Gui extends javax.swing.JFrame {
     // class of thread
     class DaemonThread implements Runnable
     {
-    protected volatile boolean runnable = false;
+        protected volatile boolean runnable = false;
 
-    @Override
-    public  void run()
-    {
-        synchronized(this)
+        @Override
+        public  void run()
         {
-            while(runnable)
+            synchronized(this)
             {
-                if(webSource.grab())
+                while(runnable)
                 {
-		    	try
-                        {
-                            webSource.retrieve(frame);
-			    Imgcodecs.imencode(".bmp", frame, mem);
-			    Image im = ImageIO.read(new ByteArrayInputStream(mem.toArray()));
-
-			    BufferedImage buff = (BufferedImage) im;
-			    Graphics g=jPanel1.getGraphics();
-
-			    if (g.drawImage(buff, 0, 0, getWidth(), getHeight() -150 , 0, 0, buff.getWidth(), buff.getHeight(), null))
-			    
-			    if(runnable == false)
+                    //if(webSource.grab())
+                    //{
+                            try
                             {
-			    	System.out.println("Going to wait()");
-			    	this.wait();
-			    }
-			 }
-			 catch(Exception ex)
-                         {
-			    System.out.println("Error");
-                         }
+                                //webSource.retrieve(frame);
+                                frame = grabber.getFrame();
+                                System.out.print("test");
+                                Imgcodecs.imencode(".bmp", frame, mem);
+                                Image im = ImageIO.read(new ByteArrayInputStream(mem.toArray()));
+
+                                BufferedImage buff = (BufferedImage) im;
+                                Graphics g=jPanel1.getGraphics();
+
+                                if (g.drawImage(buff, 0, 0, getWidth(), getHeight() -150 , 0, 0, buff.getWidth(), buff.getHeight(), null))
+
+                                if(runnable == false)
+                                {
+                                    System.out.println("Going to wait()");
+                                    this.wait();
+                                }
+                             }
+                             catch(Exception ex)
+                             {
+                                System.out.println("Error");
+                             }
+    //                }
                 }
             }
-        }
-     }
+         }
    }
 
     /**
      * Creates new form Gui
      */
-    public Gui() {
+    public Gui(VideoGrabber vg){
+        grabber = vg;
+        SetupGui();
         initComponents();
     }
 
@@ -153,8 +158,9 @@ public class Gui extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         /// start button 
-            webSource =new VideoCapture(0); // Video capture from defult cam
-             myThread = new DaemonThread(); // creat object of thread class
+            //webSource =new VideoCapture(0); // Video capture from defult cam
+            
+            myThread = new DaemonThread(); // creat object of thread class
             Thread t = new Thread(myThread);
             t.setDaemon(true);
             myThread.runnable = true;
@@ -169,15 +175,13 @@ public class Gui extends javax.swing.JFrame {
             jButton2.setEnabled(false);     // activate start button  
             jButton1.setEnabled(true);      // deactivate sop button
             
-            webSource.release();            // stop capturing from cam	
+            //webSource.release();            // stop capturing from cam
+            
     }//GEN-LAST:event_jButton2ActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        
-        System.loadLibrary(Core.NATIVE_LIBRARY_NAME); // load native library of opencv
+   
+//    public static void main(String args[]) {      
+    public void SetupGui(){
+//        System.loadLibrary(Core.NATIVE_LIBRARY_NAME); // load native library of opencv
         
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -203,12 +207,9 @@ public class Gui extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Gui().setVisible(true);
-            }
-        });
+        
     }
+ 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

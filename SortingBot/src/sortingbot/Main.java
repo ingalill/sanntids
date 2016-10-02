@@ -17,7 +17,8 @@ public class Main {
      * @param args the command line arguments
      */
     private static Camera camera;
-
+    private static VideoGrabber grabber;
+    private static FrameGrabber vGrabber;//framegrabber for video
     
     public static void main(String[] args) {
         //explaination of classes:
@@ -37,6 +38,23 @@ public class Main {
         //1. start camera from Camera class
         camera = new Camera();
         camera.startCamera();
+        //start videograbber as frame storagebox
+        grabber = new VideoGrabber();
+        //start a framegrabber for the gui
+        vGrabber = new FrameGrabber(camera,grabber);
+        //start gui
+        java.awt.EventQueue.invokeLater(
+            new Runnable() {
+            public void run() {
+                new Gui(grabber).setVisible(true);
+            }
+        });
+        
+        
+        
+        //REMEMBER: .currentThread().setPriority(Thread.MAX_PRIORITY); //ask demy why
+        
+        
         //2. start a network server
         //3. start a connection with arduino
         //4. create a timer
