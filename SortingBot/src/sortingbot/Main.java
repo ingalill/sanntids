@@ -34,11 +34,10 @@ public class Main {
         
          System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         
-        //TODO for the main() class
-        //1. start camera from Camera class
+        
+        //start camera from Camera class
         camera = new Camera();
-        camera.startCamera();
-        //start videograbber as frame storagebox
+        //start videograbber as an storagebox for frames
         grabber = new VideoGrabber();
         //start a framegrabber for the gui
         vGrabber = new FrameGrabber(camera,grabber);
@@ -54,7 +53,7 @@ public class Main {
         
         //REMEMBER: .currentThread().setPriority(Thread.MAX_PRIORITY); //ask demy why
         
-        
+        //TODO for the main() class
         //2. start a network server
         //3. start a connection with arduino
         //4. create a timer

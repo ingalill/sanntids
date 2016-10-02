@@ -24,10 +24,10 @@ public class FrameGrabber implements Runnable {
     private ImageHandler handler;
     private Mat currentFrame;
     private int frameGrabberMode;//is this thread going to generate a video stream(1) or process an image(0)?
-    private Camera cam;
     
     public FrameGrabber(Camera cam, ImageHandler imgH){
         this.camera = cam.getCam();
+        currentFrame = new Mat();
         this.handler = imgH;
         frameGrabberMode = 0;
         //implement runnable
@@ -37,6 +37,7 @@ public class FrameGrabber implements Runnable {
     
     public FrameGrabber(Camera cam, VideoGrabber vidG){
         this.camera = cam.getCam();
+        currentFrame = new Mat();
         this.grabber = vidG;
         frameGrabberMode = 1;
         //implement runnable
@@ -46,34 +47,26 @@ public class FrameGrabber implements Runnable {
     
     @Override
     public void run(){
-        
-        if (camera.isOpened())
-        {
-            try
+        while(true){
+            if (camera.isOpened())
             {
-//                if(camera.grab())
-//                {
-//                    camera.retrieve(currentFrame);
-//                }
-//                else
-//                {
-//                    System.out.print("Y U NO WORK?!");
-//                }
-                //this.camera.read(currentFrame);
-                currentFrame = cam.readFrame();
+                try
+                {
+                    camera.read(currentFrame);
+                }
+                catch (Exception e)
+                {
+                    // log the (full) error
+                    System.err.print("ERROR, could not retrieve an image from the camera\n");
+                    e.printStackTrace();
+                }
             }
-            catch (Exception e)
-            {
-                // log the (full) error
-                System.err.print("ERROR, could not retrieve an image from the camera\n");
-                e.printStackTrace();
+            if(frameGrabberMode == 1){
+                grabber.putFrame(currentFrame);
             }
-        }
-        if(frameGrabberMode == 1){
-            grabber.putFrame(currentFrame);
-        }
-        else{
-            handler.processFrame(currentFrame);
+            else{
+                handler.processFrame(currentFrame);
+            }
         }
     }
 }

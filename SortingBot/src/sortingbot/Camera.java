@@ -11,8 +11,11 @@ package sortingbot;
  */
 //import org.opencv.highgui.VideoCapture;
 //import org.opencv.imgcodecs.Imgcodecs;
+
+
 import org.opencv.videoio.VideoCapture;
-import org.opencv.core.Mat;
+//import org.opencv.core.Mat;
+
 
 public class Camera {
     
@@ -21,20 +24,21 @@ public class Camera {
     
     public Camera(){
         cameraReady = false;
+        startCamera();
     }
     
-    public void startCamera(){
-        this.camera = new VideoCapture(-1);
+    private void startCamera(){
+        this.camera = new VideoCapture(0);
         if (!camera.isOpened())
         {
-            System.out.println("Camera hasnt been found or failed to start...");
+            System.err.println("Camera hasnt been found or failed to start...");
         }
         cameraReady = true;
     }
     
     //synchronized because multiple threads are gonna ask for acces to the camera
     public synchronized VideoCapture getCam(){
-        if(!cameraReady){
+        if(!cameraReady){//make threads wait until the camera has been started 
             try{
                 wait();
             }
@@ -46,11 +50,5 @@ public class Camera {
             return this.camera;
         }
         return null;
-    }
-    
-    public Mat readFrame(){
-        Mat returnMat = null;
-        camera.read(returnMat);
-        return returnMat;
     }
 }

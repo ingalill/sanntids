@@ -27,7 +27,6 @@ public class Gui extends javax.swing.JFrame {
     // definitions
     private DaemonThread myThread = null;
     int count = 0;
-    //VideoCapture webSource = null;
     VideoGrabber grabber = null;
 
     Mat frame = new Mat();
@@ -46,32 +45,27 @@ public class Gui extends javax.swing.JFrame {
             {
                 while(runnable)
                 {
-                    //if(webSource.grab())
-                    //{
-                            try
-                            {
-                                //webSource.retrieve(frame);
-                                frame = grabber.getFrame();
-                                System.out.print("test");
-                                Imgcodecs.imencode(".bmp", frame, mem);
-                                Image im = ImageIO.read(new ByteArrayInputStream(mem.toArray()));
+                    try
+                    {
+                        frame = grabber.getFrame();
+                        Imgcodecs.imencode(".bmp", frame, mem);
+                        Image im = ImageIO.read(new ByteArrayInputStream(mem.toArray()));
 
-                                BufferedImage buff = (BufferedImage) im;
-                                Graphics g=jPanel1.getGraphics();
+                        BufferedImage buff = (BufferedImage) im;
+                        Graphics g=jPanel1.getGraphics();
 
-                                if (g.drawImage(buff, 0, 0, getWidth(), getHeight() -150 , 0, 0, buff.getWidth(), buff.getHeight(), null))
+                        if (g.drawImage(buff, 0, 0, getWidth(), getHeight() -150 , 0, 0, buff.getWidth(), buff.getHeight(), null))
 
-                                if(runnable == false)
-                                {
-                                    System.out.println("Going to wait()");
-                                    this.wait();
-                                }
-                             }
-                             catch(Exception ex)
-                             {
-                                System.out.println("Error");
-                             }
-    //                }
+                        if(runnable == false)
+                        {
+                            System.out.println("Going to wait()");
+                            this.wait();
+                        }
+                     }
+                     catch(Exception ex)
+                     {
+                        System.out.println("Error, GUI image processing failed\n");
+                     }
                 }
             }
          }
@@ -209,7 +203,6 @@ public class Gui extends javax.swing.JFrame {
         /* Create and display the form */
         
     }
- 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
