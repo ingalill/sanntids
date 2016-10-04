@@ -6,7 +6,7 @@
 package sortingbot;
 
 /**
- *
+ * 
  * @author Demy
  */
 import org.opencv.core.Core;
@@ -21,9 +21,9 @@ import java.util.*;
 
 public class ImageHandler {
     
-    private Thresholds names;
+    private Thresholds names; // enum class 
     
-    public Mat processFrame(Mat frame){
+    public Mat processFrame(Mat frame){ 
         Mat blurredImage = new Mat();
         Mat hsvImage = new Mat();
         Mat mask = new Mat();
@@ -74,7 +74,7 @@ public class ImageHandler {
             }
         }
         
-        
+       
         return morphOutput;
         //return mask;
     }

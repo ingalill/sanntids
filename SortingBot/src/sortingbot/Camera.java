@@ -28,7 +28,7 @@ public class Camera {
     }
     
     private void startCamera(){
-        this.camera = new VideoCapture(0);
+        this.camera = new VideoCapture(0); //-1 for odroid.
         if (!camera.isOpened())
         {
             System.err.println("Camera hasnt been found or failed to start...");
