@@ -127,6 +127,11 @@ public class Gui extends javax.swing.JFrame {
         });
 
         jAdvance.setText("Advance");
+        jAdvance.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jAdvanceActionPerformed(evt);
+            }
+        });
 
         jRight.setText("Right");
 
@@ -223,6 +228,10 @@ public class Gui extends javax.swing.JFrame {
             //webSource.release();            // stop capturing from cam
             
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jAdvanceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jAdvanceActionPerformed
+        // Code to arduino to move Robot forward
+    }//GEN-LAST:event_jAdvanceActionPerformed
    
 //    public static void main(String args[]) {      
     public void SetupGui(){
