@@ -42,8 +42,8 @@ public class Main {
         //start imageHandler to prosess images
         handler = new ImageHandler();
         //start a framegrabber for the gui
-        //vGrabber = new FrameGrabber(camera,handler,grabber); //for use for testing the processing
-        vGrabber = new FrameGrabber(camera,grabber);
+        vGrabber = new FrameGrabber(camera,handler,grabber); //for use for testing the processing
+        //vGrabber = new FrameGrabber(camera,grabber);
         //start gui
         java.awt.EventQueue.invokeLater(
             new Runnable() {

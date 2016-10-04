@@ -11,9 +11,13 @@ package sortingbot;
  */
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
+import org.opencv.core.MatOfPoint;
+import org.opencv.core.MatOfPoint2f;
 import org.opencv.core.Size;
 import org.opencv.core.Scalar;
+import org.opencv.core.Point;
 import org.opencv.imgproc.Imgproc;
+import java.util.*;
 
 public class ImageHandler {
     
@@ -34,11 +38,39 @@ public class ImageHandler {
         //filter the image and remove everything that is NOT blue
         Core.inRange(hsvImage, upperLimit, lowerLimit, mask);
         
-        
+        // morphological operators
+        // dilate with large element, erode with small ones
         Mat morphOutput = new Mat();
         Mat erodeElement = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(12, 12));
         Imgproc.erode(mask, morphOutput, erodeElement);
         Imgproc.erode(mask, morphOutput, erodeElement);
+        
+        //find the contours, find the centers, and find a circle whose radius is as big as the object in screen
+        Mat hierarchy = new Mat();
+        List<MatOfPoint> contours = new ArrayList<>();
+        List<Point> centers = new ArrayList<>();
+        List<float[]> radiuss = new ArrayList<>();
+        Imgproc.findContours(morphOutput, contours, hierarchy, Imgproc.RETR_LIST ,Imgproc.CHAIN_APPROX_SIMPLE);
+        for(int i = 0; contours.size() > i; i++)
+        {
+            Point center = new Point();
+            float[] radius = new float[1];
+            Imgproc.minEnclosingCircle(new MatOfPoint2f(contours.get(i).toArray()), center, radius);
+            if(radius[0] > 20){
+                centers.add(center);
+                radiuss.add(radius);
+            }
+        }
+        
+        //draw the circles on the objects, (only for debugging)
+        Scalar Red = new Scalar(255,0,0);
+        if(!centers.isEmpty()){
+            for(int i = 0; i < centers.size(); i++){
+                Imgproc.circle(morphOutput, centers.get(i), Math.round(radiuss.get(i)[0]),Red);
+            }
+        }
+        
+        
         return morphOutput;
     }
 }
