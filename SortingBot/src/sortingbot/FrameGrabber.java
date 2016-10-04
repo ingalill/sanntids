@@ -53,7 +53,7 @@ public class FrameGrabber implements Runnable {
             {
                 try
                 {
-                    camera.read(currentFrame);
+                    camera.read(currentFrame); //read from the video stream and downloads to currentframe.
                 }
                 catch (Exception e)
                 {
@@ -63,10 +63,10 @@ public class FrameGrabber implements Runnable {
                 }
             }
             if(frameGrabberMode == 1){
-                grabber.putFrame(currentFrame);
+                grabber.putFrame(currentFrame); // legger currentframe inn i grabber. 
             }
             else{
-                grabber.putFrame(handler.processFrame(currentFrame));
+                grabber.putFrame(handler.processFrame(currentFrame)); 
             }
         }
     }
