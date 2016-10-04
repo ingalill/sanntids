@@ -145,11 +145,6 @@ public class SortBotGUI extends javax.swing.JFrame {
         });
 
         bForward.setText("Forward");
-        bForward.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bForwardActionPerformed(evt);
-            }
-        });
 
         bRight.setText("Right");
 
@@ -259,10 +254,6 @@ public class SortBotGUI extends javax.swing.JFrame {
             webSource.release();            // stop capturing from cam	
         
     }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void bForwardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bForwardActionPerformed
-        // Code to write variable w to arduino and get bot to move forward
-    }//GEN-LAST:event_bForwardActionPerformed
 
     /**
      * @param args the command line arguments
