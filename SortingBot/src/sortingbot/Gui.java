@@ -90,8 +90,8 @@ public class Gui extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        jStart = new javax.swing.JButton();
+        jPause = new javax.swing.JButton();
         jManuel = new javax.swing.JButton();
         jAuto = new javax.swing.JButton();
         jAdvance = new javax.swing.JButton();
@@ -112,17 +112,17 @@ public class Gui extends javax.swing.JFrame {
             .addGap(0, 356, Short.MAX_VALUE)
         );
 
-        jButton1.setText("Start");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jStart.setText("Start");
+        jStart.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jStartActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Pause");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jPause.setText("Pause");
+        jPause.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jPauseActionPerformed(evt);
             }
         });
 
@@ -178,9 +178,9 @@ public class Gui extends javax.swing.JFrame {
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(42, 42, 42)
-                .addComponent(jButton1)
+                .addComponent(jStart)
                 .addGap(18, 18, 18)
-                .addComponent(jButton2)
+                .addComponent(jPause)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jAdvance)
                 .addGap(69, 69, 69))
@@ -208,8 +208,8 @@ public class Gui extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
+                    .addComponent(jStart)
+                    .addComponent(jPause)
                     .addComponent(jAdvance))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -227,7 +227,7 @@ public class Gui extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jStartActionPerformed
         /// start button 
             //webSource =new VideoCapture(0); // Video capture from defult cam
             
@@ -236,19 +236,19 @@ public class Gui extends javax.swing.JFrame {
             t.setDaemon(true);
             myThread.runnable = true;
             t.start();                      // Start Thread
-            jButton1.setEnabled(false);  //Deactivate start button
-            jButton2.setEnabled(true);  // activate stop button
-    }//GEN-LAST:event_jButton1ActionPerformed
+            jStart.setEnabled(false);  //Deactivate start button
+            jPause.setEnabled(true);  // activate stop button
+    }//GEN-LAST:event_jStartActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void jPauseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPauseActionPerformed
         /// stop button 
             myThread.runnable = false;      //stop thread
-            jButton2.setEnabled(false);     // activate start button  
-            jButton1.setEnabled(true);      // deactivate sop button
+            jPause.setEnabled(false);     // activate start button  
+            jStart.setEnabled(true);      // deactivate sop button
             
             //webSource.release();            // stop capturing from cam
             
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_jPauseActionPerformed
 
     private void jManuelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jManuelActionPerformed
         // Code to enable manuel drive..
@@ -272,6 +272,7 @@ public class Gui extends javax.swing.JFrame {
 
     private void jAdvanceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jAdvanceActionPerformed
         // Drive Forward
+        jManuel.setEnabled(false);      //Deactivate start button
         jAdvance.setEnabled(false);    // Activate advance button
         jRight.setEnabled(true);       // Deactivate Right button
         jLeft.setEnabled(true);        // Deactivate Left button
@@ -280,6 +281,7 @@ public class Gui extends javax.swing.JFrame {
 
     private void jRightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRightActionPerformed
         // Drive Right
+        jManuel.setEnabled(false);      //Deactivate start button
         jAdvance.setEnabled(true);     // Deactivate advance button
         jRight.setEnabled(false);      // Activate Right button
         jLeft.setEnabled(true);        // Deactivate Left button
@@ -288,6 +290,7 @@ public class Gui extends javax.swing.JFrame {
 
     private void jLeftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jLeftActionPerformed
         // Drive Left
+        jManuel.setEnabled(false);      //Deactivate start button
         jAdvance.setEnabled(true);     // Deactivate advance button
         jRight.setEnabled(true);       // Deactivate Right button
         jLeft.setEnabled(false);       // Activate Left button
@@ -296,6 +299,7 @@ public class Gui extends javax.swing.JFrame {
 
     private void jBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBackActionPerformed
         // Drive Back
+        jManuel.setEnabled(false);      //Deactivate start button
         jAdvance.setEnabled(true);     // Deactivate advance button
         jRight.setEnabled(true);       // Deactivate Right button
         jLeft.setEnabled(true);        // Deactivate Left button
@@ -337,11 +341,11 @@ public class Gui extends javax.swing.JFrame {
     private javax.swing.JButton jAdvance;
     private javax.swing.JButton jAuto;
     private javax.swing.JButton jBack;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jLeft;
     private javax.swing.JButton jManuel;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton jPause;
     private javax.swing.JButton jRight;
+    private javax.swing.JButton jStart;
     // End of variables declaration//GEN-END:variables
 }
