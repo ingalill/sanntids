@@ -45,6 +45,10 @@ public class ImageHandler {
         Imgproc.erode(mask, morphOutput, erodeElement);
         Imgproc.erode(mask, morphOutput, erodeElement);
         
+        Mat dilateElement = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(24, 24));
+        Imgproc.dilate(mask, morphOutput, dilateElement);
+        Imgproc.dilate(mask, morphOutput, dilateElement);
+        
         //find the contours, find the centers, and find a circle whose radius is as big as the object in screen
         Mat hierarchy = new Mat();
         List<MatOfPoint> contours = new ArrayList<>();
@@ -56,7 +60,7 @@ public class ImageHandler {
             Point center = new Point();
             float[] radius = new float[1];
             Imgproc.minEnclosingCircle(new MatOfPoint2f(contours.get(i).toArray()), center, radius);
-            if(radius[0] > 20){
+            if(radius[0] > 75){
                 centers.add(center);
                 radiuss.add(radius);
             }
@@ -72,5 +76,6 @@ public class ImageHandler {
         
         
         return morphOutput;
+        //return mask;
     }
 }
