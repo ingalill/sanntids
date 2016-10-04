@@ -92,12 +92,12 @@ public class Gui extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jAdvance = new javax.swing.JToggleButton();
-        jRight = new javax.swing.JToggleButton();
-        jLeft = new javax.swing.JToggleButton();
-        jBack = new javax.swing.JToggleButton();
-        jManuel = new javax.swing.JToggleButton();
-        jAuto = new javax.swing.JToggleButton();
+        jManuel = new javax.swing.JButton();
+        jAuto = new javax.swing.JButton();
+        jAdvance = new javax.swing.JButton();
+        jBack = new javax.swing.JButton();
+        jLeft = new javax.swing.JButton();
+        jRight = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -126,6 +126,20 @@ public class Gui extends javax.swing.JFrame {
             }
         });
 
+        jManuel.setText("Manuel Drive");
+        jManuel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jManuelActionPerformed(evt);
+            }
+        });
+
+        jAuto.setText("Auto Drive");
+        jAuto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jAutoActionPerformed(evt);
+            }
+        });
+
         jAdvance.setText("Advance");
         jAdvance.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -133,15 +147,26 @@ public class Gui extends javax.swing.JFrame {
             }
         });
 
-        jRight.setText("Right");
+        jBack.setText("Back");
+        jBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBackActionPerformed(evt);
+            }
+        });
 
         jLeft.setText("Left");
+        jLeft.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jLeftActionPerformed(evt);
+            }
+        });
 
-        jBack.setText("Back");
-
-        jManuel.setText("Manuel Drive");
-
-        jAuto.setText("Auto Drive");
+        jRight.setText("Right");
+        jRight.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRightActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -157,26 +182,24 @@ public class Gui extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jButton2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(41, 41, 41)
-                        .addComponent(jAdvance)
-                        .addGap(42, 42, 42))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLeft)
-                        .addGap(50, 50, 50)
-                        .addComponent(jRight))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jBack)
-                        .addGap(52, 52, 52)))
-                .addGap(28, 28, 28))
+                .addComponent(jAdvance)
+                .addGap(69, 69, 69))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jAuto)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jManuel)
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jBack)
+                        .addGap(78, 78, 78))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jManuel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jAuto)
+                        .addGap(19, 19, 19))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLeft)
+                        .addGap(29, 29, 29)
+                        .addComponent(jRight)
+                        .addGap(36, 36, 36))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -184,22 +207,20 @@ public class Gui extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton1)
-                        .addComponent(jButton2))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jAdvance)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jRight)
-                            .addComponent(jLeft))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jBack)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2)
+                    .addComponent(jAdvance))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLeft)
+                    .addComponent(jRight))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jBack)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jManuel)
-                    .addComponent(jAuto))
+                    .addComponent(jAuto)
+                    .addComponent(jManuel))
                 .addContainerGap(28, Short.MAX_VALUE))
         );
 
@@ -229,9 +250,57 @@ public class Gui extends javax.swing.JFrame {
             
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jManuelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jManuelActionPerformed
+        // Code to enable manuel drive..
+        jManuel.setEnabled(false);      //Deactivate start button
+        jAuto.setEnabled(true);         // activate stop button
+        jAdvance.setEnabled(true);      // Activate advance button
+        jRight.setEnabled(true);        // Deactivate Right button
+        jLeft.setEnabled(true);         // Deactivate Left button
+        jBack.setEnabled(true);         // Deactivate Back button
+    }//GEN-LAST:event_jManuelActionPerformed
+
+    private void jAutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jAutoActionPerformed
+        // Code to enable auto drive.
+        jManuel.setEnabled(true);       //Deactivate start button
+        jAuto.setEnabled(false);        // activate stop button
+        jAdvance.setEnabled(false);     // Deactivate advance button
+        jRight.setEnabled(false);       // Deactivate Right button
+        jLeft.setEnabled(false);        // Deactivate Left button
+        jBack.setEnabled(false);        // Deactivate Back button
+    }//GEN-LAST:event_jAutoActionPerformed
+
     private void jAdvanceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jAdvanceActionPerformed
-        // Code to arduino to move Robot forward
+        // Drive Forward
+        jAdvance.setEnabled(false);    // Activate advance button
+        jRight.setEnabled(true);       // Deactivate Right button
+        jLeft.setEnabled(true);        // Deactivate Left button
+        jBack.setEnabled(true);        // Deactivate Back button
     }//GEN-LAST:event_jAdvanceActionPerformed
+
+    private void jRightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRightActionPerformed
+        // Drive Right
+        jAdvance.setEnabled(true);     // Deactivate advance button
+        jRight.setEnabled(false);      // Activate Right button
+        jLeft.setEnabled(true);        // Deactivate Left button
+        jBack.setEnabled(true);        // Deactivate Back button
+    }//GEN-LAST:event_jRightActionPerformed
+
+    private void jLeftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jLeftActionPerformed
+        // Drive Left
+        jAdvance.setEnabled(true);     // Deactivate advance button
+        jRight.setEnabled(true);       // Deactivate Right button
+        jLeft.setEnabled(false);       // Activate Left button
+        jBack.setEnabled(true);        // Deactivate Back button
+    }//GEN-LAST:event_jLeftActionPerformed
+
+    private void jBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBackActionPerformed
+        // Drive Back
+        jAdvance.setEnabled(true);     // Deactivate advance button
+        jRight.setEnabled(true);       // Deactivate Right button
+        jLeft.setEnabled(true);        // Deactivate Left button
+        jBack.setEnabled(false);       // Activate Back button
+    }//GEN-LAST:event_jBackActionPerformed
    
 //    public static void main(String args[]) {      
     public void SetupGui(){
@@ -265,14 +334,14 @@ public class Gui extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JToggleButton jAdvance;
-    private javax.swing.JToggleButton jAuto;
-    private javax.swing.JToggleButton jBack;
+    private javax.swing.JButton jAdvance;
+    private javax.swing.JButton jAuto;
+    private javax.swing.JButton jBack;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JToggleButton jLeft;
-    private javax.swing.JToggleButton jManuel;
+    private javax.swing.JButton jLeft;
+    private javax.swing.JButton jManuel;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JToggleButton jRight;
+    private javax.swing.JButton jRight;
     // End of variables declaration//GEN-END:variables
 }
