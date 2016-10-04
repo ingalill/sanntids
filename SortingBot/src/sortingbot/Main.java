@@ -9,11 +9,18 @@ package sortingbot;
  *
  * @author Demy Patrick Gielesen
  */
+import org.opencv.core.Core;
+
 public class Main {
 
     /**
      * @param args the command line arguments
      */
+    private static Camera camera;
+    private static VideoGrabber grabber;
+    private static ImageHandler handler;
+    private static FrameGrabber vGrabber;//framegrabber for video
+    
     public static void main(String[] args) {
         //explaination of classes:
         // Camera() : class that starts a connection with a camera
@@ -25,12 +32,31 @@ public class Main {
         // ArduinoHandler() : creates an Serial connection with arduino board
         // MORE TO COME
         
+        //load the necessary libraries:
+        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+        
+        //start camera from Camera class
+        camera = new Camera();
+        //start videograbber as an storagebox for frames
+        grabber = new VideoGrabber();
+        //start imageHandler to prosess images
+        handler = new ImageHandler();
+        //start a framegrabber for the gui
+        //vGrabber = new FrameGrabber(camera,handler,grabber); //for use for testing the processing
+        vGrabber = new FrameGrabber(camera,grabber);
+        //start gui
+        java.awt.EventQueue.invokeLater(
+            new Runnable() {
+            public void run() {
+                new Gui(grabber).setVisible(true);
+            }
+        });
         
         
+        
+        //REMEMBER: .currentThread().setPriority(Thread.MAX_PRIORITY); //ask demy why
         
         //TODO for the main() class
-        
-        //1. start camera from Camera class
         //2. start a network server
         //3. start a connection with arduino
         //4. create a timer

@@ -9,22 +9,46 @@ package sortingbot;
  *
  * @author Demy
  */
-import org.opencv.highgui.VideoCapture;
+//import org.opencv.highgui.VideoCapture;
+//import org.opencv.imgcodecs.Imgcodecs;
+
+
+import org.opencv.videoio.VideoCapture;
+//import org.opencv.core.Mat;
+
 
 public class Camera {
     
     private VideoCapture camera;
+    private boolean cameraReady;
     
-    public void startCamera(){
-        this.camera = new VideoCapture(-1);
+    public Camera(){
+        cameraReady = false;
+        startCamera();
+    }
+    
+    private void startCamera(){
+        this.camera = new VideoCapture(0);
         if (!camera.isOpened())
         {
-            System.out.println("Camera hasnt been found or failed to start...");
+            System.err.println("Camera hasnt been found or failed to start...");
         }
+        cameraReady = true;
     }
     
     //synchronized because multiple threads are gonna ask for acces to the camera
     public synchronized VideoCapture getCam(){
-        return this.camera;
+        if(!cameraReady){//make threads wait until the camera has been started 
+            try{
+                wait();
+            }
+            catch(Exception e){
+                System.out.print("Thread couldnt wait!");
+            }
+        }
+        else{
+            return this.camera;
+        }
+        return null;
     }
 }
