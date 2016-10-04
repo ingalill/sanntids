@@ -14,6 +14,7 @@ import org.opencv.core.Core;
 public class Main {
 
     /**
+     * @date test
      * @param args the command line arguments
      */
     private static Camera camera;
