@@ -13,11 +13,9 @@ import gnu.io.SerialPort;
 import gnu.io.SerialPortEvent; 
 import gnu.io.SerialPortEventListener; 
 import java.util.Enumeration;
-/**
- *
- * @author Demy
- */
-public class ArduinoHandler implements SerialPortEventListener {
+
+
+public class SerialTest implements SerialPortEventListener {
     //static{ System.loadLibrary("librxtxSerial"); }
      static {
     try {
@@ -42,13 +40,13 @@ public class ArduinoHandler implements SerialPortEventListener {
 	* converting the bytes into characters 
 	* making the displayed results codepage independent
 	*/
-	private BufferedReader input;
+	private static BufferedReader input;
 	/** The output stream to the port */
-	private OutputStream output;
+	private static OutputStream output;
 	/** Milliseconds to block while waiting for port open */
 	private static final int TIME_OUT = 2000;
 	/** Default bits per second for COM port. */
-	private static final int DATA_RATE = 115200;
+	private static final int DATA_RATE = 19200;
 
 	public void initialize() {
                 // the next line is for Raspberry Pi and 
@@ -87,10 +85,12 @@ public class ArduinoHandler implements SerialPortEventListener {
 			// open the streams
 			input = new BufferedReader(new InputStreamReader(serialPort.getInputStream()));
 			output = serialPort.getOutputStream();
-
+                        
 			// add event listeners
 			serialPort.addEventListener(this);
 			serialPort.notifyOnDataAvailable(true);
+                        
+
 		} catch (Exception e) {
 			System.err.println(e.toString());
 		}
@@ -122,17 +122,11 @@ public class ArduinoHandler implements SerialPortEventListener {
 		// Ignore all the other eventTypes, but you should consider the other ones.
 	}
 
-//	public static void main(String[] args) throws Exception {
-//		ArduinoHandler main = new ArduinoHandler();
-//		main.initialize();
-//		Thread t=new Thread() {
-//			public void run() {
-//				//the following line will keep this app alive for 1000 seconds,
-//				//waiting for events to occur and responding to them (printing incoming messages to console).
-//				try {Thread.sleep(1000000);} catch (InterruptedException ie) {}
-//			}
-//		};
-//		t.start();
-//		System.out.println("Started");
-//	}
+	public static void main(String[] args) throws Exception {
+		SerialTest main = new SerialTest();
+		main.initialize();
+		ArduinoDriver t=new ArduinoDriver(input,output);
+		t.start();
+		System.out.println("Started");
+	}
 }
