@@ -15,7 +15,7 @@ import gnu.io.SerialPortEventListener;
 import java.util.Enumeration;
 
 
-public class SerialTest implements SerialPortEventListener {
+public class ArduinoHandler implements SerialPortEventListener {
     //static{ System.loadLibrary("librxtxSerial"); }
      static {
     try {
