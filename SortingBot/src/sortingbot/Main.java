@@ -35,8 +35,8 @@ public class Main {
         
         //load the necessary libraries:
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-        System.setProperty("java.library.path", "C:/OpenCv 3.1/build/java/x64/opencv_java310.dll");
-        //System.setProperty("java.library.path", "/Library/java/extensions");
+        //System.setProperty("java.library.path", "C:/OpenCv 3.1/build/java/x64/opencv_java310.dll");
+        //System.setProperty("java.library.path", "/Users/ingalillbjolstad/Documents/opencv_libs");
         //start camera from Camera class
         camera = new Camera();
         //start videograbber as an storagebox for frames
@@ -53,7 +53,6 @@ public class Main {
                 new Gui(grabber).setVisible(true);
             }
         });
-        
         
         
         //REMEMBER: .currentThread().setPriority(Thread.MAX_PRIORITY); //ask demy why
