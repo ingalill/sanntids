@@ -123,7 +123,7 @@ public class ArduinoHandler implements SerialPortEventListener {
 	}
 
 	public static void main(String[] args) throws Exception {
-		SerialTest main = new SerialTest();
+		ArduinoHandler main = new ArduinoHandler();
 		main.initialize();
 		ArduinoDriver t=new ArduinoDriver(input,output);
 		t.start();
