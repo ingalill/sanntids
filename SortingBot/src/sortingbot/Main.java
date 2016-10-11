@@ -7,7 +7,7 @@ package sortingbot;
 
 /**
  *
- * @author Demy Patrick Gielesen
+ * @author Demy Patrick Gielesen og Inga Lill Bjølstad
  */
 import java.util.Timer;
 import org.opencv.core.Core;
@@ -55,9 +55,8 @@ public class Main {
         //vGrabber = new FrameGrabber(camera,grabber);
         testGrabber = new FrameGrabber(camera,handler,grabber);
         
-        // timer.scheduleAtFixedRate(testGrabber, delay*0, timedelay); // denne funker
-      
-        timer.scheduleAtFixedRate(testGrabber.currentThread().setPriority(Thread.MAX_PRIORITY), delay*0, timedelay);
+         timer.scheduleAtFixedRate(testGrabber, delay*0, timedelay); // denne funker
+        //timer.scheduleAtFixedRate(testGrabber.currentThread().setPriority(Thread.MAX_PRIORITY), delay*0, timedelay);
         //start gui
         java.awt.EventQueue.invokeLater(
             new Runnable() {
