@@ -53,10 +53,9 @@ public class Main {
         //start a framegrabber for the gui
         vGrabber = new FrameGrabber(camera,handler,grabber); //for use for testing the processing
         //vGrabber = new FrameGrabber(camera,grabber);
-        testGrabber = new FrameGrabber(camera,handler,grabber);
-        
-         timer.scheduleAtFixedRate(testGrabber, delay*0, timedelay); // denne funker
-        //timer.scheduleAtFixedRate(testGrabber.currentThread().setPriority(Thread.MAX_PRIORITY), delay*0, timedelay);
+        testGrabber = new FrameGrabber(camera,handler,grabber,true);
+        //Start framegrabber with timed intervals
+        timer.scheduleAtFixedRate(testGrabber, delay*0, timedelay);
         //start gui
         java.awt.EventQueue.invokeLater(
             new Runnable() {

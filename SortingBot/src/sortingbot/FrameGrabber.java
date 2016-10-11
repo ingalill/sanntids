@@ -18,7 +18,7 @@ import org.opencv.videoio.VideoCapture;
 import org.opencv.core.Mat;
 
 public class FrameGrabber // implements Runnable{ 
-                          extends TimerTask implements Runnable {
+                          extends TimerTask {
     
     private Thread frameGrabber;
     private VideoCapture camera;
@@ -34,15 +34,27 @@ public class FrameGrabber // implements Runnable{
         this.grabber = vidG;
         frameGrabberMode = 0;
         //implement runnable
-      //  frameGrabber = new Thread(this); // create a thread
-       // frameGrabber.start(); // start this thread
+        frameGrabber = new Thread(this); // create a thread
+        frameGrabber.start(); // start this thread
+    }
+    
+    public FrameGrabber(Camera cam, ImageHandler imgH, VideoGrabber vidG, boolean Debug){
+        this.camera = cam.getCam();
+        currentFrame = new Mat();
+        this.handler = imgH;
+        this.grabber = vidG;
+        frameGrabberMode = 1;
+        Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
+        //implement runnable
+        //frameGrabber = new Thread(this); // create a thread
+        // frameGrabber.start(); // start this thread
     }
     
     public FrameGrabber(Camera cam, VideoGrabber vidG){
         this.camera = cam.getCam();
         currentFrame = new Mat();
         this.grabber = vidG;
-        frameGrabberMode = 1;
+        frameGrabberMode = 2;
         //implement runnable
        // frameGrabber = new Thread(this); // create a thread
       //  frameGrabber.start(); // start this thread
@@ -50,26 +62,34 @@ public class FrameGrabber // implements Runnable{
     
     @Override
     public void run(){
-        //while(true){
-            if (camera.isOpened())
+        
+        switch (frameGrabberMode) {
+            case 0: //Gui
+                while(true){
+                    grabber.putFrame(getFrame()); // legger currentframe inn i grabber. 
+                }
+            case 1: //Debug
+                grabber.putFrame(handler.processFrame(getFrame()));
+                break;
+            default: //odroid handling
+                //TODO
+                break;
+        }
+    }
+    private Mat getFrame(){
+        if (camera.isOpened())
+        {
+            try
             {
-                try
-                {
-                    camera.read(currentFrame); //read from the video stream and downloads to currentframe.
-                }
-                catch (Exception e)
-                {
-                    // log the (full) error
-                    System.err.print("ERROR, could not retrieve an image from the camera\n");
-                    e.printStackTrace();
-                }
+                camera.read(currentFrame); //read from the video stream and downloads to currentframe.
             }
-            if(frameGrabberMode == 1){
-                grabber.putFrame(currentFrame); // legger currentframe inn i grabber. 
+            catch (Exception e)
+            {
+                // log the (full) error
+                System.err.print("ERROR, could not retrieve an image from the camera\n");
+                e.printStackTrace();
             }
-            else{
-                grabber.putFrame(handler.processFrame(currentFrame)); 
-            }
-        //}
+        }
+        return currentFrame;
     }
 }
