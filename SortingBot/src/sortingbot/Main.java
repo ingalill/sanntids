@@ -24,6 +24,9 @@ public class Main {
     private static FrameGrabber vGrabber;//framegrabber for video
     private static FrameGrabber testGrabber; 
     private static Timer timer;
+    private static ArduinoCommunication communication;
+    private static ArduinoDriver driver;
+    
     public static void main(String[] args) {
         
        long timedelay = 500; // repeat every 500ms
@@ -46,6 +49,9 @@ public class Main {
         //System.setProperty("java.library.path", "/Users/ingalillbjolstad/Documents/opencv_libs");
         //start camera from Camera class
         camera = new Camera();
+        //Starting communication with the arduino
+        communication = new ArduinoCommunication();
+        driver = new ArduinoDriver(communication);
         //start videograbber as an storagebox for frames
         grabber = new VideoGrabber();
         //start imageHandler to prosess images
