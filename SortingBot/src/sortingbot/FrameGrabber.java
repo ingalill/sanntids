@@ -7,18 +7,15 @@ package sortingbot;
 
 /**
  *
- * @author Demy
+ * @author Demy og inga
  */
 
-//import org.opencv.imgcodecs.Imgcodecs;
+
 import java.util.TimerTask;
 import org.opencv.videoio.VideoCapture;
-
-//import org.opencv.highgui.VideoCapture;
 import org.opencv.core.Mat;
 
-public class FrameGrabber // implements Runnable{ 
-                          extends TimerTask {
+public class FrameGrabber extends TimerTask {
     
     private Thread frameGrabber;
     private VideoCapture camera;
