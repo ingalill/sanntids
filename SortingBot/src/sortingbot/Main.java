@@ -26,9 +26,9 @@ public class Main {
     private static Timer timer;
     public static void main(String[] args) {
         
-       long timedelay = 500;
-       long delay     =1;
-       
+       long timedelay = 500; // repeat every 500ms
+       long delay     =1000;    // starts after 1 seond. 
+       timer = new Timer();
            
         //explaination of classes:
         // Camera() : class that starts a connection with a camera
@@ -59,6 +59,7 @@ public class Main {
         //start gui
         java.awt.EventQueue.invokeLater(
             new Runnable() {
+            @Override
             public void run() {
                 new Gui(grabber).setVisible(true);
             }
