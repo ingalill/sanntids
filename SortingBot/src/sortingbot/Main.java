@@ -22,7 +22,7 @@ public class Main {
     private static VideoGrabber grabber;
     private static ImageHandler handler;
     private static FrameGrabber vGrabber;//framegrabber for video
-    private static FrameGrabber testGrabber; 
+    private static FrameGrabber odroidGrabber; 
     private static Timer timer;
     private static ArduinoCommunication communication;
     private static ArduinoDriver driver;
@@ -62,9 +62,9 @@ public class Main {
         //start a framegrabber for the gui
         //vGrabber = new FrameGrabber(camera,handler,grabber); //for use for testing the processing
         //vGrabber = new FrameGrabber(camera,grabber);
-        testGrabber = new FrameGrabber(camera,handler,grabber,true);
+        odroidGrabber = new FrameGrabber(camera,handler,grabber,true);
         //Start framegrabber with timed intervals
-        timer.scheduleAtFixedRate(testGrabber, delay*0, timedelay);
+        timer.scheduleAtFixedRate(odroidGrabber, delay*0, timedelay);
         //start gui
         java.awt.EventQueue.invokeLater(
             new Runnable() {
