@@ -73,6 +73,7 @@ public class FrameGrabber extends TimerTask {
                 break;
         }
     }
+    
     private Mat getFrame(){
         if (camera.isOpened())
         {

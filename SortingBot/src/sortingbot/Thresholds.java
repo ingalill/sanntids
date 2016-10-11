@@ -11,7 +11,9 @@ package sortingbot;
 public enum Thresholds {
     
     BLUEUPPER(110,110,30),
-    BLUELOWER(130,255,255);
+    BLUELOWER(130,255,255),
+    ORANGEUPPER(0,220,0),
+    ORANGELOWER(90,255,255);
 //    REDUPPER,
 //    REDLOWER,
 //    GREENUPPER,
