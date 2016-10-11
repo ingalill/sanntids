@@ -25,11 +25,15 @@ public class ImageHandler {
     
     public Mat processFrame(Mat frame){ 
         Mat blurredImage = new Mat();
+        Mat morphPart1 = new Mat();
         Mat hsvImage = new Mat();
         Mat mask = new Mat();
         
         //remove some noise
-        Imgproc.blur(frame, blurredImage, new Size(7, 7));
+        Imgproc.medianBlur(frame, blurredImage, 7);//averages the colors to be more constant (removes noise well)
+        //Imgproc.blur(frame, blurredImage, new Size(7, 7));//blurs the image, the easiest
+        //Imgproc.bilateralFilter(frame,blurredImage, 9, 75, 75)//heavy filtering (takes alot of time)
+        
         //convert the frame to HSV
         Imgproc.cvtColor(blurredImage, hsvImage, Imgproc.COLOR_BGR2HSV);
         //setup the limits for the color blue
@@ -42,25 +46,26 @@ public class ImageHandler {
         // dilate with large element, erode with small ones
         Mat morphOutput = new Mat();
         Mat erodeElement = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(12, 12));
-        Imgproc.erode(mask, morphOutput, erodeElement);
-        Imgproc.erode(mask, morphOutput, erodeElement);
+        Imgproc.erode(mask, morphPart1, erodeElement);
+        //Imgproc.erode(blurredImage2, morphOutput, erodeElement);
         
         Mat dilateElement = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(24, 24));
-        Imgproc.dilate(mask, morphOutput, dilateElement);
-        Imgproc.dilate(mask, morphOutput, dilateElement);
+        Imgproc.dilate(morphPart1, morphOutput, dilateElement);
+        //Imgproc.dilate(mask, morphOutput, dilateElement);
         
         //find the contours, find the centers, and find a circle whose radius is as big as the object in screen
         Mat hierarchy = new Mat();
+        Mat copyOfOutput = morphOutput.clone();
         List<MatOfPoint> contours = new ArrayList<>();
         List<Point> centers = new ArrayList<>();
         List<float[]> radiuss = new ArrayList<>();
-        Imgproc.findContours(morphOutput, contours, hierarchy, Imgproc.RETR_LIST ,Imgproc.CHAIN_APPROX_SIMPLE);
+        Imgproc.findContours(copyOfOutput, contours, hierarchy, Imgproc.RETR_LIST ,Imgproc.CHAIN_APPROX_SIMPLE);
         for(int i = 0; contours.size() > i; i++)
         {
             Point center = new Point();
             float[] radius = new float[1];
             Imgproc.minEnclosingCircle(new MatOfPoint2f(contours.get(i).toArray()), center, radius);
-            if(radius[0] > 75){
+            if(radius[0] > 40){
                 centers.add(center);
                 radiuss.add(radius);
             }
