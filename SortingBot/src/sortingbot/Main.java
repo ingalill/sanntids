@@ -26,6 +26,7 @@ public class Main {
     private static Timer timer;
     private static ArduinoCommunication communication;
     private static ArduinoDriver driver;
+    private static CommandBox commandBox;
     
     public static void main(String[] args) {
         
@@ -51,7 +52,9 @@ public class Main {
         camera = new Camera();
         //Starting communication with the arduino
         communication = new ArduinoCommunication();
-        driver = new ArduinoDriver(communication);
+        //
+        commandBox= new CommandBox();
+        driver = new ArduinoDriver(communication,commandBox);
         //start videograbber as an storagebox for frames
         grabber = new VideoGrabber();
         //start imageHandler to prosess images
