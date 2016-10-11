@@ -11,12 +11,14 @@ package sortingbot;
  */
 
 //import org.opencv.imgcodecs.Imgcodecs;
+import java.util.TimerTask;
 import org.opencv.videoio.VideoCapture;
 
 //import org.opencv.highgui.VideoCapture;
 import org.opencv.core.Mat;
 
-public class FrameGrabber implements Runnable {
+public class FrameGrabber // implements Runnable{ 
+                          extends TimerTask implements Runnable {
     
     private Thread frameGrabber;
     private VideoCapture camera;
@@ -32,8 +34,8 @@ public class FrameGrabber implements Runnable {
         this.grabber = vidG;
         frameGrabberMode = 0;
         //implement runnable
-        frameGrabber = new Thread(this); // create a thread
-        frameGrabber.start(); // start this thread
+      //  frameGrabber = new Thread(this); // create a thread
+       // frameGrabber.start(); // start this thread
     }
     
     public FrameGrabber(Camera cam, VideoGrabber vidG){
@@ -42,13 +44,13 @@ public class FrameGrabber implements Runnable {
         this.grabber = vidG;
         frameGrabberMode = 1;
         //implement runnable
-        frameGrabber = new Thread(this); // create a thread
-        frameGrabber.start(); // start this thread
+       // frameGrabber = new Thread(this); // create a thread
+      //  frameGrabber.start(); // start this thread
     }
     
     @Override
     public void run(){
-        while(true){
+        //while(true){
             if (camera.isOpened())
             {
                 try
@@ -68,6 +70,6 @@ public class FrameGrabber implements Runnable {
             else{
                 grabber.putFrame(handler.processFrame(currentFrame)); 
             }
-        }
+        //}
     }
 }

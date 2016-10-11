@@ -9,6 +9,7 @@ package sortingbot;
  *
  * @author Demy Patrick Gielesen
  */
+import java.util.Timer;
 import org.opencv.core.Core;
 
 public class Main {
@@ -21,8 +22,14 @@ public class Main {
     private static VideoGrabber grabber;
     private static ImageHandler handler;
     private static FrameGrabber vGrabber;//framegrabber for video
-    
+    private static FrameGrabber testGrabber; 
+    private static Timer timer;
     public static void main(String[] args) {
+        
+       long timedelay = 500;
+       long delay     =1;
+       
+           
         //explaination of classes:
         // Camera() : class that starts a connection with a camera
         // FrameGrabber() : a thread that takes a single frame from the opened camera for each run (can be used for both camera feedback to the gui and image processing)
@@ -46,6 +53,9 @@ public class Main {
         //start a framegrabber for the gui
         vGrabber = new FrameGrabber(camera,handler,grabber); //for use for testing the processing
         //vGrabber = new FrameGrabber(camera,grabber);
+        testGrabber = new FrameGrabber(camera,handler,grabber);
+        
+        timer.scheduleAtFixedRate(testGrabber, delay*0, timedelay);
         //start gui
         java.awt.EventQueue.invokeLater(
             new Runnable() {
