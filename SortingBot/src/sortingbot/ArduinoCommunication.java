@@ -130,6 +130,7 @@ public class ArduinoCommunication implements SerialPortEventListener {
 			}
 		}
 		// Ignore all the other eventTypes, but you should consider the other ones.
+                
 	}
 
 	public ArduinoCommunication() {

@@ -11,11 +11,22 @@ package sortingbot;
  */
 public class CommandBox {
     boolean objectFound = false;
+    boolean objectFoundAvailable;
     
-    public void setObjectFound(boolean objectFound){
+    public CommandBox(){
+        objectFoundAvailable=false;
+    }
+    public synchronized void setObjectFound(boolean objectFound){
+        while(objectFoundAvailable){
+            //
+            try{
+                wait();
+            }catch (InterruptedException e){
+            }
+        }
         this.objectFound=objectFound;
     }
-    public boolean getObjectFound(){
+    public synchronized boolean getObjectFound(){
         return objectFound;
     }
 }

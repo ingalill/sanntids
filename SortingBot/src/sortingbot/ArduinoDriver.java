@@ -32,7 +32,7 @@ public class ArduinoDriver extends Thread{
         while(autoDrive){
             seek();
             getObject();
-            locateTarget();
+            locateGoal();
         }
     }
     public void seek(){
@@ -47,7 +47,7 @@ public class ArduinoDriver extends Thread{
         // Use sensors and camera to go and getthe object
         
     }
-    public void locateTarget(){
+    public void locateGoal(){
         //Find the right area to place current object
     }
     public void placeObject() {
