@@ -65,7 +65,7 @@ public class Main {
         //start a framegrabber for the gui
         //vGrabber = new FrameGrabber(camera,handler,grabber); //for use for testing the processing
         //vGrabber = new FrameGrabber(camera,grabber);
-        odroidGrabber = new FrameGrabber(camera,handler,grabber,true);
+        odroidGrabber = new FrameGrabber(camera,handler,videoBox,true);
         //Start framegrabber with timed intervals
         timer.scheduleAtFixedRate(odroidGrabber, delay*0, timedelay);
         //start gui
