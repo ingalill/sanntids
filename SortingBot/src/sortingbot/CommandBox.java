@@ -13,6 +13,12 @@ public class CommandBox {
     boolean objectFound = false;
     boolean objectFoundAvailable;
     
+    // TODOOOOOOOOOOOO
+    // -Vi treng noko som kan gir kommando at roboten skal stoppe (men kan fortsette der den slapp, så det blir ei slags pause funksjon)
+    
+    
+    
+    
     public CommandBox(){
         objectFoundAvailable=false;
     }
