@@ -52,8 +52,10 @@ public class Main {
         camera = new Camera();
         //Starting communication with the arduino
         communication = new ArduinoCommunication();
-        //
+        //Creating  a new command box for handling communication between ArduinoDriver
+        // and the rest of the world
         commandBox= new CommandBox();
+        //Starting the arduino driver
         driver = new ArduinoDriver(communication,commandBox);
         //start videograbber as an storagebox for frames
         grabber = new VideoGrabber();

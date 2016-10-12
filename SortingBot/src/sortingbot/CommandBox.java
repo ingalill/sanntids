@@ -10,6 +10,12 @@ package sortingbot;
  * @author Demy
  */
 public class CommandBox {
-    boolean foundObject = false;
+    boolean objectFound = false;
     
+    public void setObjectFound(boolean objectFound){
+        this.objectFound=objectFound;
+    }
+    public boolean getObjectFound(){
+        return objectFound;
+    }
 }

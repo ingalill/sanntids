@@ -109,11 +109,11 @@ public class ArduinoCommunication implements SerialPortEventListener {
         
         public void SendString(String stuff){
             try {
-            String data=stuff;
-            output.write(data.getBytes());
-            Thread.sleep(10000);
-        } catch (InterruptedException ie) {
-        } catch (Exception e) {}
+                String data=stuff;
+                output.write(data.getBytes());
+                Thread.sleep(10000);
+            } catch (InterruptedException ie) {
+            } catch (Exception e) {}
         }
         
         
@@ -134,8 +134,6 @@ public class ArduinoCommunication implements SerialPortEventListener {
 
 	public ArduinoCommunication() {
 		initialize();
-		//ArduinoDriver t=new ArduinoDriver(input,output);
-		//t.start();
-		//System.out.println("Started");
+		
 	}
 }

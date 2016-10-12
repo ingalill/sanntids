@@ -16,32 +16,41 @@ public class ArduinoDriver extends Thread{
      
     private static BufferedReader input;
     private static OutputStream output;
-    private String forward50 = "w50";
-    private ArduinoCommunication com;
+    private final ArduinoCommunication communication;
+    private final CommandBox commandBox;
+    private boolean autoDrive=true;
     
-//    public ArduinoDriver(BufferedReader in, OutputStream out) {
-//        this.input=in;
-//        this.output=out;
-//  }
-    public ArduinoDriver(ArduinoCommunication com){
-        this.com = com;
+    private String forward50 = "w50"; //Move forward at speed 50
+    private String right70 = "d70"; //Move right at speed 70
+
+    public ArduinoDriver(ArduinoCommunication com, CommandBox box){
+        this.communication = com;
+        this.commandBox=box;
     }
     
-    public void run() {                
-	//the following line will keep this app alive for 1000 seconds,
-	//waiting for events to occur and responding to them (printing incoming messages to console).
-
+    public void run() {   
+        while(autoDrive){
+            seek();
+            getObject();
+            locateTarget();
+        }
     }
     public void seek(){
-        
+        //Checks if an object has not been found
+        while(!commandBox.getObjectFound()){
+            //Tells the arduino to turn in a circle
+            communication.SendString(right70);
+            
+        }
     }
     public void getObject(){
+        // Use sensors and camera to go and getthe object
         
     }
     public void locateTarget(){
-        
+        //Find the right area to place current object
     }
     public void placeObject() {
-        
+        //Drive the object to its target
     }
 }
