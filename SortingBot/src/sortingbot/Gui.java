@@ -309,7 +309,7 @@ public class Gui extends javax.swing.JFrame {
 //    public static void main(String args[]) {      
     public void SetupGui(){
 //        System.loadLibrary(Core.NATIVE_LIBRARY_NAME); // load native library of opencv
-        
+        jBack.setEnabled(false);
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
