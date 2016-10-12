@@ -19,27 +19,27 @@ public class FrameGrabber extends TimerTask {
     
     private Thread frameGrabber;
     private VideoCapture camera;
-    private VideoGrabber grabber;
+    private VideoBox box;
     private ImageHandler handler;
     private Mat currentFrame;
     private int frameGrabberMode;//is this thread going to generate a video stream(1) or process an image(0)?
     
-    public FrameGrabber(Camera cam, ImageHandler imgH, VideoGrabber vidG){
+    public FrameGrabber(Camera cam, ImageHandler imgH, VideoBox vidG){
         this.camera = cam.getCam();
         currentFrame = new Mat();
         this.handler = imgH;
-        this.grabber = vidG;
+        this.box = vidG;
         frameGrabberMode = 0;
         //implement runnable
         frameGrabber = new Thread(this); // create a thread
         frameGrabber.start(); // start this thread
     }
     
-    public FrameGrabber(Camera cam, ImageHandler imgH, VideoGrabber vidG, boolean Debug){
+    public FrameGrabber(Camera cam, ImageHandler imgH, VideoBox vidG, boolean Debug){
         this.camera = cam.getCam();
         currentFrame = new Mat();
         this.handler = imgH;
-        this.grabber = vidG;
+        this.box = vidG;
         frameGrabberMode = 1;
         Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
         //implement runnable
@@ -47,10 +47,10 @@ public class FrameGrabber extends TimerTask {
         // frameGrabber.start(); // start this thread
     }
     
-    public FrameGrabber(Camera cam, VideoGrabber vidG){
+    public FrameGrabber(Camera cam, VideoBox vidG){
         this.camera = cam.getCam();
         currentFrame = new Mat();
-        this.grabber = vidG;
+        this.box = vidG;
         frameGrabberMode = 2;
         //implement runnable
        // frameGrabber = new Thread(this); // create a thread
@@ -63,10 +63,10 @@ public class FrameGrabber extends TimerTask {
         switch (frameGrabberMode) {
             case 0: //Gui
                 while(true){
-                    grabber.putFrame(getFrame()); // legger currentframe inn i grabber. 
+                    box.putFrame(getFrame()); // legger currentframe inn i grabber. 
                 }
             case 1: //Debug
-                grabber.putFrame(handler.processFrame(getFrame()));
+                box.putFrame(handler.processFrame(getFrame()));
                 break;
             default: //odroid handling
                 //TODO

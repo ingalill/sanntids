@@ -19,7 +19,7 @@ public class Main {
      * @param args the command line arguments
      */
     private static Camera camera;
-    private static VideoGrabber grabber;
+    private static VideoBox videoBox;
     private static ImageHandler handler;
     private static FrameGrabber vGrabber;//framegrabber for video
     private static FrameGrabber odroidGrabber; 
@@ -40,7 +40,7 @@ public class Main {
         // ImageHandler() : processes an image(in our case a single frame) and finds the specified physical object from the image
         // Thresholds() : an enum that holds the values for specified colors for use with OpenCV
         // Server() : creates sockets for each client and sends info
-        // VideoGrabber() : Handles the total input stream from the camera by use of a FrameGrabber class and sends the video stream to the client
+        // VideoBox() : Handles the total input stream from the camera by use of a FrameGrabber class and sends the video stream to the client
         // ArduinoHandler() : creates an Serial connection with arduino board
         // MORE TO COME
         
@@ -59,9 +59,9 @@ public class Main {
         //Starting the arduino driver
         driver = new ArduinoDriver(communication,commandBox);
         //start videograbber as an storagebox for frames
-        grabber = new VideoGrabber();
+        videoBox = new VideoBox();
         //start imageHandler to prosess images
-        handler = new ImageHandler();
+        handler = new ImageHandler(commandBox);
         //start a framegrabber for the gui
         //vGrabber = new FrameGrabber(camera,handler,grabber); //for use for testing the processing
         //vGrabber = new FrameGrabber(camera,grabber);
@@ -73,7 +73,7 @@ public class Main {
             new Runnable() {
             @Override
             public void run() {
-                new Gui(grabber).setVisible(true);
+                new Gui(videoBox).setVisible(true);
             }
         });
         

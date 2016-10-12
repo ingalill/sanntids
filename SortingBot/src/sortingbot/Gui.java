@@ -27,7 +27,7 @@ public class Gui extends javax.swing.JFrame {
     // definitions
     private DaemonThread myThread = null;
     int count = 0;
-    VideoGrabber grabber = null;
+    VideoBox grabber = null;
 
     Mat frame = new Mat();
     MatOfByte mem = new MatOfByte();
@@ -74,7 +74,7 @@ public class Gui extends javax.swing.JFrame {
     /**
      * Creates new form Gui
      */
-    public Gui(VideoGrabber vg){
+    public Gui(VideoBox vg){
         grabber = vg;
         SetupGui();
         initComponents();

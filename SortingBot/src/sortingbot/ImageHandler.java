@@ -22,10 +22,14 @@ import java.util.*;
 public class ImageHandler {
     
     private Thresholds names; // enum class 
+    private CommandBox comBox;
+    
+    public ImageHandler(CommandBox comBox){
+        this.comBox = comBox;
+    }
     
     public Mat processFrame(Mat frame){ 
         Mat blurredImage = new Mat();
-        Mat morphPart1 = new Mat();
         Mat hsvImage = new Mat();
         Mat mask = new Mat();
         
@@ -47,6 +51,7 @@ public class ImageHandler {
         // morphological operators
         // dilate with large element, erode with small ones
         Mat morphOutput = new Mat();
+        Mat morphPart1 = new Mat();
         Mat erodeElement = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(12, 12));
         Imgproc.erode(mask, morphPart1, erodeElement);
         //Imgproc.erode(blurredImage2, morphOutput, erodeElement);
@@ -54,7 +59,6 @@ public class ImageHandler {
         Mat dilateElement = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(24, 24));
         Imgproc.dilate(morphPart1, morphOutput, dilateElement);
         //Imgproc.dilate(mask, morphOutput, dilateElement);
-        
         
         //test for å finne formen på blokka, men er ikke bra nok
 //        Mat gray = new Mat();
@@ -103,6 +107,23 @@ public class ImageHandler {
                 centers.add(center);
                 radiuss.add(radius);
             }
+        }
+        //finn største sirkelen og dens plassering i arrayen
+        float previous = 0;
+        int biggestRad = 0;
+        for(int i=0; radiuss.size() > i; i++){
+            if(radiuss.get(i)[0] > previous){
+                previous = radiuss.get(i)[0];
+                biggestRad = i;
+            }
+        }
+        //send signal til CommandBox
+        int horizontalSpeed = 0;
+        if(centers.get(biggestRad).x > frame.size().width /2){//bruka fart endring på 20
+            horizontalSpeed = (int) Math.round(((centers.get(biggestRad).x-(frame.size().width /2))/(frame.size().width /2))*20);
+        }
+        else{
+            //horizontalSpeed = ((centers.get(biggestRad).x)/(frame.size().width /2))*20;
         }
         
         //draw the circles on the objects, (only for debugging)
