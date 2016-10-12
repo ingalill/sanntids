@@ -18,7 +18,6 @@ public class ArduinoDriver extends Thread{
     private static OutputStream output;
     private final ArduinoCommunication communication;
     private final CommandBox commandBox;
-    private boolean autoDrive=true;
     
     private String forward50 = "w50"; //Move forward at speed 50
     private String right70 = "d70"; //Move right at speed 70
@@ -36,8 +35,9 @@ public class ArduinoDriver extends Thread{
     
     public void run() {   
        while(true){
-           //commandBox. check if autoDrive
-            while(autoDrive){
+           communication.SendString(readShortSensor);
+           System.out.println(communication.getInput());
+            while(commandBox.isAutoDrive()){
                 seek();
                 getObject();
                 locateGoal();

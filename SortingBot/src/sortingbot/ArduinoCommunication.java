@@ -13,6 +13,7 @@ import gnu.io.SerialPort;
 import gnu.io.SerialPortEvent; 
 import gnu.io.SerialPortEventListener; 
 import java.util.Enumeration;
+import java.util.ArrayList;
 
 
 public class ArduinoCommunication implements SerialPortEventListener {
@@ -47,6 +48,9 @@ public class ArduinoCommunication implements SerialPortEventListener {
 	private static final int TIME_OUT = 2000;
 	/** Default bits per second for COM port. */
 	private static final int DATA_RATE = 19200;
+        // ArrayList for storing inputs fro arduino
+        private ArrayList<String> inputList= new ArrayList<>();
+        private boolean trigger=false;
 
 	public void initialize() {
                 // the next line is for Raspberry Pi and 
@@ -111,9 +115,19 @@ public class ArduinoCommunication implements SerialPortEventListener {
             try {
                 String data=stuff;
                 output.write(data.getBytes());
-                Thread.sleep(10000);
-            } catch (InterruptedException ie) {
             } catch (Exception e) {}
+        }
+        public synchronized String getInput(){
+            while(!trigger){
+                try {
+                    wait();
+                }
+                catch (InterruptedException e) {
+                }
+            }
+            String inputA=inputList.get(0);
+            inputList.remove(0);
+            return inputA;
         }
         
         
@@ -123,8 +137,9 @@ public class ArduinoCommunication implements SerialPortEventListener {
 	public synchronized void serialEvent(SerialPortEvent oEvent) {
 		if (oEvent.getEventType() == SerialPortEvent.DATA_AVAILABLE) {
 			try {
-				String inputLine=input.readLine();
-				System.out.println(inputLine);
+				inputList.add(input.readLine());
+				trigger=true;
+                                notifyAll();
 			} catch (Exception e) {
 				System.err.println(e.toString());
 			}
