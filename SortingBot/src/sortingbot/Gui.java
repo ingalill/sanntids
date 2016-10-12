@@ -96,6 +96,9 @@ public class Gui extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
+        buttonGroup2 = new javax.swing.ButtonGroup();
+        jPanel2 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jPlay = new javax.swing.JButton();
         jPause = new javax.swing.JButton();
@@ -106,6 +109,27 @@ public class Gui extends javax.swing.JFrame {
         jLeft = new javax.swing.JButton();
         jRight = new javax.swing.JButton();
         jStart = new javax.swing.JButton();
+        jGotBlue = new javax.swing.JCheckBox();
+        jGotOrange = new javax.swing.JCheckBox();
+        jGotRed = new javax.swing.JCheckBox();
+        jPlacedBlue = new javax.swing.JCheckBox();
+        jPlacedOrange = new javax.swing.JCheckBox();
+        jPlacedRed = new javax.swing.JCheckBox();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jToggleButton1 = new javax.swing.JToggleButton();
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -149,6 +173,7 @@ public class Gui extends javax.swing.JFrame {
         });
 
         jAdvance.setText("Advance");
+        jAdvance.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jAdvance.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jAdvanceActionPerformed(evt);
@@ -176,12 +201,37 @@ public class Gui extends javax.swing.JFrame {
             }
         });
 
-        jStart.setText("Start");
+        jStart.setText("GoGoGo!");
         jStart.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jStartActionPerformed(evt);
             }
         });
+
+        jGotBlue.setText("Got Blue");
+
+        jGotOrange.setText("Got Orange");
+
+        jGotRed.setText("Got Red");
+
+        jPlacedBlue.setText("Placed Blue");
+
+        jPlacedOrange.setText("Placed Orange");
+        jPlacedOrange.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jPlacedOrangeActionPerformed(evt);
+            }
+        });
+
+        jPlacedRed.setText("Placed Red");
+
+        jLabel1.setText("Video");
+
+        jLabel2.setText("Checklist");
+
+        jLabel3.setText("Controls");
+
+        jToggleButton1.setText("Reset");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -191,55 +241,115 @@ public class Gui extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(42, 42, 42)
-                .addComponent(jPlay)
-                .addGap(18, 18, 18)
-                .addComponent(jPause)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 505, Short.MAX_VALUE)
-                .addComponent(jAdvance)
-                .addGap(69, 69, 69))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(42, 42, 42)
+                        .addComponent(jPlay)
+                        .addGap(18, 18, 18)
+                        .addComponent(jPause))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(93, 93, 93)
+                        .addComponent(jLabel1)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel3)
+                .addGap(85, 85, 85))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jGotBlue)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jPlacedBlue))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jGotOrange)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jPlacedOrange))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jGotRed)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jPlacedRed)))
+                                .addGap(132, 132, 132)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jStart)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(85, 85, 85)
+                                .addComponent(jLabel2)))
+                        .addGap(192, 192, 192)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                            .addComponent(jAdvance)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLeft, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(29, 29, 29)
+                                .addComponent(jRight))
+                            .addComponent(jBack)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(616, 616, 616)
                         .addComponent(jManuel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jAuto)
-                        .addGap(19, 19, 19))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jStart)
-                        .addGap(217, 217, 217)
-                        .addComponent(jLeft)
-                        .addGap(29, 29, 29)
-                        .addComponent(jRight)
-                        .addGap(36, 36, 36))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jBack)
-                        .addGap(81, 81, 81))))
+                        .addComponent(jAuto)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jGotBlue, jGotOrange, jGotRed, jPlacedBlue, jPlacedOrange, jPlacedRed});
+
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jAdvance, jBack, jLeft, jRight});
+
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jPlay)
-                    .addComponent(jPause)
-                    .addComponent(jAdvance))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLeft)
-                    .addComponent(jRight)
-                    .addComponent(jStart))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jBack)
-                .addGap(13, 13, 13)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jAuto)
-                    .addComponent(jManuel))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(49, 49, 49)
+                                .addComponent(jStart)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jToggleButton1))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(jAdvance, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(8, 8, 8)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLeft)
+                                    .addComponent(jRight))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jBack)))
+                        .addGap(13, 13, 13)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jAuto)
+                            .addComponent(jManuel))
+                        .addGap(39, 39, 39))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel3))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jPlay)
+                            .addComponent(jPause))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jGotBlue)
+                            .addComponent(jPlacedBlue))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jGotOrange)
+                            .addComponent(jPlacedOrange))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jPlacedRed)
+                            .addComponent(jGotRed))
+                        .addContainerGap())))
         );
 
         pack();
@@ -325,10 +435,18 @@ public class Gui extends javax.swing.JFrame {
     }//GEN-LAST:event_jBackActionPerformed
 
     private void jStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jStartActionPerformed
-        // TODO add your handling code here:
+        // Start Driving in auto mode.
         jManuel.setEnabled(true);
         jAuto.setEnabled(false);
+        jAdvance.setEnabled(false);     // Deactivate advance button
+        jRight.setEnabled(false);       // Deactivate Right button
+        jLeft.setEnabled(false);        // Deactivate Left button
+        jBack.setEnabled(false);    
     }//GEN-LAST:event_jStartActionPerformed
+
+    private void jPlacedOrangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPlacedOrangeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jPlacedOrangeActionPerformed
    
 //    public static void main(String args[]) {      
     public void SetupGui(){
@@ -361,15 +479,28 @@ public class Gui extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JButton jAdvance;
     private javax.swing.JButton jAuto;
     private javax.swing.JButton jBack;
+    private javax.swing.JCheckBox jGotBlue;
+    private javax.swing.JCheckBox jGotOrange;
+    private javax.swing.JCheckBox jGotRed;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JButton jLeft;
     private javax.swing.JButton jManuel;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JButton jPause;
+    private javax.swing.JCheckBox jPlacedBlue;
+    private javax.swing.JCheckBox jPlacedOrange;
+    private javax.swing.JCheckBox jPlacedRed;
     private javax.swing.JButton jPlay;
     private javax.swing.JButton jRight;
     private javax.swing.JButton jStart;
+    private javax.swing.JToggleButton jToggleButton1;
     // End of variables declaration//GEN-END:variables
 }
