@@ -17,8 +17,9 @@ public class CommandBox {
     
     // TODOOOOOOOOOOOO
     // -Vi treng noko som kan gir kommando at roboten skal stoppe (men kan fortsette der den slapp, så det blir ei slags pause funksjon)
-   //- Komando for auto/manuel mode + kommado for retning og fart
-    
+    //- Komando for auto/manuel mode + kommado for retning og fart
+    //- kommando for å ta imot et tall som tilsvarer både rettning og hastighet til roboten for når han kjører og skal til å svinge
+    //- Kommando for å ta imot distanse målt frå camera
     
     
     public CommandBox(){
