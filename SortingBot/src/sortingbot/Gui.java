@@ -78,6 +78,13 @@ public class Gui extends javax.swing.JFrame {
         grabber = vg;
         SetupGui();
         initComponents();
+        jManuel.setEnabled(false);
+        jAuto.setEnabled(false);
+        jAdvance.setEnabled(false);
+        jRight.setEnabled(false);
+        jLeft.setEnabled(false);
+        jBack.setEnabled(false);
+        jPause.setEnabled(false);
     }
 
     /**
@@ -90,7 +97,7 @@ public class Gui extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jStart = new javax.swing.JButton();
+        jPlay = new javax.swing.JButton();
         jPause = new javax.swing.JButton();
         jManuel = new javax.swing.JButton();
         jAuto = new javax.swing.JButton();
@@ -98,6 +105,7 @@ public class Gui extends javax.swing.JFrame {
         jBack = new javax.swing.JButton();
         jLeft = new javax.swing.JButton();
         jRight = new javax.swing.JButton();
+        jStart = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -105,17 +113,17 @@ public class Gui extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 803, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 356, Short.MAX_VALUE)
         );
 
-        jStart.setText("Start");
-        jStart.addActionListener(new java.awt.event.ActionListener() {
+        jPlay.setText("Play");
+        jPlay.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jStartActionPerformed(evt);
+                jPlayActionPerformed(evt);
             }
         });
 
@@ -168,6 +176,13 @@ public class Gui extends javax.swing.JFrame {
             }
         });
 
+        jStart.setText("Start");
+        jStart.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jStartActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -178,28 +193,30 @@ public class Gui extends javax.swing.JFrame {
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(42, 42, 42)
-                .addComponent(jStart)
+                .addComponent(jPlay)
                 .addGap(18, 18, 18)
                 .addComponent(jPause)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 505, Short.MAX_VALUE)
                 .addComponent(jAdvance)
                 .addGap(69, 69, 69))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jBack)
-                        .addGap(78, 78, 78))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jManuel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jAuto)
                         .addGap(19, 19, 19))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jStart)
+                        .addGap(217, 217, 217)
                         .addComponent(jLeft)
                         .addGap(29, 29, 29)
                         .addComponent(jRight)
-                        .addGap(36, 36, 36))))
+                        .addGap(36, 36, 36))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jBack)
+                        .addGap(81, 81, 81))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -208,26 +225,27 @@ public class Gui extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jStart)
+                    .addComponent(jPlay)
                     .addComponent(jPause)
                     .addComponent(jAdvance))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLeft)
-                    .addComponent(jRight))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jRight)
+                    .addComponent(jStart))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jBack)
-                .addGap(18, 18, 18)
+                .addGap(13, 13, 13)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jAuto)
                     .addComponent(jManuel))
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jStartActionPerformed
+    private void jPlayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPlayActionPerformed
         /// start button 
             //webSource =new VideoCapture(0); // Video capture from defult cam
             
@@ -236,15 +254,15 @@ public class Gui extends javax.swing.JFrame {
             t.setDaemon(true);
             myThread.runnable = true;
             t.start();                      // Start Thread
-            jStart.setEnabled(false);  //Deactivate start button
+            jPlay.setEnabled(false);  //Deactivate play button
             jPause.setEnabled(true);  // activate stop button
-    }//GEN-LAST:event_jStartActionPerformed
+    }//GEN-LAST:event_jPlayActionPerformed
 
     private void jPauseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPauseActionPerformed
         /// stop button 
             myThread.runnable = false;      //stop thread
-            jPause.setEnabled(false);     // activate start button  
-            jStart.setEnabled(true);      // deactivate sop button
+            jPause.setEnabled(false);     // activate play button  
+            jPlay.setEnabled(true);      // deactivate stop button
             
             //webSource.release();            // stop capturing from cam
             
@@ -305,11 +323,16 @@ public class Gui extends javax.swing.JFrame {
         jLeft.setEnabled(true);        // Deactivate Left button
         jBack.setEnabled(false);       // Activate Back button
     }//GEN-LAST:event_jBackActionPerformed
+
+    private void jStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jStartActionPerformed
+        // TODO add your handling code here:
+        jManuel.setEnabled(true);
+        jAuto.setEnabled(false);
+    }//GEN-LAST:event_jStartActionPerformed
    
 //    public static void main(String args[]) {      
     public void SetupGui(){
 //        System.loadLibrary(Core.NATIVE_LIBRARY_NAME); // load native library of opencv
-        jBack.setEnabled(false);
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -345,6 +368,7 @@ public class Gui extends javax.swing.JFrame {
     private javax.swing.JButton jManuel;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton jPause;
+    private javax.swing.JButton jPlay;
     private javax.swing.JButton jRight;
     private javax.swing.JButton jStart;
     // End of variables declaration//GEN-END:variables
