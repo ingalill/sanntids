@@ -37,10 +37,10 @@ public class ImageHandler {
         //convert the frame to HSV
         Imgproc.cvtColor(blurredImage, hsvImage, Imgproc.COLOR_BGR2HSV);
         //setup the limits for the color blue
-        //Scalar upperLimit = new Scalar(names.BLUEUPPER.hue(),names.BLUEUPPER.sat(),names.BLUEUPPER.val());
-        //Scalar lowerLimit = new Scalar(names.BLUELOWER.hue(),names.BLUELOWER.sat(),names.BLUELOWER.val());
-        Scalar upperLimit = new Scalar(names.ORANGEUPPER.hue(),names.ORANGEUPPER.sat(),names.ORANGEUPPER.val());
-        Scalar lowerLimit = new Scalar(names.ORANGELOWER.hue(),names.ORANGELOWER.sat(),names.ORANGELOWER.val());
+        Scalar upperLimit = new Scalar(names.BLUEUPPER.hue(),names.BLUEUPPER.sat(),names.BLUEUPPER.val());
+        Scalar lowerLimit = new Scalar(names.BLUELOWER.hue(),names.BLUELOWER.sat(),names.BLUELOWER.val());
+//        Scalar upperLimit = new Scalar(names.ORANGEUPPER.hue(),names.ORANGEUPPER.sat(),names.ORANGEUPPER.val());
+//        Scalar lowerLimit = new Scalar(names.ORANGELOWER.hue(),names.ORANGELOWER.sat(),names.ORANGELOWER.val());
         //filter the image and remove everything that is NOT blue
         Core.inRange(hsvImage, upperLimit, lowerLimit, mask);
         
@@ -55,6 +55,34 @@ public class ImageHandler {
         Imgproc.dilate(morphPart1, morphOutput, dilateElement);
         //Imgproc.dilate(mask, morphOutput, dilateElement);
         
+        
+        //test for å finne formen på blokka, men er ikke bra nok
+//        Mat gray = new Mat();
+//        Mat edges = new Mat();
+//        Mat lines = new Mat();
+//        //Imgproc.cvtColor(morphOutput,gray,Imgproc.COLOR_BGR2GRAY);
+//        Imgproc.Canny(morphOutput,edges,50,150);
+//        int threshold = 50;
+//        int minLineSize = 20;
+//        int lineGap = 20;
+//
+//        Imgproc.HoughLinesP(edges, lines, 1, Math.PI/180, threshold, minLineSize, lineGap);
+//
+//        for (int x = 0; x < lines.cols(); x++) 
+//        {
+//              double[] vec = lines.get(0, x);
+//              double x1 = vec[0], 
+//                     y1 = vec[1],
+//                     x2 = vec[2],
+//                     y2 = vec[3];
+//              Point start = new Point(x1, y1);
+//              Point end = new Point(x2, y2);
+//
+//              Imgproc.line(frame, start, end, new Scalar(255,0,0), 3);
+//
+//        }
+        
+        
         //find the contours, find the centers, and find a circle whose radius is as big as the object in screen
         Mat hierarchy = new Mat();
         Mat copyOfOutput = morphOutput.clone();
@@ -66,7 +94,11 @@ public class ImageHandler {
         {
             Point center = new Point();
             float[] radius = new float[1];
-            Imgproc.minEnclosingCircle(new MatOfPoint2f(contours.get(i).toArray()), center, radius);
+            MatOfPoint2f points =  new MatOfPoint2f(contours.get(i).toArray());
+            Imgproc.minEnclosingCircle(points, center, radius);
+            //-----------------------------------------------------------
+            System.out.println(points.size().height);
+            //-----------------------------------------------------------
             if(radius[0] > 40){
                 centers.add(center);
                 radiuss.add(radius);
