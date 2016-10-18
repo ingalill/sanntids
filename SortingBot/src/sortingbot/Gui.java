@@ -139,7 +139,7 @@ public class Gui extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 776, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -203,7 +203,7 @@ public class Gui extends javax.swing.JFrame {
             }
         });
 
-        jStart.setText("Start");
+        jStart.setText("GoGoGo!");
         jStart.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jStartActionPerformed(evt);
@@ -247,46 +247,41 @@ public class Gui extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jGotBlue)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jPlacedBlue))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jGotOrange)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jPlacedOrange))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jGotRed)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jPlacedRed)))
-                                .addGap(132, 132, 132)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jToggleButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
-                                    .addComponent(jStart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(85, 85, 85)
-                                .addComponent(jLabel2)))
-                        .addGap(135, 135, 135)
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                            .addComponent(jAdvance)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLeft, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(7, 7, 7)
-                                .addComponent(jStop)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jRight))
-                            .addComponent(jBack)
-                            .addComponent(jLabel3))))
-                .addGap(0, 28, Short.MAX_VALUE))
+                                .addComponent(jGotBlue)
+                                .addGap(18, 18, 18)
+                                .addComponent(jPlacedBlue))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jGotOrange)
+                                .addGap(18, 18, 18)
+                                .addComponent(jPlacedOrange))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jGotRed)
+                                .addGap(18, 18, 18)
+                                .addComponent(jPlacedRed)))
+                        .addGap(132, 132, 132)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jStart)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(85, 85, 85)
+                        .addComponent(jLabel2)))
+                .addGap(135, 135, 135)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jAdvance)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLeft, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(7, 7, 7)
+                        .addComponent(jStop)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jRight))
+                    .addComponent(jBack)
+                    .addComponent(jLabel3))
+                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -298,11 +293,15 @@ public class Gui extends javax.swing.JFrame {
                         .addGap(93, 93, 93)
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(582, 582, 582)
-                        .addComponent(jManuel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jAuto)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(395, 395, 395))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(582, 582, 582)
+                .addComponent(jManuel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jAuto)
+                .addContainerGap(44, Short.MAX_VALUE))
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jGotBlue, jGotOrange, jGotRed, jPlacedBlue, jPlacedOrange, jPlacedRed});
@@ -414,7 +413,6 @@ public class Gui extends javax.swing.JFrame {
         jRight.setEnabled(true);       // Deactivate Right button
         jLeft.setEnabled(true);        // Deactivate Left button
         jBack.setEnabled(true);        // Deactivate Back button
-        jStop.setEnabled(true);
     }//GEN-LAST:event_jAdvanceActionPerformed
 
     private void jRightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRightActionPerformed
@@ -424,7 +422,6 @@ public class Gui extends javax.swing.JFrame {
         jRight.setEnabled(false);      // Activate Right button
         jLeft.setEnabled(true);        // Deactivate Left button
         jBack.setEnabled(true);        // Deactivate Back button
-        jStop.setEnabled(true);
     }//GEN-LAST:event_jRightActionPerformed
 
     private void jLeftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jLeftActionPerformed
@@ -434,7 +431,6 @@ public class Gui extends javax.swing.JFrame {
         jRight.setEnabled(true);       // Deactivate Right button
         jLeft.setEnabled(false);       // Activate Left button
         jBack.setEnabled(true);        // Deactivate Back button
-        jStop.setEnabled(true);
     }//GEN-LAST:event_jLeftActionPerformed
 
     private void jBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBackActionPerformed
@@ -444,7 +440,6 @@ public class Gui extends javax.swing.JFrame {
         jRight.setEnabled(true);       // Deactivate Right button
         jLeft.setEnabled(true);        // Deactivate Left button
         jBack.setEnabled(false);       // Activate Back button
-        jStop.setEnabled(true);
     }//GEN-LAST:event_jBackActionPerformed
 
     private void jStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jStartActionPerformed
@@ -455,7 +450,6 @@ public class Gui extends javax.swing.JFrame {
         jRight.setEnabled(false);       // Deactivate Right button
         jLeft.setEnabled(false);        // Deactivate Left button
         jBack.setEnabled(false);    
-        jStop.setEnabled(true);
     }//GEN-LAST:event_jStartActionPerformed
 
     private void jPlacedOrangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPlacedOrangeActionPerformed
