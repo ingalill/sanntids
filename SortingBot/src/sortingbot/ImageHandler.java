@@ -41,10 +41,10 @@ public class ImageHandler {
         //convert the frame to HSV
         Imgproc.cvtColor(blurredImage, hsvImage, Imgproc.COLOR_BGR2HSV);
         //setup the limits for the color blue
-        Scalar upperLimit = new Scalar(names.BLUEUPPER.hue(),names.BLUEUPPER.sat(),names.BLUEUPPER.val());
-        Scalar lowerLimit = new Scalar(names.BLUELOWER.hue(),names.BLUELOWER.sat(),names.BLUELOWER.val());
-//        Scalar upperLimit = new Scalar(names.ORANGEUPPER.hue(),names.ORANGEUPPER.sat(),names.ORANGEUPPER.val());
-//        Scalar lowerLimit = new Scalar(names.ORANGELOWER.hue(),names.ORANGELOWER.sat(),names.ORANGELOWER.val());
+//        Scalar upperLimit = new Scalar(names.BLUEUPPER.hue(),names.BLUEUPPER.sat(),names.BLUEUPPER.val());
+//        Scalar lowerLimit = new Scalar(names.BLUELOWER.hue(),names.BLUELOWER.sat(),names.BLUELOWER.val());
+        Scalar upperLimit = new Scalar(names.ORANGEUPPER.hue(),names.ORANGEUPPER.sat(),names.ORANGEUPPER.val());
+        Scalar lowerLimit = new Scalar(names.ORANGELOWER.hue(),names.ORANGELOWER.sat(),names.ORANGELOWER.val());
         //filter the image and remove everything that is NOT blue
         Core.inRange(hsvImage, upperLimit, lowerLimit, mask);
         
@@ -119,12 +119,18 @@ public class ImageHandler {
         }
         //send signal til CommandBox
         int horizontalSpeed = 0;
-        if(centers.get(biggestRad).x > frame.size().width /2){//bruka fart endring på 20
+        if(centers.size() > 0){
+            if(centers.get(biggestRad).x > frame.size().width /2){//bruka fart endring på 20
             horizontalSpeed = (int) Math.round(((centers.get(biggestRad).x-(frame.size().width /2))/(frame.size().width /2))*20);
+            }
+            else{
+                //horizontalSpeed = ((centers.get(biggestRad).x)/(frame.size().width /2))*20;
+            }
         }
         else{
-            //horizontalSpeed = ((centers.get(biggestRad).x)/(frame.size().width /2))*20;
+            System.out.println("No object in sight!");
         }
+        
         
         //draw the circles on the objects, (only for debugging)
         Scalar Red = new Scalar(255,0,0);
