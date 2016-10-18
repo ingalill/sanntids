@@ -5,6 +5,7 @@
  */
 package sortingbot;
 
+import static java.lang.Math.abs;
 /**
  *
  * @author Demy
@@ -14,10 +15,13 @@ public class CommandBox {
     boolean objectFoundAvailable;
     boolean autoDrive=true;
     boolean autoDriveAvailable;
+    //when object is located use these values to adjust direction (float or int??)
+    float adjustedDirection; //value for how much to turn to the right or left
+    boolean adjustedDirAvailable;
     
     // TODOOOOOOOOOOOO
     // -Vi treng noko som kan gir kommando at roboten skal stoppe (men kan fortsette der den slapp, så det blir ei slags pause funksjon)
-    //- Komando for auto/manuel mode + kommado for retning og fart
+    //- kommado for retning og fart (manuel mode)
     //- kommando for å ta imot et tall som tilsvarer både rettning og hastighet til roboten for når han kjører og skal til å svinge
     //- Kommando for å ta imot distanse målt frå camera
     
@@ -25,6 +29,8 @@ public class CommandBox {
     public CommandBox(){
         objectFoundAvailable=false;
         autoDriveAvailable=false;
+        adjustedDirection=0;
+        adjustedDirAvailable=false;
     }
     public synchronized void setObjectFound(boolean objectFound){
         while(objectFoundAvailable){
@@ -72,6 +78,31 @@ public class CommandBox {
         }
         autoDriveAvailable=false;
         notifyAll();
-        return objectFound;
+        return autoDrive;
+    }
+    //use method to set values for how much to turn left or right
+    public synchronized void adjustDirection(float val){
+        while(adjustedDirAvailable){
+            //
+            try{
+                wait();
+            }catch (InterruptedException e){
+            }
+        }
+        adjustedDirection=val;
+        adjustedDirAvailable=true;
+        notifyAll();
+    }
+    public synchronized float getAdjustedDirection(){
+        while(!adjustedDirAvailable){
+            //
+            try{
+                wait();
+            }catch (InterruptedException e){
+            }
+        }
+        adjustedDirAvailable=false;
+        notifyAll();
+        return adjustedDirection;
     }
 }

@@ -127,6 +127,7 @@ public class ArduinoCommunication implements SerialPortEventListener {
             }
             String inputA=inputList.get(0);
             inputList.remove(0);
+            trigger=false;
             return inputA;
         }
         
@@ -140,6 +141,8 @@ public class ArduinoCommunication implements SerialPortEventListener {
 				inputList.add(input.readLine());
 				trigger=true;
                                 notifyAll();
+                                 System.out.println("Array size: "+inputList.size());
+                                 
 			} catch (Exception e) {
 				System.err.println(e.toString());
 			}
