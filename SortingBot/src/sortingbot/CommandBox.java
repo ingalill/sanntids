@@ -14,12 +14,22 @@ public class CommandBox {
     boolean objectFoundAvailable;
     boolean autoDrive=true;
     boolean autoDriveAvailable;
+    boolean advance;
+    boolean right;
+    boolean left;
+    boolean back;
     
     // TODOOOOOOOOOOOO
     // -Vi treng noko som kan gir kommando at roboten skal stoppe (men kan fortsette der den slapp, så det blir ei slags pause funksjon)
     //- Komando for auto/manuel mode + kommado for retning og fart
+    //****************************************************************
     //- kommando for å ta imot et tall som tilsvarer både rettning og hastighet til roboten for når han kjører og skal til å svinge
     //- Kommando for å ta imot distanse målt frå camera
+    //- Kommando for å kjøre fremmover kalt advance
+    //- Kommando for å kjøre til høre kalt right
+    //- Kommando for å kjøre til venstre kalt left
+    //- Kommando for å kjøre bakover kalt back
+    
     
     
     public CommandBox(){
