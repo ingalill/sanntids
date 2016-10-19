@@ -47,8 +47,8 @@ public class ServerThread implements Runnable {
             dataInputStream = new DataInputStream(serverSocket.getInputStream());
             printStream = new PrintStream(serverSocket.getOutputStream());
            // output = new PrintWriter(serverSocket.getOutputStream(), true);
-          //  inputStream = new BufferedReader(new InputStreamReader(serverSocket.getInputStream()));
-            inputStream = new BufferedReader(new InputStreamReader(System.in)); 
+            inputStream = new BufferedReader(new InputStreamReader(serverSocket.getInputStream()));
+         //   inputStream = new BufferedReader(new InputStreamReader(System.in)); 
             
             //This will wait until a line of text has been sent. skal inn i serverThread
            //     String input = inputStream.readLine(); // KLIKK

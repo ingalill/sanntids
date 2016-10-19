@@ -14,7 +14,7 @@ public class Server {
     private VideoBox videograbber;
     private ServerSocket serverSocket;
     private Socket socket;
-    //private BufferedReader inputStream;
+    private BufferedReader inputStream;
     private PrintWriter output;
     
     private static final int maxServers = 10;
@@ -28,7 +28,7 @@ public class Server {
     {
         //We need a try-catch because lots of errors can be thrown
         try {
-                 while(true) {
+            while(true) {
             serverSocket = new ServerSocket(5000);
             System.out.println("Server started at: " + new Date());
             
@@ -37,7 +37,7 @@ public class Server {
              
             //Create the streams
             output = new PrintWriter(socket.getOutputStream(), true);
-           // inputStream = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            inputStream = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                       
             //Tell the client that he/she has connected
             output.println("You have connected at: " + new Date());
