@@ -30,8 +30,7 @@ public class Client{
     {
     //We set up the scanner to receive user input
         Scanner scanner = new Scanner(System.in);
-        try {                           // localhost skal byttes ut med IP addresse
-            
+        try {                       
             Socket socket = new Socket("localhost",5000);
             PrintWriter output = new PrintWriter(socket.getOutputStream(), true);
             BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));     
@@ -48,10 +47,10 @@ public class Client{
                 String userInput = scanner.nextLine();
                 //Now we write it to the server
                 output.println(userInput);
-                System.out.println("Received " + userInput);
+                System.out.println("Wrote: " + userInput);
             }
         } catch (IOException exception) {
-            System.out.println("Error: " + exception);
+            System.out.println("Error client: " + exception);
         }
     }
     
@@ -63,11 +62,13 @@ public class Client{
         Mat out;
         byte[] data;
         int r,g,b;
+        int height = in.getHeight();
+        int width = in.getWidth();
         
         if(in.getType() == BufferedImage.TYPE_INT_RGB){
-            out = new Mat(240,320, CvType.CV_8UC3);
-            data = new byte[320*240 * (int)out.elemSize()];
-            int[] databuffer = in.getRGB(0,0,320,240,null,0,320);
+            out = new Mat(width,height, CvType.CV_8UC3);
+            data = new byte[height*width * (int)out.elemSize()];
+            int[] databuffer = in.getRGB(0,0,height,width,null,0,height);
             for(int i=0; i<databuffer.length; i++){
                 data[i*3] = (byte) ((databuffer[i] >> 16) & 0xFF);
                 data[i*3+1] = (byte) ((databuffer[i]>> 8) & 0xFF);
@@ -75,9 +76,9 @@ public class Client{
             }         
         }
         else {
-            out = new Mat(240,320,CvType.CV_8UC3);
-            data = new byte[320*240 * (int)out.elemSize()];
-            int[] databuffer = in.getRGB(0,0,320,240,null,0,320);
+            out = new Mat(width,height,CvType.CV_8UC3);
+            data = new byte[height*width * (int)out.elemSize()];
+            int[] databuffer = in.getRGB(0,0,height,width,null,0,height);
             for(int i=0; i<databuffer.length; i++){
                 r = (byte) ((databuffer[i] >> 16) & 0xFF);
                 g = (byte) ((databuffer[i] >> 8) & 0xFF);
