@@ -21,6 +21,11 @@ public class MainArduino {
         commandBox= new CommandBox();
         //Starting the arduino driver
         driver = new ArduinoDriver(communication,commandBox);
+       try {
+            Thread.sleep(100);
+ 
+        } catch(Exception e) {}
+        commandBox.setObjectFound(true);
         
     }
     

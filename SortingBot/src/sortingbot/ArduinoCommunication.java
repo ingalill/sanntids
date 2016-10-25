@@ -34,7 +34,7 @@ public class ArduinoCommunication implements SerialPortEventListener {
                         "/dev/ttyACM0", // Raspberry Pi
 			"/dev/ttyUSB0", // Linux
 			"COM3",  // Windows
-                        "/dev/cu.usbmodem1421"// Mac
+                        "/dev/cu.usbmodem1411"// Mac
 	};
 	/**
 	* A BufferedReader which will be fed by a InputStreamReader 
@@ -50,7 +50,6 @@ public class ArduinoCommunication implements SerialPortEventListener {
 	private static final int DATA_RATE = 19200;
         // ArrayList for storing inputs fro arduino
         private ArrayList<String> inputList= new ArrayList<>();
-        private boolean trigger=false;
 
 	public void initialize() {
                 // the next line is for Raspberry Pi and 
@@ -111,24 +110,31 @@ public class ArduinoCommunication implements SerialPortEventListener {
 		}
 	}
         
-        public void SendString(String stuff){
+        public synchronized String sendString(String aText,boolean aWait){
             try {
-                String data=stuff;
-                output.write(data.getBytes());
+                System.out.println(aText);
+                output.write(aText.getBytes());
             } catch (Exception e) {}
-        }
-        public synchronized String getInput(){
-            while(!trigger){
+            if(aWait){
                 try {
+                    System.out.println("waiting...");
                     wait();
+                    
                 }
                 catch (InterruptedException e) {
+                    
                 }
             }
-            String inputA=inputList.get(0);
-            inputList.remove(0);
+            String inputA="";
+            if(inputList.isEmpty()){
+                inputA="";
+            } else {
+                inputA=inputList.get(0);
+                inputList.remove(0);
+            }
             return inputA;
         }
+
         
         
 	/**
@@ -138,7 +144,7 @@ public class ArduinoCommunication implements SerialPortEventListener {
 		if (oEvent.getEventType() == SerialPortEvent.DATA_AVAILABLE) {
 			try {
 				inputList.add(input.readLine());
-				trigger=true;
+                                System.out.println("Gotinput!");
                                 notifyAll();
 			} catch (Exception e) {
 				System.err.println(e.toString());

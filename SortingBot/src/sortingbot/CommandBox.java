@@ -14,6 +14,7 @@ public class CommandBox {
     boolean objectFoundAvailable;
     boolean autoDrive=true;
     boolean autoDriveAvailable;
+    int adjustedDirection;
     boolean advance;
     boolean right;
     boolean left;
@@ -21,7 +22,7 @@ public class CommandBox {
     
     // TODOOOOOOOOOOOO
     // -Vi treng noko som kan gir kommando at roboten skal stoppe (men kan fortsette der den slapp, så det blir ei slags pause funksjon)
-    //- Komando for auto/manuel mode + kommado for retning og fart
+    //- kommado for retning og fart
     //****************************************************************
     //- kommando for å ta imot et tall som tilsvarer både rettning og hastighet til roboten for når han kjører og skal til å svinge
     //- Kommando for å ta imot distanse målt frå camera
@@ -33,11 +34,12 @@ public class CommandBox {
     
     
     public CommandBox(){
-        objectFoundAvailable=false;
-        autoDriveAvailable=false;
+        objectFoundAvailable=true;
+        autoDriveAvailable=true;
+        adjustedDirection=0;
     }
     public synchronized void setObjectFound(boolean objectFound){
-        while(objectFoundAvailable){
+        while(!objectFoundAvailable){
             try{
                 //wait for consumer to read value
                 wait();
@@ -45,34 +47,13 @@ public class CommandBox {
             }
         }
         this.objectFound=objectFound;
-        objectFoundAvailable=true;
+        //objectFoundAvailable=true;
         notifyAll();
     }
     public synchronized boolean getObjectFound(){
-        while(!objectFoundAvailable){
-            //Wait for producer to set value
-            try{
-                wait();
-            }catch (InterruptedException e){
-            }
-        }
-        objectFoundAvailable=false;
-        notifyAll();
         return objectFound;
     }
     public synchronized void setAutoDrive(boolean autoDrive){
-        while(autoDriveAvailable){
-            //
-            try{
-                wait();
-            }catch (InterruptedException e){
-            }
-        }
-        this.autoDrive=autoDrive;
-        autoDriveAvailable=true;
-        notifyAll();
-    }
-    public synchronized boolean isAutoDrive(){
         while(!autoDriveAvailable){
             //
             try{
@@ -80,8 +61,17 @@ public class CommandBox {
             }catch (InterruptedException e){
             }
         }
-        autoDriveAvailable=false;
+        this.autoDrive=autoDrive;
+        //autoDriveAvailable=false;
         notifyAll();
-        return objectFound;
     }
+    public boolean isAutoDrive(){
+        return autoDrive;
+    }
+   public void adjustDirection(int dir){
+        adjustedDirection=dir;
+    }
+   public int getAdjustedDirection(){
+       return adjustedDirection;
+   }
 }
