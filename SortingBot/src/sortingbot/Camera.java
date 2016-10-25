@@ -28,7 +28,13 @@ public class Camera {
     }
     
     private void startCamera(){
-        this.camera = new VideoCapture(0); //-1 for odroid.
+        try{
+            this.camera = new VideoCapture(0); //-1 for odroid.
+        }
+        catch(Exception e){
+            System.err.println("Native core libraries not loaded");
+        }
+       
         if (!camera.isOpened())
         {
             System.err.println("Camera hasnt been found or failed to start...");             
