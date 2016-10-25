@@ -6,8 +6,8 @@
 package sortingbot.server;
 
 /**
- *
- * @author ingalillbjolstad
+ * @date 12.10.2016
+ * @author inga lil lbjolstad
  */
 import java.awt.image.BufferedImage;
 import java.io.*;
@@ -55,7 +55,8 @@ public class Client {
                 output.println(userInput);
                 System.out.println("Wrote: " + userInput);
                 
-                // BufferedImage img=ImageIO.read(ImageIO.createImageInputStream(socket.getInputStream()));
+                BufferedImage img=ImageIO.read(ImageIO.createImageInputStream(socket.getInputStream()));
+                imgToMat(img);
             /* EKSEMPEL HVOR IMG SKAL bLI SENDT VIDERE
                 BufferedImage image = ImageIO.read(socket.getInputStream());
                 JLabel label = new JLabel(new ImageIcon(image));
