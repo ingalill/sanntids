@@ -34,7 +34,8 @@ public class ArduinoCommunication implements SerialPortEventListener {
                         "/dev/ttyACM0", // Raspberry Pi
 			"/dev/ttyUSB0", // Linux
 			"COM3",  // Windows
-                        "/dev/cu.usbmodem1411"// Mac
+                        "/dev/cu.usbmodem1411",// Mac
+                        "/dev/cu.usbmodem1421"// Mac
 	};
 	/**
 	* A BufferedReader which will be fed by a InputStreamReader 
@@ -47,7 +48,7 @@ public class ArduinoCommunication implements SerialPortEventListener {
 	/** Milliseconds to block while waiting for port open */
 	private static final int TIME_OUT = 2000;
 	/** Default bits per second for COM port. */
-	private static final int DATA_RATE = 19200;
+	private static final int DATA_RATE = 115200;
         // ArrayList for storing inputs fro arduino
         private ArrayList<String> inputList= new ArrayList<>();
 
@@ -110,32 +111,27 @@ public class ArduinoCommunication implements SerialPortEventListener {
 		}
 	}
         
-        public synchronized String sendString(String aText,boolean aWait){
+        public synchronized void sendCommand(String aText){
             try {
                 System.out.println(aText);
                 output.write(aText.getBytes());
             } catch (Exception e) {}
-            if(aWait){
-                try {
-                    System.out.println("waiting...");
+
+        }
+        public synchronized String getInput(String aText){
+            try {
+                output.write(aText.getBytes());
+            } catch (Exception e) {}
+            while(inputList.isEmpty()){
+                try{
                     wait();
-                    
-                }
-                catch (InterruptedException e) {
-                    
-                }
-            }
-            String inputA="";
-            if(inputList.isEmpty()){
-                inputA="";
-            } else {
-                inputA=inputList.get(0);
-                inputList.remove(0);
-            }
+                } catch(Exception e){}
+            } 
+            String inputA=inputList.get(0);
+            inputList.remove(0);
             return inputA;
         }
-
-        
+                
         
 	/**
 	 * Handle an event on the serial port. Read the data and print it.
@@ -144,7 +140,8 @@ public class ArduinoCommunication implements SerialPortEventListener {
 		if (oEvent.getEventType() == SerialPortEvent.DATA_AVAILABLE) {
 			try {
 				inputList.add(input.readLine());
-                                System.out.println("Gotinput!");
+                                System.out.print("Gotinput!: ");
+                                System.out.println(inputList.toString());
                                 notifyAll();
 			} catch (Exception e) {
 				System.err.println(e.toString());

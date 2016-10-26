@@ -21,12 +21,13 @@ public class ArduinoDriver extends Thread{
     
     private boolean objectCaught;
     
-    private final String cForward = "w50"; //Move forward at speed 50
-    private final String cStop="w0"; //Stop
-    private final String cRight = "d70"; //Turn right at speed 70
-    private final String cLeft = "a70"; //Turn left at speed 70
-    private final String cReadSS = "vss"; //Read value from the short range sensor
-    private final String cReadLS = "vls"; //Read value from the long range sensor
+    private final String cForward = "w50 "; //Move forward at speed 50
+    private final String cStop="w0 "; //Stop
+    private final String cBackward = "s50 "; //Move backward at speed 50
+    private final String cRight = "d70 "; //Turn right at speed 70
+    private final String cLeft = "a70 "; //Turn left at speed 70
+    private final String cReadSS = "vss "; //Read value from the short range sensor
+    private final String cReadLS = "vls "; //Read value from the long range sensor
     
     //Todo:
     // Manuel mode
@@ -40,14 +41,6 @@ public class ArduinoDriver extends Thread{
     
     public void run() {   
        while(true){
-           //System.out.println("hei");
-           //communication.sendString(right,true);
-           String in=communication.sendString(cReadSS,true);
-           String in2=communication.sendString(cReadSS,true);
-           String in3=communication.sendString(cReadSS,true);
-            System.out.println("Input: "+in);
-            System.out.println("Input: "+in2);
-            System.out.println("Input: "+in3);
             while(commandBox.isAutoDrive()){
                 seek();
                 if(!commandBox.isAutoDrive()) break;
@@ -63,42 +56,46 @@ public class ArduinoDriver extends Thread{
     }
     public void seek(){
         System.out.println("1");
+        commandBox.setState(1);
         //Tells the arduino to turn in a circle
-        communication.sendString(cRight,true);
-        /*System.out.println("In: "+nothing);
-        String in=communication.sendString(readSS,false);
-        System.out.println("Input: "+in);*/
-        while((!commandBox.getObjectFound())&&(commandBox.isAutoDrive())){
-            System.out.println("seeking...");
-        }
-        communication.sendString(cStop, true);
+        communication.sendCommand(cRight);
+        while((!commandBox.getObjectFound())&&(commandBox.isAutoDrive()));
+            //System.out.println("seeking...");
+        
+        communication.sendCommand(cStop);
         System.out.println("object found...");
        
     }
     public void getObject(){
         // Use sensors and camera to go and get the object
         System.out.println("2");
+        commandBox.setState(2);
         boolean done=false;
-        while(!done){
-            // while object not caught and objectFound is still true
-             while((commandBox.getObjectFound())&&(!objectCaught)){
-                communication.sendString(cForward, true);
-                System.out.println("Drive forward");
+        while((!done)&&(commandBox.isAutoDrive())){
+            // while object not caught and objectFound is still true, object found is set false when
+            // the object no longer is in the camera view
+             while((commandBox.getObjectFound())&&(!objectCaught)&&(commandBox.isAutoDrive())){
                 if(commandBox.getAdjustedDirection()>4){
-                    communication.sendString("r70", true);
-                    communication.sendString("l50", true);
+                    communication.sendCommand("r70 ");
+                    communication.sendCommand("l50 ");
+                    //System.out.println("Turn left");
                 } else if(commandBox.getAdjustedDirection()<-4){
-                    communication.sendString("l70", true);
-                    communication.sendString("r50", true);
+                    communication.sendCommand("l70 ");
+                    communication.sendCommand("r50 ");
+                    //System.out.println("Turn right");
                 } else if((commandBox.getAdjustedDirection()<4)&&(commandBox.getAdjustedDirection()>-4)){
-                    communication.sendString(cForward, true);
+                    communication.sendCommand(cForward);
+                    //System.out.println("Drive forward");
                 }
                 checkIfCaught();
-            }   
-            communication.sendString(cStop, true);
-            //if object not found and not not caught seek() again.
+            }  
+             System.out.println("object caught");
+            communication.sendCommand(cStop);
+            //if object not found and not not caught, seek() again.
             if((!commandBox.getObjectFound())&&(!objectCaught)){
                 seek();
+            } else {
+                done=true;
             }
         }
         
@@ -107,18 +104,41 @@ public class ArduinoDriver extends Thread{
     public void locateGoal(){
         //Find the right area to place current object
         System.out.println("3");
+        commandBox.setState(3);
+        boolean located=false;
+        while(!located){
+            communication.sendCommand(cForward);
+            communication.sendCommand("r70 ");
+            while((!commandBox.isGoalFound()&&(objectCaught)&&(commandBox.isAutoDrive()))){
+                checkIfCaught();
+            }
+            communication.sendCommand(cStop);
+            if(!objectCaught){
+                seek();
+                getObject();
+            } else if((objectCaught)&&(commandBox.isGoalFound())){
+                located=true;
+            }
+        }
+        System.out.println("goal located");
     }
     public void placeObject() {
         //Drive the object to its target
         System.out.println("4");
-        //Object caught=false;
+        commandBox.setState(4);
+        boolean goalReached=false;
+        while((!goalReached)&&(commandBox.isAutoDrive())){
+            // while object i still caught and goal is still in view
+           while((objectCaught)&&(commandBox.isGoalFound())&&(commandBox.isAutoDrive())){
+                
+            }
+        }
+        objectCaught=false;
     }
     public void checkIfCaught(){
         System.out.println("check if caught");
-        String in=communication.sendString(cReadSS,false);
-        System.out.println("get value");
+        String in=communication.getInput(cReadSS);
         int val=Integer.parseInt(in);
-        System.out.println(in);
         if(val<=6){
             objectCaught=true;
         } else {

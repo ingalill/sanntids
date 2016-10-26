@@ -22,10 +22,16 @@ public class MainArduino {
         //Starting the arduino driver
         driver = new ArduinoDriver(communication,commandBox);
        try {
-            Thread.sleep(100);
+            Thread.sleep(3000);
  
         } catch(Exception e) {}
         commandBox.setObjectFound(true);
+        try {
+            Thread.sleep(6000);
+ 
+        } catch(Exception e) {}
+        commandBox.setGoalFound(true);
+         System.out.println("goal found");
         
     }
     
