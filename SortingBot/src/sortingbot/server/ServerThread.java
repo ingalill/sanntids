@@ -8,6 +8,7 @@ package sortingbot.server;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -31,46 +32,53 @@ public class ServerThread implements Runnable {
     // get Frame from server and send it to client
 
     private DataInputStream dataInputStream = null;
-    private PrintStream printStream = null;
+    //private PrintStream printStream = null;
     private Socket serverSocket = null;
-    private final ServerThread[] threads;
-    private int maxServerCount;
-    private BufferedReader inputStream;
-    private OutputStream outputBuffer;
+    //private final ServerThread[] threads;
+    //private int maxServerCount;
+    //private BufferedReader inputStream;
+    private DataOutputStream outputBuffer;
     //  private static boolean closed = false;
 
-    private VideoBox videograbber;
+    private VideoBox videoBox;
 
-    public ServerThread(Socket serverSocket, ServerThread[] threads) {
+    public ServerThread(Socket serverSocket, VideoBox videoBox) {
         this.serverSocket = serverSocket;
-        this.threads = threads;
-        maxServerCount = threads.length;
+        //this.threads = threads;
+        //maxServerCount = threads.length;
+        this.videoBox = videoBox;
     }
 
     @Override
     public void run() {
-        int maxServerCount = this.maxServerCount;
-        ServerThread[] threads = this.threads;
+        //int maxServerCount = this.maxServerCount;
+        //ServerThread[] threads = this.threads;
 
         try {
 
-            outputBuffer = serverSocket.getOutputStream();
+            outputBuffer = new DataOutputStream(serverSocket.getOutputStream());
             dataInputStream = new DataInputStream(serverSocket.getInputStream());
-            printStream = new PrintStream(serverSocket.getOutputStream());
+            //printStream = new PrintStream(serverSocket.getOutputStream());
             // output = new PrintWriter(serverSocket.getOutputStream(), true);
-            inputStream = new BufferedReader(new InputStreamReader(serverSocket.getInputStream()));
+            //inputStream = new BufferedReader(new InputStreamReader(serverSocket.getInputStream()));
             //   inputStream = new BufferedReader(new InputStreamReader(System.in)); 
 
-            if (serverSocket != null && dataInputStream != null && inputStream != null) {
-                try { // send frames skal inn her 
-
-                    ImageIO.write(matToImg(videograbber.getFrame()), "png", printStream);
-                    printStream.flush();
+            if (serverSocket != null && dataInputStream != null) {
+                try { // send frames skal inn her
+                    int type = 1;
+                    System.out.println("Sending type " + type + " to client");
+                    outputBuffer.writeInt(type); //  Write type of the message (1 = image)
+                    outputBuffer.flush();
+                    // !!! ImageIO.write(matToImg(videoBox.getFrame()), "png", outputBuffer);
+                    //printStream.flush();
                     //This will wait until a line of text has been sent.
-                    String input = inputStream.readLine();
-                    System.out.println("You got the input: " + input);
+                    //String input = inputStream.readLine();
+                    //System.out.println("You got the input: " + input);
+                    Thread.sleep(1000);
                 } catch (IOException e) {
                     System.err.println("IOException:  " + e);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(ServerThread.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
 

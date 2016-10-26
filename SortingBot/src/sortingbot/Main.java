@@ -11,6 +11,7 @@ package sortingbot;
  */
 import java.util.Timer;
 import org.opencv.core.Core;
+import sortingbot.server.Server;
 
 public class Main {
 
@@ -23,6 +24,7 @@ public class Main {
     private static ImageHandler handler;
     private static FrameGrabber vGrabber;//framegrabber for video
     private static FrameGrabber odroidGrabber; 
+    private static Server server;
     private static Timer timer;
     private static ArduinoCommunication communication;
     private static ArduinoDriver driver;
@@ -66,6 +68,12 @@ public class Main {
         //vGrabber = new FrameGrabber(camera,handler,grabber); //for use for testing the processing
         //vGrabber = new FrameGrabber(camera,grabber);
         odroidGrabber = new FrameGrabber(camera,handler,videoBox,true);
+        
+        // Start the server
+        server = new Server();
+        server.setVideoBox(videoBox);
+        server.start();
+        
         //Start framegrabber with timed intervals
         timer.scheduleAtFixedRate(odroidGrabber, delay*0, timedelay);
         //start gui

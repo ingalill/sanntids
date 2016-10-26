@@ -471,7 +471,10 @@ public class Gui extends javax.swing.JFrame {
         jBack.setEnabled(true);
         jStop.setEnabled(false);
     }//GEN-LAST:event_jStopActionPerformed
-   
+
+    public void clientToGui(){
+     // Get image from Client and use in GUI
+    }
 //    public static void main(String args[]) {      
     public void SetupGui(){
 //        System.loadLibrary(Core.NATIVE_LIBRARY_NAME); // load native library of opencv

@@ -5,54 +5,60 @@ import java.net.*;
 import java.util.*;
 import java.io.*;
 import org.opencv.core.Mat;
+import sortingbot.VideoBox;
 
 /**
  * @date 11.10.2016
  * @author inga lill bjolstad
  */
-public class Server {
-    // private VideoBox videograbber;
+public class Server extends Thread {
+    private VideoBox videoBox;
 
     private ServerSocket serverSocket;
     private Socket socket;
-    private BufferedReader inputStream;
-    private PrintWriter output;
+//    private BufferedReader inputStream;
+//    private PrintWriter output;
 
-    private static final int maxServers = 10;
-    private static final ServerThread[] threads = new ServerThread[maxServers];
+    private static final int maxClients = 10;
+    private static final ServerThread[] threads = new ServerThread[maxClients];
 
-    public static void main(String[] args) throws InterruptedException {
-        new Server();
+    public VideoBox getVideograbber() {
+        return videoBox;
     }
 
-    public Server() throws InterruptedException {
+//    public static void main(String[] args) throws InterruptedException {
+//        new Server();
+//    }
+    public void setVideoBox(VideoBox videoBox) {
+        this.videoBox = videoBox;
+    }
+
+    @Override
+    public void run() {
         //We need a try-catch because lots of errors can be thrown
         try {
-            while (true) {
-                serverSocket = new ServerSocket(5000);
+            serverSocket = new ServerSocket(5000);
                 System.out.println("Server started at: " + new Date());
+            while (true) {
 
                 //Wait for a client to connect
                 socket = serverSocket.accept();
 
                 //Create the streams
-                output = new PrintWriter(socket.getOutputStream(), true);
+                //output = new PrintWriter(socket.getOutputStream(), true);
                 //inputStream = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
                 //Tell the client that he/she has connected
-                output.println("You have connected at: " + new Date());
+                //output.println("You have connected at: " + new Date());
 
                 //test
-                for (int i = 0; i < maxServers; i++) {
+                for (int i = 0; i < maxClients; i++) {
                     if (threads[i] == null) {
-                        (threads[i] = new ServerThread(socket, threads)).run();
-                        try {
-                            Thread.sleep(10);
-                        } catch (InterruptedException e) {
-                            break;
-                        }
+                        threads[i] = new ServerThread(socket, videoBox);
+                        new Thread(threads[i]).start();
+                        break;
                     }
-                    if (i == maxServers) {
+                    if (i == maxClients) {
                         try (PrintStream printSt = new PrintStream(socket.getOutputStream())) {
                             printSt.println("Server is busy, come back later");
                         }
