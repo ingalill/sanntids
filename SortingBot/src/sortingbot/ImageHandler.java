@@ -120,8 +120,10 @@ public class ImageHandler {
             }
         }
         //send signal til CommandBox
+        
         int horizontalSpeed = 0;
         if(centers.size() > 0){
+            comBox.setObjectFound(true);
             if(centers.get(biggestRad).x > morphOutput.size().width /2){//bruka fart endring på 20
                 horizontalSpeed = (int) Math.round(((centers.get(biggestRad).x-(morphOutput.size().width /2))/(morphOutput.size().width /2))*20);
             }
@@ -129,9 +131,12 @@ public class ImageHandler {
                 horizontalSpeed = (int) Math.round(-20+((centers.get(biggestRad).x)/(morphOutput.size().width /2))*20);
             }
             System.out.println(horizontalSpeed);
+            comBox.adjustDirection(horizontalSpeed);
         }
         else{
             System.out.println("No object in sight!");
+            comBox.adjustDirection(0);
+            comBox.setObjectFound(false);
         }
         
         
