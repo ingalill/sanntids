@@ -22,7 +22,7 @@ import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import sortingbotgui.SortingBotGUI;
 
-public class Client{
+public class Client implements ActionListener{
 
     private Mat frames;
     private Socket socket;
@@ -35,9 +35,9 @@ public class Client{
         this.Gui = Gui;
     }
     
-    public void actionPeformed(ActionEvent e) {
-        
-    }
+//    public void actionPeformed(ActionEvent e) {
+//        System.out.println("Button Manuel is pressed");
+//    }
     
 
     public static void main(String[] args) {
@@ -135,6 +135,11 @@ public class Client{
         }
         out.put(0, 0, data);
         return out;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        System.out.println("Client Listening.");
     }
 
 } // end of class

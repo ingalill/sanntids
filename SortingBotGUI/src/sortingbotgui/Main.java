@@ -5,6 +5,11 @@
  */
 package sortingbotgui;
 
+import java.net.MalformedURLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.opencv.core.Core;
+
 /**
  *
  * @author Aleksander
@@ -14,17 +19,19 @@ public class Main {
     private static VideoBox videoBox;
     
     public static void main(String[] args) {
-    
+        
+    System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
     // Create an objeckt of each  class
     videoBox = new VideoBox();
     
     
     /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new SortingBotGUI(videoBox).setVisible(true);
-//            }
-//        };
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                
+                    new SortingBotGUI(videoBox).setVisible(true);
+                } 
+            
+        });
     }
-    
 }

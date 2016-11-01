@@ -7,6 +7,8 @@ package sortingbot;
 
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import javax.imageio.ImageIO;
@@ -17,12 +19,13 @@ import org.opencv.core.MatOfByte;
 //import org.opencv.highgui.VideoCapture;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.videoio.VideoCapture;
+import sortingbot.server.Client;
 
 /**
  *
  * @author Demy
  */
-public class Gui extends javax.swing.JFrame {
+public class Gui extends javax.swing.JFrame implements ActionListener{
     
     // definitions
     private DaemonThread myThread = null;
@@ -31,8 +34,12 @@ public class Gui extends javax.swing.JFrame {
 
     Mat frame = new Mat();
     MatOfByte mem = new MatOfByte();
-    
-    
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        System.out.println("Dummy test");
+    }
+        
     // class of thread
     class DaemonThread implements Runnable
     {
@@ -86,6 +93,9 @@ public class Gui extends javax.swing.JFrame {
         jBack.setEnabled(false);
         jPause.setEnabled(false);
         jStop.setEnabled(false);
+        
+        jRight.addActionListener(this);
+        jLeft.addActionListener(this);
     }
 
     /**

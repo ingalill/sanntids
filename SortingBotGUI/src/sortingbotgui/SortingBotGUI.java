@@ -34,7 +34,7 @@ import javax.swing.JLabel;
  * å sende verdien.
  */
 
-public class SortingBotGUI extends javax.swing.JFrame implements ActionListener {
+public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
     
     // definitions
     private DaemonThread myThread = null;
@@ -49,10 +49,9 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener 
     /**
      * Creates new form SortingBotGUI
      */
-    public SortingBotGUI(VideoBox abox) throws MalformedURLException {
+    public SortingBotGUI(VideoBox abox)  {
         cgrabber = abox;
         SetupGui();
-        
         initComponents();
         
         jManuel.setEnabled(false);
@@ -63,18 +62,19 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener 
         jBack.setEnabled(false);
         jPause.setEnabled(false);
         jStop.setEnabled(false);
+        
         jManuel.addActionListener(this);
         
        
     }
 
-    public SortingBotGUI() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+//    public SortingBotGUI() {
+//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.println("Dummy test");
     }
     
     // class of thread
@@ -393,6 +393,7 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener 
         jRight.setEnabled(true);       // Deactivate Right button
         jLeft.setEnabled(true);        // Deactivate Left button
         jBack.setEnabled(false);       // Activate Back button
+        System.out.println("Backing up!");
     }//GEN-LAST:event_jBackActionPerformed
 
     private void jLeftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jLeftActionPerformed
@@ -402,6 +403,7 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener 
         jRight.setEnabled(true);       // Deactivate Right button
         jLeft.setEnabled(false);       // Activate Left button
         jBack.setEnabled(true);        // Deactivate Back button
+        System.out.println("Going Right");
     }//GEN-LAST:event_jLeftActionPerformed
 
     private void jRightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRightActionPerformed
@@ -411,6 +413,7 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener 
         jRight.setEnabled(false);      // Activate Right button
         jLeft.setEnabled(true);        // Deactivate Left button
         jBack.setEnabled(true);        // Deactivate Back button
+        System.out.println("Going Right");
     }//GEN-LAST:event_jRightActionPerformed
 
     private void jStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jStartActionPerformed
