@@ -67,19 +67,6 @@ public class Client {
             System.out.println("Error client: " + exception);
         }
         
-        /// test
-        //BufferedImage image2 = ImageIO.read(socket.getInputStream());
-
-       /* try {
-            BufferedImage image = ImageIO.read(socket.getInputStream());
-            if (image != null) {
-             //   new ImageWindow(image); //creates a viewing frame for the image
-            } else {
-                System.out.println("Screenshot failed"); //2nd and 3rd.. etc. screenshot fails (only 1st works)
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }*/
     }
 
     /*Convert an image to a mat

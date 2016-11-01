@@ -6,8 +6,8 @@
 package sortingbot.server;
 
 /**
- *
- * @author ingalill
+ * @version 01.11.2016
+ * @author inga lill bjølstad
  */
 public interface ServerCommand {
     

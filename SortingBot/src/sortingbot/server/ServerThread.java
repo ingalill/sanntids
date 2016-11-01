@@ -10,6 +10,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintStream;
 import java.net.DatagramPacket;
 import java.net.Socket;
 import java.util.logging.Level;
@@ -32,6 +33,8 @@ public class ServerThread implements Runnable {
     private Socket serverSocket = null;
     private BufferedReader infromClient;
     private DataOutputStream outputBuffer;
+    private PrintStream printStream; // write out to itself.
+    private CommandHandler command = new CommandHandler();
 
     private VideoBox videoBox;
     
@@ -46,34 +49,27 @@ public class ServerThread implements Runnable {
     @Override
     public void run() {
 
+        String line ="";
+        
         try {
 
             outputBuffer = new DataOutputStream(serverSocket.getOutputStream());
             dataInputStream = new DataInputStream(serverSocket.getInputStream());
             infromClient =  new BufferedReader(new InputStreamReader(System.in));
-                   
-            // while(true)   
-            // switchCase();
             
-                String command= infromClient.readLine();//""; // readLine from user 
-        switch(command){
-            case "stop":
-                System.out.println("Stop the robot.");
-                break;
-            case "camera":
-                System.out.println("camera");
-                break;
-            case "send frame":
-                System.out.println("send frame");
-                break;
-             
-                
-        }
+      
+            if(command.check(line).equalsIgnoreCase("quit")){
+                System.out.println("goodbye");
+            } else{
+                System.out.println(command.check(line));
+            }
             
-            // alt dette skal inn i switch case
-
+            
             if (serverSocket != null && dataInputStream != null) {
                 try { // send frames skal inn her
+                    
+                    
+                   //GetFrame klassen?
                     int type = 1;
                     System.out.println("Sending type " + type + " to client");
                     outputBuffer.writeInt(type); //  Write type of the message (1 = image)
@@ -98,15 +94,7 @@ public class ServerThread implements Runnable {
     }
     
     
-    public void switchCase(){
-        String command= ""; // readLine from user 
-        switch(command){
-            case "stop":
-                System.out.println("Stop the command.");
-                break;
-        }
-        
-}
+  
 
     /*
     *Take an Mat and convert it to an BufferedImage
