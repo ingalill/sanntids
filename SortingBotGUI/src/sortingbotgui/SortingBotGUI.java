@@ -62,6 +62,7 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
         jBack.setEnabled(false);
         jPause.setEnabled(false);
         jStop.setEnabled(false);
+        jReset.setEnabled(false);
         
         jManuel.addActionListener(this);
         
@@ -74,7 +75,7 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println("Dummy test");
+        System.out.println("ActionListener test");
     }
     
     // class of thread
@@ -129,7 +130,6 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
         jLeft = new javax.swing.JButton();
         jControlLabel = new javax.swing.JLabel();
         jRight = new javax.swing.JButton();
-        jToggleButton1 = new javax.swing.JToggleButton();
         jStart = new javax.swing.JButton();
         jStop = new javax.swing.JButton();
         jGotBlue = new javax.swing.JCheckBox();
@@ -145,7 +145,8 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
         jPlacedRed = new javax.swing.JCheckBox();
         jAdvance = new javax.swing.JButton();
         jVideoLabel = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        jReset = new javax.swing.JButton();
+        jQuit = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -174,9 +175,7 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
             }
         });
 
-        jToggleButton1.setText("Reset");
-
-        jStart.setText("GoGoGo!");
+        jStart.setText("Start");
         jStart.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jStartActionPerformed(evt);
@@ -256,7 +255,19 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
 
         jVideoLabel.setText("Video");
 
-        jLabel4.setText("jLabel4");
+        jReset.setText("Reset");
+        jReset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jResetActionPerformed(evt);
+            }
+        });
+
+        jQuit.setText("Quit");
+        jQuit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jQuitActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -278,14 +289,15 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jGotRed)
                                 .addGap(18, 18, 18)
-                                .addComponent(jPlacedRed)))
-                        .addGap(132, 132, 132)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jStart)))
+                                .addComponent(jPlacedRed))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(85, 85, 85)
                         .addComponent(jCheckLabel)))
+                .addGap(132, 132, 132)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jStart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jReset, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
+                    .addComponent(jQuit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(135, 135, 135)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jAdvance)
@@ -308,17 +320,13 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jAuto))
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(42, 42, 42)
-                                        .addComponent(jPlay)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jPause))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(93, 93, 93)
-                                        .addComponent(jVideoLabel)))
-                                .addGap(81, 81, 81)
-                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(42, 42, 42)
+                                .addComponent(jPlay)
+                                .addGap(18, 18, 18)
+                                .addComponent(jPause))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(93, 93, 93)
+                                .addComponent(jVideoLabel)))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
@@ -331,35 +339,6 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(49, 49, 49)
-                                        .addComponent(jStart)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jToggleButton1))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(5, 5, 5)
-                                        .addComponent(jControlLabel)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jAdvance, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(jLeft)
-                                            .addComponent(jRight)
-                                            .addComponent(jStop))))
-                                .addGap(10, 10, 10))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(79, 79, 79)))
-                        .addComponent(jBack)
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jAuto)
-                            .addComponent(jManuel)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jVideoLabel)
                         .addGap(18, 18, 18)
@@ -379,7 +358,34 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jPlacedRed)
-                            .addComponent(jGotRed))))
+                            .addComponent(jGotRed)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(5, 5, 5)
+                                .addComponent(jControlLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jAdvance, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLeft)
+                                    .addComponent(jRight)
+                                    .addComponent(jStop)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(112, 112, 112)
+                                .addComponent(jBack)
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jAuto)
+                                    .addComponent(jManuel)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(49, 49, 49)
+                                .addComponent(jStart)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jReset)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jQuit)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -393,6 +399,8 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
         jRight.setEnabled(true);       // Deactivate Right button
         jLeft.setEnabled(true);        // Deactivate Left button
         jBack.setEnabled(false);       // Activate Back button
+        jStop.setEnabled(true);
+        System.out.println("Back");
     }//GEN-LAST:event_jBackActionPerformed
 
     private void jLeftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jLeftActionPerformed
@@ -402,6 +410,8 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
         jRight.setEnabled(true);       // Deactivate Right button
         jLeft.setEnabled(false);       // Activate Left button
         jBack.setEnabled(true);        // Deactivate Back button
+        jStop.setEnabled(true);
+        System.out.println("Left");
     }//GEN-LAST:event_jLeftActionPerformed
 
     private void jRightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRightActionPerformed
@@ -411,27 +421,33 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
         jRight.setEnabled(false);      // Activate Right button
         jLeft.setEnabled(true);        // Deactivate Left button
         jBack.setEnabled(true);        // Deactivate Back button
+        jStop.setEnabled(true);
+        System.out.println("Right");
     }//GEN-LAST:event_jRightActionPerformed
 
     private void jStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jStartActionPerformed
         // Start Driving in auto mode.
+        jStart.setEnabled(false);
         jManuel.setEnabled(true);
         jAuto.setEnabled(false);
         jAdvance.setEnabled(false);     // Deactivate advance button
         jRight.setEnabled(false);       // Deactivate Right button
         jLeft.setEnabled(false);        // Deactivate Left button
         jBack.setEnabled(false);
+        jReset.setEnabled(true);
+        System.out.println("Start");
     }//GEN-LAST:event_jStartActionPerformed
 
     private void jStopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jStopActionPerformed
         // Stop Bot driving.
-        jManuel.setEnabled(true);
-        jAuto.setEnabled(false);
+        jManuel.setEnabled(false);
+        jAuto.setEnabled(true);
         jAdvance.setEnabled(true);     // Deactivate advance button
         jRight.setEnabled(true);       // Deactivate Right button
         jLeft.setEnabled(true);        // Deactivate Left button
         jBack.setEnabled(true);
         jStop.setEnabled(false);
+        System.out.println("Stop");
     }//GEN-LAST:event_jStopActionPerformed
 
     private void jPlayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPlayActionPerformed
@@ -445,6 +461,7 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
         t.start();                      // Start Thread
         jPlay.setEnabled(false);  //Deactivate play button
         jPause.setEnabled(true);  // activate stop button
+        System.out.println("Play");
     }//GEN-LAST:event_jPlayActionPerformed
 
     private void jPauseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPauseActionPerformed
@@ -452,6 +469,7 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
         myThread.runnable = false;      //stop thread
         jPause.setEnabled(false);     // activate play button
         jPlay.setEnabled(true);      // deactivate stop button
+        System.out.println("Pause");
 
         //webSource.release();            // stop capturing from cam
 
@@ -465,14 +483,16 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
         jRight.setEnabled(true);        // Deactivate Right button
         jLeft.setEnabled(true);         // Deactivate Left button
         jBack.setEnabled(true);         // Deactivate Back button
+        System.out.println("Manuell");
         
     }//GEN-LAST:event_jManuelActionPerformed
 
     private void jPlacedOrangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPlacedOrangeActionPerformed
         // Set true when colored object is in place
         //        if(color == place){
-            //            checkBox = jPlacedOrange.setEnabled(true);
+            //            checkBox = jPlacedOrange.setSelected(true);
             //        }
+        System.out.println("Placed Orange");
     }//GEN-LAST:event_jPlacedOrangeActionPerformed
 
     private void jAutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jAutoActionPerformed
@@ -483,6 +503,7 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
         jRight.setEnabled(false);       // Deactivate Right button
         jLeft.setEnabled(false);        // Deactivate Left button
         jBack.setEnabled(false);        // Deactivate Back button
+        System.out.println("Auto");
     }//GEN-LAST:event_jAutoActionPerformed
 
     private void jAdvanceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jAdvanceActionPerformed
@@ -492,7 +513,32 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
         jRight.setEnabled(true);       // Deactivate Right button
         jLeft.setEnabled(true);        // Deactivate Left button
         jBack.setEnabled(true);        // Deactivate Back button
+        jStop.setEnabled(true);
+        System.out.println("Advance");
     }//GEN-LAST:event_jAdvanceActionPerformed
+
+    private void jResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jResetActionPerformed
+        // start over
+        jReset.setEnabled(false);
+        jStart.setEnabled(true);
+        jManuel.setEnabled(false);
+        jAuto.setEnabled(false);
+        jAdvance.setEnabled(false);
+        jRight.setEnabled(false);
+        jLeft.setEnabled(false);
+        jBack.setEnabled(false);
+        jGotBlue.setSelected(false);
+        jGotOrange.setSelected(false);
+        jGotRed.setSelected(false);
+        jPlacedBlue.setSelected(false);
+        jPlacedOrange.setSelected(false);
+        jPlacedRed.setSelected(false);
+        System.out.println("Reset");
+    }//GEN-LAST:event_jResetActionPerformed
+
+    private void jQuitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jQuitActionPerformed
+        System.out.println("Quit");
+    }//GEN-LAST:event_jQuitActionPerformed
     
     public void SetupGui(){
 //        System.loadLibrary(Core.NATIVE_LIBRARY_NAME); // load native library of opencv
@@ -567,7 +613,6 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
     private javax.swing.JCheckBox jGotBlue;
     private javax.swing.JCheckBox jGotOrange;
     private javax.swing.JCheckBox jGotRed;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JButton jLeft;
     private javax.swing.JButton jManuel;
     private javax.swing.JPanel jPanel1;
@@ -576,10 +621,11 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
     private javax.swing.JCheckBox jPlacedOrange;
     private javax.swing.JCheckBox jPlacedRed;
     private javax.swing.JButton jPlay;
+    private javax.swing.JButton jQuit;
+    private javax.swing.JButton jReset;
     private javax.swing.JButton jRight;
     private javax.swing.JButton jStart;
     private javax.swing.JButton jStop;
-    private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JLabel jVideoLabel;
     // End of variables declaration//GEN-END:variables
 }
