@@ -20,7 +20,7 @@ import javax.imageio.ImageIO;
 
 /**
  * @date 18.10.2016
- * @author ingalillbjolstad
+ * @author inga lill bjolstad
  */
 public class ServerThread implements Runnable {
     // send a frame from the server to the client.
