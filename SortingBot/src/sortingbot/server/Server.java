@@ -16,8 +16,7 @@ public class Server extends Thread {
 
     private ServerSocket serverSocket;
     private Socket socket;
-//    private BufferedReader inputStream;
-//    private PrintWriter output;
+    private PrintWriter output;
 
     private static final int maxClients = 10;
     private static final ServerThread[] threads = new ServerThread[maxClients];
@@ -26,9 +25,6 @@ public class Server extends Thread {
         return videoBox;
     }
 
-//    public static void main(String[] args) throws InterruptedException {
-//        new Server();
-//    }
     public void setVideoBox(VideoBox videoBox) {
         this.videoBox = videoBox;
     }
@@ -45,11 +41,10 @@ public class Server extends Thread {
                 socket = serverSocket.accept();
 
                 //Create the streams
-                //output = new PrintWriter(socket.getOutputStream(), true);
-                //inputStream = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-
+                output = new PrintWriter(socket.getOutputStream(), true);
+            
                 //Tell the client that he/she has connected
-                //output.println("You have connected at: " + new Date());
+                output.println("You have connected at: " + new Date());
 
                 //test
                 for (int i = 0; i < maxClients; i++) {

@@ -31,7 +31,13 @@ public class MainArduino {
  
         } catch(Exception e) {}
         commandBox.setGoalFound(true);
-         System.out.println("goal found");
+         System.out.println("set goal found");
+         try {
+            Thread.sleep(5000);
+ 
+        } catch(Exception e) {}
+         commandBox.setAutoDrive(false);
+         System.out.println("set auto drive false");
         
     }
     

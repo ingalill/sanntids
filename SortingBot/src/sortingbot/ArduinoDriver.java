@@ -51,7 +51,7 @@ public class ArduinoDriver extends Thread{
                 placeObject();
 
              }
-             //System.out.println("ute");
+             //System.out.println("Manual mode");
        }
     }
     public void seek(){
@@ -69,9 +69,9 @@ public class ArduinoDriver extends Thread{
     public void getObject(){
         // Use sensors and camera to go and get the object
         System.out.println("2");
-        commandBox.setState(2);
         boolean done=false;
         while((!done)&&(commandBox.isAutoDrive())){
+            commandBox.setState(2);
             // while object not caught and objectFound is still true, object found is set false when
             // the object no longer is in the camera view
              while((commandBox.getObjectFound())&&(!objectCaught)&&(commandBox.isAutoDrive())){
@@ -104,9 +104,9 @@ public class ArduinoDriver extends Thread{
     public void locateGoal(){
         //Find the right area to place current object
         System.out.println("3");
-        commandBox.setState(3);
         boolean located=false;
         while(!located){
+            commandBox.setState(3);
             communication.sendCommand(cForward);
             communication.sendCommand("r70 ");
             while((!commandBox.isGoalFound()&&(objectCaught)&&(commandBox.isAutoDrive()))){
@@ -125,13 +125,46 @@ public class ArduinoDriver extends Thread{
     public void placeObject() {
         //Drive the object to its target
         System.out.println("4");
-        commandBox.setState(4);
+        
         boolean goalReached=false;
         while((!goalReached)&&(commandBox.isAutoDrive())){
+            commandBox.setState(4);
+            int distanceFromGoal;
             // while object i still caught and goal is still in view
            while((objectCaught)&&(commandBox.isGoalFound())&&(commandBox.isAutoDrive())){
-                
+               
+                if(commandBox.getAdjustedDirection()>4){
+                    communication.sendCommand("r70 ");
+                    communication.sendCommand("l50 ");
+                    //System.out.println("Turn left");
+                } else if(commandBox.getAdjustedDirection()<-4){
+                    communication.sendCommand("l70 ");
+                    communication.sendCommand("r50 ");
+                    //System.out.println("Turn right");
+                } else if((commandBox.getAdjustedDirection()<4)&&(commandBox.getAdjustedDirection()>-4)){
+                    communication.sendCommand(cForward);
+                    distanceFromGoal=Integer.parseInt(communication.getInput(cReadLS));
+                    //System.out.println("Drive forward");
+                    System.out.print("Distance from goal: ");
+                    System.out.println(distanceFromGoal);
+                    if(distanceFromGoal<20) break;
+                }
+                checkIfCaught();
             }
+           
+           if(!objectCaught){
+               seek();
+               getObject();
+               locateGoal();
+           } else if((commandBox.isGoalFound())&&(objectCaught)){
+               System.out.println("goal reached");
+               communication.sendCommand(cBackward);
+               while((true)&&(commandBox.isAutoDrive())){
+                    distanceFromGoal=Integer.parseInt(communication.getInput(cReadLS));
+                    if(distanceFromGoal>40) break;
+               }
+               goalReached=true;
+           }
         }
         objectCaught=false;
     }

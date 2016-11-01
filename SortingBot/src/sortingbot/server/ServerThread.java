@@ -1,8 +1,7 @@
 /*
- * -Djava.library.path="C:\Users\ingab\Desktop\inga\OpenCv 3.1\build\java\x64;C:\Users\ingab\Desktop\inga\sanntids\Arduino\ArduinoJavaTest"
 * http://stackoverflow.com/questions/24182610/java-socket-server-client-to-client-file-transfer 
-http://www.codeproject.com/Questions/898073/java-How-to-send-a-multiple-images-over-socket?arn=9 
- */
+* http://www.codeproject.com/Questions/898073/java-How-to-send-a-multiple-images-over-socket?arn=9 
+*/
 package sortingbot.server;
 
 import java.awt.image.BufferedImage;
@@ -11,9 +10,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.PrintStream;
-import java.io.PrintWriter;
+import java.net.DatagramPacket;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,36 +29,48 @@ public class ServerThread implements Runnable {
     // get Frame from server and send it to client
 
     private DataInputStream dataInputStream = null;
-    //private PrintStream printStream = null;
     private Socket serverSocket = null;
-    //private final ServerThread[] threads;
-    //private int maxServerCount;
-    //private BufferedReader inputStream;
+    private BufferedReader infromClient;
     private DataOutputStream outputBuffer;
-    //  private static boolean closed = false;
 
     private VideoBox videoBox;
+    
+    // test
+    DatagramPacket packet;
 
     public ServerThread(Socket serverSocket, VideoBox videoBox) {
         this.serverSocket = serverSocket;
-        //this.threads = threads;
-        //maxServerCount = threads.length;
         this.videoBox = videoBox;
     }
 
     @Override
     public void run() {
-        //int maxServerCount = this.maxServerCount;
-        //ServerThread[] threads = this.threads;
 
         try {
 
             outputBuffer = new DataOutputStream(serverSocket.getOutputStream());
             dataInputStream = new DataInputStream(serverSocket.getInputStream());
-            //printStream = new PrintStream(serverSocket.getOutputStream());
-            // output = new PrintWriter(serverSocket.getOutputStream(), true);
-            //inputStream = new BufferedReader(new InputStreamReader(serverSocket.getInputStream()));
-            //   inputStream = new BufferedReader(new InputStreamReader(System.in)); 
+            infromClient =  new BufferedReader(new InputStreamReader(System.in));
+                   
+            // while(true)   
+            // switchCase();
+            
+                String command= infromClient.readLine();//""; // readLine from user 
+        switch(command){
+            case "stop":
+                System.out.println("Stop the robot.");
+                break;
+            case "camera":
+                System.out.println("camera");
+                break;
+            case "send frame":
+                System.out.println("send frame");
+                break;
+             
+                
+        }
+            
+            // alt dette skal inn i switch case
 
             if (serverSocket != null && dataInputStream != null) {
                 try { // send frames skal inn her
@@ -71,9 +80,9 @@ public class ServerThread implements Runnable {
                     outputBuffer.flush();
                     // !!! ImageIO.write(matToImg(videoBox.getFrame()), "png", outputBuffer);
                     //printStream.flush();
-                    //This will wait until a line of text has been sent.
-                    //String input = inputStream.readLine();
-                    //System.out.println("You got the input: " + input);
+                    // SEND SIZE OF THE PACKET!
+                    int size = 2; // fiks
+
                     Thread.sleep(1000);
                 } catch (IOException e) {
                     System.err.println("IOException:  " + e);
@@ -86,18 +95,18 @@ public class ServerThread implements Runnable {
             Logger.getLogger(ServerThread.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-//        if(serverSocket != null && dataInputStream != null && inputStream != null){
-//            try{ // send frames skal inn her 
-//                //This will wait until a line of text has been sent.
-//                outputBuffer.write(videograbber.getFrame());
-//                videograbber.getFrame();
-//                String input = inputStream.readLine(); 
-//                System.out.println("You got the input: " + input);
-//            } catch (IOException e) {
-//        System.err.println("IOException:  " + e);
-//      }
-//        }
     }
+    
+    
+    public void switchCase(){
+        String command= ""; // readLine from user 
+        switch(command){
+            case "stop":
+                System.out.println("Stop the command.");
+                break;
+        }
+        
+}
 
     /*
     *Take an Mat and convert it to an BufferedImage
