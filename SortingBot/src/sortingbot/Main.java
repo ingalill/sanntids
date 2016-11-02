@@ -56,10 +56,12 @@ public class Main {
         //Starting communication with the arduino
         communication = new ArduinoCommunication();
         //Creating  a new command box for handling communication between ArduinoDriver
-        // and the rest of the world
+        // and the rest of the project
         commandBox= new CommandBox();
-        //Starting the arduino driver
+        //Creates the arduino driver
         driver = new ArduinoDriver(communication,commandBox);
+        //start the arduino driver thread
+        driver.start();
         //start videograbber as an storagebox for frames
         videoBox = new VideoBox();
         //start imageHandler to prosess images

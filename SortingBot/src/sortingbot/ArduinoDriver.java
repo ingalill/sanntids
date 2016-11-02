@@ -20,12 +20,13 @@ public class ArduinoDriver extends Thread{
     private final CommandBox commandBox;
     
     private boolean objectCaught;
+    private String direction;
     
-    private final String cForward = "w50 "; //Move forward at speed 50
+    private final String cForward = "w70 "; //Move forward at speed 50
     private final String cStop="w0 "; //Stop
-    private final String cBackward = "s50 "; //Move backward at speed 50
-    private final String cRight = "d70 "; //Turn right at speed 70
-    private final String cLeft = "a70 "; //Turn left at speed 70
+    private final String cBackward = "s70 "; //Move backward at speed 50
+    private final String cRight = "d100 "; //Turn right at speed 70
+    private final String cLeft = "a100 "; //Turn left at speed 70
     private final String cReadSS = "vss "; //Read value from the short range sensor
     private final String cReadLS = "vls "; //Read value from the long range sensor
     
@@ -35,8 +36,9 @@ public class ArduinoDriver extends Thread{
         this.communication = com;
         this.commandBox=box;
         objectCaught=false;
+        direction="";
 
-        this.start(); // start this thread
+        //this.start(); // start this thread
     }
     
     public void run() {   
@@ -52,6 +54,10 @@ public class ArduinoDriver extends Thread{
 
              }
              //System.out.println("Manual mode");
+            direction=commandBox.getDirection();
+            System.out.print("Direction: ");
+            System.out.println(direction);
+            manuelDrive(direction);
        }
     }
     public void seek(){
@@ -76,12 +82,12 @@ public class ArduinoDriver extends Thread{
             // the object no longer is in the camera view
              while((commandBox.getObjectFound())&&(!objectCaught)&&(commandBox.isAutoDrive())){
                 if(commandBox.getAdjustedDirection()>4){
-                    communication.sendCommand("r70 ");
-                    communication.sendCommand("l50 ");
+                    communication.sendCommand("r100 ");
+                    communication.sendCommand("l70 ");
                     //System.out.println("Turn left");
                 } else if(commandBox.getAdjustedDirection()<-4){
-                    communication.sendCommand("l70 ");
-                    communication.sendCommand("r50 ");
+                    communication.sendCommand("l100 ");
+                    communication.sendCommand("r70 ");
                     //System.out.println("Turn right");
                 } else if((commandBox.getAdjustedDirection()<4)&&(commandBox.getAdjustedDirection()>-4)){
                     communication.sendCommand(cForward);
@@ -152,11 +158,11 @@ public class ArduinoDriver extends Thread{
                 checkIfCaught();
             }
            
-           if(!objectCaught){
+           if((!objectCaught)&&(commandBox.isAutoDrive())){
                seek();
                getObject();
                locateGoal();
-           } else if((commandBox.isGoalFound())&&(objectCaught)){
+           } else if((commandBox.isGoalFound())&&(objectCaught)&&(commandBox.isAutoDrive())){
                System.out.println("goal reached");
                communication.sendCommand(cBackward);
                while((true)&&(commandBox.isAutoDrive())){
@@ -177,5 +183,24 @@ public class ArduinoDriver extends Thread{
         } else {
             objectCaught=false;
         }
+    }
+    public void manuelDrive(String aDriection){
+        switch(direction){
+               case "w":
+                   communication.sendCommand(cForward);
+                break;
+                case "s":
+                    communication.sendCommand(cBackward);
+                break;
+                case "d":
+                    communication.sendCommand(cRight);
+                break;
+                case "a":
+                   communication.sendCommand(cLeft);
+                break;
+                case "x":
+                    communication.sendCommand(cStop);
+                break;
+            }
     }
 }

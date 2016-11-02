@@ -7,7 +7,7 @@ package sortingbot;
 
 /**
  *
- * @author Demy
+ * @author Demy og Malen
  */
 public class CommandBox {
     boolean objectFound;
@@ -19,29 +19,29 @@ public class CommandBox {
     boolean right;
     boolean left;
     boolean back;
+    boolean stop;
     boolean goalFound;
     int state;
     
     // TODOOOOOOOOOOOO
     // -Vi treng noko som kan gir kommando at roboten skal stoppe (men kan fortsette der den slapp, så det blir ei slags pause funksjon)
     //- kommado for retning og fart
-    //****************************************************************
-    //- kommando for å ta imot et tall som tilsvarer både rettning og hastighet til roboten for når han kjører og skal til å svinge
-    //- Kommando for å kjøre fremmover kalt advance
-    //- Kommando for å kjøre til høre kalt right
-    //- Kommando for å kjøre til venstre kalt left
-    //- Kommando for å kjøre bakover kalt back
     
     
     
     public CommandBox(){
-        autoDrive=true;
-        objectFound = false;
-        objectFoundAvailable=true;
+        autoDrive=true; //set the mode to auto 
+        objectFound = false; // the object is not jet found
+        objectFoundAvailable=true; 
         autoDriveAvailable=true;
         adjustedDirection=0;
-        goalFound=false;
-        state=0;
+        goalFound=false; // the goal is not jet found
+        state=0; //autodrive mode is not jet started. States: 1-seek,2-get object,3-locate target, 4-place object
+        advance=false;
+        right=false;
+        left=false;
+        back=false;
+        stop=false;
     }
     public synchronized void setObjectFound(boolean objectFound){
         while(!objectFoundAvailable){
@@ -91,4 +91,43 @@ public class CommandBox {
    public int getState(){
        return state;
    }
+   public void setDirection(String aDirection){
+       advance=false;
+       right=false;
+       left=false;
+       back=false;
+       stop=false;
+       switch(aDirection){
+           case "w":
+               advance=true;
+            break;
+           case "s":
+               back=true;
+            break;
+           case "d":
+               right=true;
+            break;
+           case "a":
+               left=true;
+            break;
+           case "x":
+               stop=true;
+            break;
+       }
+   }
+   public String getDirection(){
+       String dir="";
+       if(advance){
+           dir="w";
+       } else if(back){
+           dir="s";
+       } else if(right){
+           dir="d";
+       } else if(left){
+           dir="a";
+       } else if(stop){
+           dir="x";
+       }
+       return dir;
+    }
 }

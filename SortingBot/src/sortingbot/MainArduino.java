@@ -21,8 +21,9 @@ public class MainArduino {
         commandBox= new CommandBox();
         //Starting the arduino driver
         driver = new ArduinoDriver(communication,commandBox);
+        driver.start();
        try {
-            Thread.sleep(3000);
+            Thread.sleep(1000);
  
         } catch(Exception e) {}
         commandBox.setObjectFound(true);
@@ -33,11 +34,26 @@ public class MainArduino {
         commandBox.setGoalFound(true);
          System.out.println("set goal found");
          try {
-            Thread.sleep(5000);
+            Thread.sleep(1000);
  
         } catch(Exception e) {}
          commandBox.setAutoDrive(false);
          System.out.println("set auto drive false");
+         try {
+            Thread.sleep(1000);
+ 
+        } catch(Exception e) {}
+        commandBox.setDirection("d");
+        try {
+            Thread.sleep(1000);
+ 
+        } catch(Exception e) {}
+        commandBox.setDirection("w");
+        try {
+            Thread.sleep(1000);
+ 
+        } catch(Exception e) {}
+        commandBox.setDirection("a");
         
     }
     
