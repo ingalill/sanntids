@@ -36,14 +36,14 @@ public class Client implements ActionListener{
     }
     
 
-    public static void main(String[] args) {
-        Client c = new Client(null);
-        c.run();
-    }
+//    public static void main(String[] args) {
+//        Client c = new Client(null);
+//        c.run();
+//    }
 
     // HA EN EGEN THREAD SOM TAR SEG AV MOTTAKELSEN AV FRAMES.
     // is going to ask for frames from the server
-    public void run() {
+    public void run() throws InterruptedException {
         //We set up the scanner to receive user input
         Scanner scanner = new Scanner(System.in);
         try {
@@ -51,6 +51,16 @@ public class Client implements ActionListener{
             output = new PrintWriter(socket.getOutputStream(), true);
             input = new DataInputStream(socket.getInputStream());
             System.out.println("Client started at: " + new Date());
+            
+                            /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                
+                    //new SortingBotGUI(videoBox).setVisible(true);
+                    new SortingBotGUI().setVisible(true);
+                } 
+            
+        });
 
             //This will wait for the server to send the string to the client saying a connection
             //has been made.
@@ -63,7 +73,9 @@ public class Client implements ActionListener{
                 //String userInput = scanner.nextLine();
                 //Now we write it to the server
                 //output.println(userInput);
-                
+                try{
+                Thread.sleep(10000);
+                }catch(Exception e){}
                 // Get the first integer, it should be the type of the message
                 // Type 1 means image
                 int msgType = input.readInt();
@@ -77,7 +89,7 @@ public class Client implements ActionListener{
 //                Mat img = imgToMat(image);
 //                Gui.getImage(img);
                 
-                
+ 
                 // BufferedImage img=ImageIO.read(ImageIO.createImageInputStream(socket.getInputStream()));
             /* EKSEMPEL HVOR IMG SKAL bLI SENDT VIDERE
                 BufferedImage image = ImageIO.read(socket.getInputStream());
@@ -104,10 +116,11 @@ public class Client implements ActionListener{
         }*/
     }
 
-    public Mat putFrame() throws IOException{
-         BufferedImage image = ImageIO.read(socket.getInputStream());
-         Mat img = imgToMat(image);
-         return img;
+    public BufferedImage putFrame() throws IOException{
+        return  ImageIO.read(socket.getInputStream());
+//         Mat img = imgToMat(image);
+//         System.out.println("Helloosahdgoshgoahsg");
+//         return img;
     }
     
     

@@ -56,6 +56,8 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
         SetupGui();
         initComponents();
         
+        //Setup of the buttons that are avaible when starting the program
+        // Buttons need .setEnabled() while checkboxes need .setSelected()
         jManuel.setEnabled(false);
         jAuto.setEnabled(false);
         jAdvance.setEnabled(false);
@@ -66,26 +68,70 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
         jStop.setEnabled(false);
         jReset.setEnabled(false);
         
-        jPlay.addActionListener(this);
+        // Adding Actionlisteners to the necesary buttons/all the buttons
+        jManuel.addActionListener(this);
+        jAuto.addActionListener(this);
+        jAdvance.addActionListener(this);
         jRight.addActionListener(this);
-        
+        jLeft.addActionListener(this);
+        jBack.addActionListener(this);
+        jStop.addActionListener(this);
+        jPlay.addActionListener(this);
+        jPause.addActionListener(this);
+        jReset.addActionListener(this);
+        jQuit.addActionListener(this);
+        jGotBlue.addActionListener(this);
+        jGotOrange.addActionListener(this);
+        jGotRed.addActionListener(this);
+        jPlacedBlue.addActionListener(this);
+        jPlacedOrange.addActionListener(this);
+        jPlacedRed.addActionListener(this);
        
     }
 
-//    public SortingBotGUI() {
-//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-//    }
-
+    /*
+    Each code is performed after one of the button in GUI is pressed
+    Change the print statment to do desired code to be executed.
+    
+    Note To Do. Probebly would behove us to switch to switch case.
+    */
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == jPlay){
-        System.out.println("Play Test");
+        System.out.println("Play With Me <3");
+        }
+        if(e.getSource() == jAdvance){
+            System.out.println("Advance");
         }
         if(e.getSource() == jRight){
-            System.out.println("All-right-y");
+            System.out.println("All-Right-y");
+        }
+        if(e.getSource() == jLeft){
+            System.out.println("Lefty loosy");
+        }
+        if(e.getSource() == jBack){
+            System.out.println("Back up");
+        }
+        if(e.getSource() == jStop){
+            System.out.println("HammerTime");
+        }
+        if(e.getSource() == jPause){
+            System.out.println("Pause   :|  ");
+        }
+        if(e.getSource() == jReset){
+            System.out.println("Reset");
+        }
+        if(e.getSource() == jQuit){
+            System.out.println("Quiting is for loosers...Looser");
+        }
+        if(e.getSource() == jManuel){
+            System.out.println("okay, fuck it, you do it then");
+        }
+        if(e.getSource() == jAuto){
+            System.out.println("FINE, I Will do it myself");
         }
     }
-    
+        
     // class of thread
     class DaemonThread implements Runnable
     {
@@ -100,16 +146,16 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
                 {
                     try
                     {
-                       Mat img = client.putFrame();
-                        //GetFrame Method
-                        //Use GetImage Method in the bottom to get Mat image
-                        frame = getImage(img);
-                        
-                        //frame = cgrabber.getFrame();
-                        Imgcodecs.imencode(".bmp", frame, mem);
-                        Image im = ImageIO.read(new ByteArrayInputStream(mem.toArray()));
+//                       Mat img = client.putFrame();
+//                        //GetFrame Method
+//                        //Use GetImage Method in the bottom to get Mat image
+//                        frame = getImage(img);
+//                        
+//                        //frame = cgrabber.getFrame();
+//                        Imgcodecs.imencode(".bmp", frame, mem);
+//                        Image im = ImageIO.read(new ByteArrayInputStream(mem.toArray()));
 
-                        BufferedImage buff = (BufferedImage) im;
+                        BufferedImage buff = client.putFrame();
                         Graphics g=jVideo.getGraphics();
 
                         if (g.drawImage(buff, 0, 0, getWidth(), getHeight() -150 , 0, 0, buff.getWidth(), buff.getHeight(), null))
@@ -413,7 +459,6 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
         jLeft.setEnabled(true);        // Deactivate Left button
         jBack.setEnabled(false);       // Activate Back button
         jStop.setEnabled(true);
-        System.out.println("Back");
     }//GEN-LAST:event_jBackActionPerformed
 
     private void jLeftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jLeftActionPerformed
@@ -424,7 +469,6 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
         jLeft.setEnabled(false);       // Activate Left button
         jBack.setEnabled(true);        // Deactivate Back button
         jStop.setEnabled(true);
-        System.out.println("Left");
     }//GEN-LAST:event_jLeftActionPerformed
 
     private void jRightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRightActionPerformed
@@ -447,7 +491,6 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
         jLeft.setEnabled(false);        // Deactivate Left button
         jBack.setEnabled(false);
         jReset.setEnabled(true);
-        System.out.println("Start");
     }//GEN-LAST:event_jStartActionPerformed
 
     private void jStopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jStopActionPerformed
@@ -459,7 +502,6 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
         jLeft.setEnabled(true);        // Deactivate Left button
         jBack.setEnabled(true);
         jStop.setEnabled(false);
-        System.out.println("Stop");
     }//GEN-LAST:event_jStopActionPerformed
 
     private void jPlayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPlayActionPerformed
@@ -480,7 +522,6 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
         myThread.runnable = false;      //stop thread
         jPause.setEnabled(false);     // activate play button
         jPlay.setEnabled(true);      // deactivate stop button
-        System.out.println("Pause");
 
         //webSource.release();            // stop capturing from cam
 
@@ -494,7 +535,6 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
         jRight.setEnabled(true);        // Deactivate Right button
         jLeft.setEnabled(true);         // Deactivate Left button
         jBack.setEnabled(true);         // Deactivate Back button
-        System.out.println("Manuel");
         
     }//GEN-LAST:event_jManuelActionPerformed
 
@@ -514,7 +554,6 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
         jRight.setEnabled(false);       // Deactivate Right button
         jLeft.setEnabled(false);        // Deactivate Left button
         jBack.setEnabled(false);        // Deactivate Back button
-        System.out.println("Auto");
     }//GEN-LAST:event_jAutoActionPerformed
 
     private void jAdvanceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jAdvanceActionPerformed
@@ -525,7 +564,6 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
         jLeft.setEnabled(true);        // Deactivate Left button
         jBack.setEnabled(true);        // Deactivate Back button
         jStop.setEnabled(true);
-        System.out.println("Advance");
     }//GEN-LAST:event_jAdvanceActionPerformed
 
     private void jResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jResetActionPerformed
@@ -544,7 +582,6 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
         jPlacedBlue.setSelected(false);
         jPlacedOrange.setSelected(false);
         jPlacedRed.setSelected(false);
-        System.out.println("Reset");
     }//GEN-LAST:event_jResetActionPerformed
 
     private void jQuitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jQuitActionPerformed
