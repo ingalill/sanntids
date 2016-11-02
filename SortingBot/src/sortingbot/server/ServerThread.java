@@ -31,9 +31,9 @@ public class ServerThread implements Runnable {
 
     private DataInputStream dataInputStream = null;
     private Socket serverSocket = null;
-    private BufferedReader infromClient;
+    //private BufferedReader infromClient;
     private DataOutputStream outputBuffer;
-    private PrintStream printStream; // write out to itself.
+   // private PrintStream printStream; // write out to itself.
     private CommandHandler command = new CommandHandler();
 
     private VideoBox videoBox;
@@ -55,7 +55,7 @@ public class ServerThread implements Runnable {
 
             outputBuffer = new DataOutputStream(serverSocket.getOutputStream());
             dataInputStream = new DataInputStream(serverSocket.getInputStream());
-            infromClient =  new BufferedReader(new InputStreamReader(System.in));
+            //infromClient =  new BufferedReader(new InputStreamReader(System.in));
             
       
             if(command.check(line).equalsIgnoreCase("quit")){
