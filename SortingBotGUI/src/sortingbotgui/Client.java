@@ -35,10 +35,6 @@ public class Client implements ActionListener{
         this.Gui = Gui;
     }
     
-//    public void actionPeformed(ActionEvent e) {
-//        System.out.println("Button Manuel is pressed");
-//    }
-    
 
     public static void main(String[] args) {
         Client c = new Client(null);
@@ -74,7 +70,13 @@ public class Client implements ActionListener{
           
                 
                 System.out.println("Got message type: " + msgType);
-                //BufferedImage image = ImageIO.read(socket.getInputStream());
+                
+                
+//                old way to get imgto mat to GUI side
+//                BufferedImage image = ImageIO.read(socket.getInputStream());
+//                Mat img = imgToMat(image);
+//                Gui.getImage(img);
+                
                 
                 // BufferedImage img=ImageIO.read(ImageIO.createImageInputStream(socket.getInputStream()));
             /* EKSEMPEL HVOR IMG SKAL bLI SENDT VIDERE
@@ -102,6 +104,13 @@ public class Client implements ActionListener{
         }*/
     }
 
+    public Mat putFrame() throws IOException{
+         BufferedImage image = ImageIO.read(socket.getInputStream());
+         Mat img = imgToMat(image);
+         return img;
+    }
+    
+    
     /*Convert an image to a mat
      @Param BufferedImage input
      @Return Mat output  

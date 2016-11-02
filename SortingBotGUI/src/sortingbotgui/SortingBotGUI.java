@@ -39,6 +39,7 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
     // definitions
     private DaemonThread myThread = null;
     private Client client;
+    private boolean available;
     
     int count = 0;
     VideoBox cgrabber = null;
@@ -49,8 +50,9 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
     /**
      * Creates new form SortingBotGUI
      */
-    public SortingBotGUI(VideoBox abox)  {
-        cgrabber = abox;
+    public SortingBotGUI() {
+    //public SortingBotGUI(VideoBox abox)  {
+        //cgrabber = abox;
         SetupGui();
         initComponents();
         
@@ -64,7 +66,8 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
         jStop.setEnabled(false);
         jReset.setEnabled(false);
         
-        jManuel.addActionListener(this);
+        jPlay.addActionListener(this);
+        jRight.addActionListener(this);
         
        
     }
@@ -75,7 +78,12 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println("ActionListener test");
+        if(e.getSource() == jPlay){
+        System.out.println("Play Test");
+        }
+        if(e.getSource() == jRight){
+            System.out.println("All-right-y");
+        }
     }
     
     // class of thread
@@ -92,12 +100,17 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
                 {
                     try
                     {
-                        frame = cgrabber.getFrame();
+                       Mat img = client.putFrame();
+                        //GetFrame Method
+                        //Use GetImage Method in the bottom to get Mat image
+                        frame = getImage(img);
+                        
+                        //frame = cgrabber.getFrame();
                         Imgcodecs.imencode(".bmp", frame, mem);
                         Image im = ImageIO.read(new ByteArrayInputStream(mem.toArray()));
 
                         BufferedImage buff = (BufferedImage) im;
-                        Graphics g=jPanel1.getGraphics();
+                        Graphics g=jVideo.getGraphics();
 
                         if (g.drawImage(buff, 0, 0, getWidth(), getHeight() -150 , 0, 0, buff.getWidth(), buff.getHeight(), null))
 
@@ -133,7 +146,7 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
         jStart = new javax.swing.JButton();
         jStop = new javax.swing.JButton();
         jGotBlue = new javax.swing.JCheckBox();
-        jPanel1 = new javax.swing.JPanel();
+        jVideo = new javax.swing.JPanel();
         jGotOrange = new javax.swing.JCheckBox();
         jPlay = new javax.swing.JButton();
         jGotRed = new javax.swing.JCheckBox();
@@ -191,14 +204,14 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
 
         jGotBlue.setText("Got Blue");
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout jVideoLayout = new javax.swing.GroupLayout(jVideo);
+        jVideo.setLayout(jVideoLayout);
+        jVideoLayout.setHorizontalGroup(
+            jVideoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        jVideoLayout.setVerticalGroup(
+            jVideoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 356, Short.MAX_VALUE)
         );
 
@@ -330,14 +343,14 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(jVideo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jVideo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jVideoLabel)
@@ -422,7 +435,6 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
         jLeft.setEnabled(true);        // Deactivate Left button
         jBack.setEnabled(true);        // Deactivate Back button
         jStop.setEnabled(true);
-        System.out.println("Right");
     }//GEN-LAST:event_jRightActionPerformed
 
     private void jStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jStartActionPerformed
@@ -461,7 +473,6 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
         t.start();                      // Start Thread
         jPlay.setEnabled(false);  //Deactivate play button
         jPause.setEnabled(true);  // activate stop button
-        System.out.println("Play");
     }//GEN-LAST:event_jPlayActionPerformed
 
     private void jPauseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPauseActionPerformed
@@ -483,7 +494,7 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
         jRight.setEnabled(true);        // Deactivate Right button
         jLeft.setEnabled(true);         // Deactivate Left button
         jBack.setEnabled(true);         // Deactivate Back button
-        System.out.println("Manuell");
+        System.out.println("Manuel");
         
     }//GEN-LAST:event_jManuelActionPerformed
 
@@ -565,13 +576,10 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
         }
         //</editor-fold>
 
-        /* Create and display the form */
-        
+        /* Create and display the form */ 
     }
     
-//    /**
-//     * @param args the command line arguments
-//     */
+//    Main Method for GUI now used in client part
 //    public static void main(String args[]) {
 //        /* Set the Nimbus look and feel */
 //        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -603,7 +611,13 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
 //            }
 //        });
 //    }
-
+    
+    
+        //Get img(image) From Client and use this method to use video in jVideo(Screen in GUI)
+    public Mat getImage(Mat img){
+        return img;
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jAdvance;
     private javax.swing.JButton jAuto;
@@ -615,7 +629,6 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
     private javax.swing.JCheckBox jGotRed;
     private javax.swing.JButton jLeft;
     private javax.swing.JButton jManuel;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JButton jPause;
     private javax.swing.JCheckBox jPlacedBlue;
     private javax.swing.JCheckBox jPlacedOrange;
@@ -626,6 +639,7 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
     private javax.swing.JButton jRight;
     private javax.swing.JButton jStart;
     private javax.swing.JButton jStop;
+    private javax.swing.JPanel jVideo;
     private javax.swing.JLabel jVideoLabel;
     // End of variables declaration//GEN-END:variables
 }
