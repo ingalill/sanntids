@@ -40,7 +40,6 @@ public class Client extends javax.swing.JFrame implements ActionListener{
     private DaemonThread myThread = null;
     
     int count = 0;
-    VideoBox cgrabber = null;
 
     Mat frame = new Mat();
     MatOfByte mem = new MatOfByte();

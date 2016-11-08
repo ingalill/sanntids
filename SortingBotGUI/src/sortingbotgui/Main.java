@@ -16,14 +16,10 @@ import org.opencv.core.Core;
  */
 public class Main {
     
-    private static VideoBox videoBox;
-    
-    public static void main(String[] args) {
-        
+    public static void main(String[] args) {  
     System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
     // Create an objeckt of each  class
-    videoBox = new VideoBox();
-    
+   
     
     /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {

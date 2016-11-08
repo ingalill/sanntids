@@ -19,7 +19,7 @@ import org.opencv.core.MatOfByte;
 //import org.opencv.highgui.VideoCapture;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.videoio.VideoCapture;
-import sortingbot.server.Client;
+
 
 /**
  *

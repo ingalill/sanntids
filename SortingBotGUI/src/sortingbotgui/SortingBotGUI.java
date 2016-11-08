@@ -42,7 +42,7 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
     private boolean available;
     
     int count = 0;
-    VideoBox cgrabber = null;
+   // VideoBox cgrabber = null;
 
     Mat frame = new Mat();
     MatOfByte mem = new MatOfByte();
