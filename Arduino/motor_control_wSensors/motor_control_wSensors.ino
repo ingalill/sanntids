@@ -49,13 +49,13 @@ void back_off (int a)         //Move backward
 }
 void leftSpeed (int a)         //MChange speed on lef-side
 {
-  analogWrite (E2, a);
-  digitalWrite(M2, LOW);
+  analogWrite (E1, a);
+  digitalWrite(M1, LOW);
 }
 void rightSpeed (int a)         //MChange speed on lef-side
 {
-  analogWrite (E1, a);
-  digitalWrite(M1, HIGH);
+  analogWrite (E2, a);
+  digitalWrite(M2, HIGH);
 }
 void shortSensorOutput()
 {
