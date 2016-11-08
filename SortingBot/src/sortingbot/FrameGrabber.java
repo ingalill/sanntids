@@ -29,7 +29,7 @@ public class FrameGrabber extends TimerTask {
         currentFrame = new Mat();
         this.handler = imgH;
         this.box = vidG;
-        frameGrabberMode = 0;
+        frameGrabberMode = 1;
         //implement runnable
         frameGrabber = new Thread(this); // create a thread
         frameGrabber.start(); // start this thread
@@ -40,36 +40,31 @@ public class FrameGrabber extends TimerTask {
         currentFrame = new Mat();
         this.handler = imgH;
         this.box = vidG;
-        frameGrabberMode = 1;
+        frameGrabberMode = 2;
         Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
-        //implement runnable
-        //frameGrabber = new Thread(this); // create a thread
-        // frameGrabber.start(); // start this thread
     }
     
-    public FrameGrabber(Camera cam, VideoBox vidG){
+    public FrameGrabber(Camera cam, ImageHandler imgH){
         this.camera = cam.getCam();
+        this.handler = imgH;
         currentFrame = new Mat();
-        this.box = vidG;
-        frameGrabberMode = 2;
-        //implement runnable
-       // frameGrabber = new Thread(this); // create a thread
-      //  frameGrabber.start(); // start this thread
+        frameGrabberMode = 0;
+        Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
     }
     
     @Override
     public void run(){
         
         switch (frameGrabberMode) {
-            case 0: //Gui
+            case 1: //Gui
                 while(true){
                     box.putFrame(getFrame()); // legger currentframe inn i grabber. 
                 }
-            case 1: //Debug
+            case 2: //Debug
                 box.putFrame(handler.processFrame(getFrame()));
                 break;
             default: //odroid handling
-                //TODO
+                handler.processFrame(getFrame());
                 break;
         }
     }
