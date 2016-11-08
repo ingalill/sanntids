@@ -28,31 +28,31 @@ import org.opencv.core.Mat;
 import org.opencv.core.MatOfByte;
 import sortingbotgui.SortingBotGUI;
 
-public class Client extends javax.swing.JFrame implements ActionListener{
+public class Client extends javax.swing.JFrame implements ActionListener {
 
-   // private Mat frames;
+    // private Mat frames;
     private Socket socket;
-   // private PrintWriter output;
+    // private PrintWriter output;
     private DataInputStream input;
-    private HashMap<Component,String> controls;
-    
-     // definitions // from SortingBotGUI
+    private HashMap<Component, String> controls;
+
+    // definitions // from SortingBotGUI
     private DaemonThread myThread = null;
-    
+
     int count = 0;
 
     Mat frame = new Mat();
     MatOfByte mem = new MatOfByte();
     // ********* //
-    
-    
-    Client(){
-       
-       controls = new HashMap<Component,String>();
-       
+
+    Client() throws InterruptedException {
+
+        controls = new HashMap<Component, String>();
+
         SetupGui();
         initComponents();
-        
+        run();
+
         //Setup of the buttons that are avaible when starting the program
         // Buttons need .setEnabled() while checkboxes need .setSelected()
         jManuel.setEnabled(false);
@@ -64,8 +64,7 @@ public class Client extends javax.swing.JFrame implements ActionListener{
         jPause.setEnabled(false);
         jStop.setEnabled(false);
         jReset.setEnabled(false);
-        
-        
+
         // Adding Actionlisteners to the necesary buttons/all the buttons
         jManuel.addActionListener(this);
         jAuto.addActionListener(this);
@@ -76,6 +75,7 @@ public class Client extends javax.swing.JFrame implements ActionListener{
         jStop.addActionListener(this);
         jPlay.addActionListener(this);
         jPause.addActionListener(this);
+        jStart.addActionListener(this);
         jReset.addActionListener(this);
         jQuit.addActionListener(this);
         jGotBlue.addActionListener(this);
@@ -85,20 +85,21 @@ public class Client extends javax.swing.JFrame implements ActionListener{
         jPlacedOrange.addActionListener(this);
         jPlacedRed.addActionListener(this);
     }
-    
+
     /*
     
-    */
-     public void connectButtons(){
+     */
+    public void connectButtons() {
         controls.put(jManuel, "move manuel");
         controls.put(jAuto, "move auto");
-        controls.put(jAdvance, "advance");
+        controls.put(jAdvance, "move advance");
         controls.put(jRight, "move right");
         controls.put(jLeft, "move left");
-        controls.put(jBack, "back");
-        controls.put(jStop, "stop");
+        controls.put(jBack, "move back");
+        controls.put(jStop, "move stop");
         controls.put(jPlay, "video play");
         controls.put(jPause, "video pause");
+        controls.put(jStart, " start");
         controls.put(jReset, "reset");
         controls.put(jQuit, "quit");
         controls.put(jGotBlue, "gotblue");
@@ -106,11 +107,17 @@ public class Client extends javax.swing.JFrame implements ActionListener{
         controls.put(jGotRed, "gotred");
         controls.put(jPlacedBlue, "placedblue");
         controls.put(jPlacedOrange, "placedorange");
-        controls.put(jPlacedRed, "placedred");     
-        
+        controls.put(jPlacedRed, "placedred");
+
     }
-    
-   
+
+    /*
+        Send commands all the time
+     */
+    public void sendCommand() {
+
+    }
+
     // is going to ask for frames from the server
     public void run() throws InterruptedException {
         //We set up the scanner to receive user input
@@ -120,107 +127,99 @@ public class Client extends javax.swing.JFrame implements ActionListener{
             //output = new PrintWriter(socket.getOutputStream(), true);
             input = new DataInputStream(socket.getInputStream());
             System.out.println("Client started at: " + new Date());
-            
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                
+
+            /* Create and display the form */
+            java.awt.EventQueue.invokeLater(new Runnable() {
+                public void run() {
+
                     //new SortingBotGUI(videoBox).setVisible(true);
                     new SortingBotGUI().setVisible(true);
-                } 
-        });
-          
+                }
+            });
+
             //Again, here is the code that will run the client, this will continue looking for 
             //input from the user then it will send that info to the server.
             while (true) {
-              
-                try{
-                Thread.sleep(10000);
-                }catch(Exception e){}
+
+                try {
+                    Thread.sleep(10000);
+                } catch (Exception e) {
+                }
                 // Get the first integer, it should be the type of the message
                 // Type 1 means image
                 int msgType = input.readInt();
-          
+
                 System.out.println("Got message type: " + msgType);
-                               
+
 //                old way to get imgto mat to GUI side
 //                BufferedImage image = ImageIO.read(socket.getInputStream());
 //                Mat img = imgToMat(image);
 //                Gui.getImage(img);
-          
             }
         } catch (IOException exception) {
             System.out.println("Error client: " + exception);
         }
-        
+
     }
 
-    public BufferedImage putFrame() throws IOException{
-        return  ImageIO.read(socket.getInputStream());
+    public BufferedImage putFrame() throws IOException {
+        return ImageIO.read(socket.getInputStream());
     }
-    
-   
 
     // HERE COMES THE GUUUUI
-    
-     /*
+    /*
     Each code is performed after one of the button in GUI is pressed
     Change the print statment to do desired code to be executed.
     
     Note To Do. Probebly would behove us to switch to switch case.
-    */
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == jPlay){
-        System.out.println("Play With Me <3");
+        if (e.getSource() == jPlay) {
+            System.out.println("Play With Me <3");
         }
-        if(e.getSource() == jAdvance){
+        if (e.getSource() == jAdvance) {
             System.out.println("Advance");
         }
-        if(e.getSource() == jRight){
+        if (e.getSource() == jRight) {
             System.out.println("All-Right-y");
         }
-        if(e.getSource() == jLeft){
+        if (e.getSource() == jLeft) {
             System.out.println("Lefty loosy");
         }
-        if(e.getSource() == jBack){
+        if (e.getSource() == jBack) {
             System.out.println("Back up");
         }
-        if(e.getSource() == jStop){
+        if (e.getSource() == jStop) {
             System.out.println("HammerTime");
         }
-        if(e.getSource() == jPause){
+        if (e.getSource() == jPause) {
             System.out.println("Pause   :|  ");
         }
-        if(e.getSource() == jReset){
+        if (e.getSource() == jReset) {
             System.out.println("Reset");
         }
-        if(e.getSource() == jQuit){
+        if (e.getSource() == jQuit) {
             System.out.println("Quiting is for loosers...Looser");
         }
-        if(e.getSource() == jManuel){
+        if (e.getSource() == jManuel) {
             System.out.println("okay, fuck it, you do it then");
         }
-        if(e.getSource() == jAuto){
+        if (e.getSource() == jAuto) {
             System.out.println("FINE, I Will do it myself");
         }
     }
-    
-    
-    
-     // class of thread
-    class DaemonThread implements Runnable{
+
+    // class of thread
+    class DaemonThread implements Runnable {
+
         protected volatile boolean runnable = false;
 
         @Override
-        public  void run()
-        {
-            synchronized(this)
-            {
-                while(runnable)
-                {
-                    try
-                    {
+        public void run() {
+            synchronized (this) {
+                while (runnable) {
+                    try {
 //                       Mat img = client.putFrame();
 //                        //GetFrame Method
 //                        //Use GetImage Method in the bottom to get Mat image
@@ -231,28 +230,23 @@ public class Client extends javax.swing.JFrame implements ActionListener{
 //                        Image im = ImageIO.read(new ByteArrayInputStream(mem.toArray()));
 
                         BufferedImage buff = putFrame();
-                        Graphics g=jVideo.getGraphics();
+                        Graphics g = jVideo.getGraphics();
 
-                        if (g.drawImage(buff, 0, 0, getWidth(), getHeight() -150 , 0, 0, buff.getWidth(), buff.getHeight(), null))
-
-                        if(runnable == false)
-                        {
-                            System.out.println("GUI is going to wait()");
-                            this.wait();
+                        if (g.drawImage(buff, 0, 0, getWidth(), getHeight() - 150, 0, 0, buff.getWidth(), buff.getHeight(), null)) {
+                            if (runnable == false) {
+                                System.out.println("GUI is going to wait()");
+                                this.wait();
+                            }
                         }
-                     }
-                     catch(Exception ex)
-                     {
+                    } catch (Exception ex) {
                         System.out.println("Error, GUI image processing failed\n");
-                     }
+                    }
                 }
             }
-         }
-   } // end of deamonThread
-    
-    
-    
-       /**
+        }
+    } // end of deamonThread
+
+    /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
      * regenerated by the Form Editor.
@@ -330,12 +324,12 @@ public class Client extends javax.swing.JFrame implements ActionListener{
         javax.swing.GroupLayout jVideoLayout = new javax.swing.GroupLayout(jVideo);
         jVideo.setLayout(jVideoLayout);
         jVideoLayout.setHorizontalGroup(
-            jVideoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+                jVideoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 0, Short.MAX_VALUE)
         );
         jVideoLayout.setVerticalGroup(
-            jVideoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 356, Short.MAX_VALUE)
+                jVideoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 356, Short.MAX_VALUE)
         );
 
         jGotOrange.setText("Got Orange");
@@ -408,127 +402,127 @@ public class Client extends javax.swing.JFrame implements ActionListener{
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jGotBlue)
-                                .addGap(18, 18, 18)
-                                .addComponent(jPlacedBlue))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jGotOrange)
-                                .addGap(18, 18, 18)
-                                .addComponent(jPlacedOrange))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jGotRed)
-                                .addGap(18, 18, 18)
-                                .addComponent(jPlacedRed))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(85, 85, 85)
-                        .addComponent(jCheckLabel)))
-                .addGap(132, 132, 132)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jStart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jReset, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
-                    .addComponent(jQuit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(135, 135, 135)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jAdvance)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLeft, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(7, 7, 7)
-                        .addComponent(jStop)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jRight))
-                    .addComponent(jBack)
-                    .addComponent(jControlLabel))
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(582, 582, 582)
-                                .addComponent(jManuel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jAuto))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(42, 42, 42)
-                                .addComponent(jPlay)
-                                .addGap(18, 18, 18)
-                                .addComponent(jPause))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(93, 93, 93)
-                                .addComponent(jVideoLabel)))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jVideo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap())
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(18, 18, 18)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                                                        .addGroup(layout.createSequentialGroup()
+                                                                .addComponent(jGotBlue)
+                                                                .addGap(18, 18, 18)
+                                                                .addComponent(jPlacedBlue))
+                                                        .addGroup(layout.createSequentialGroup()
+                                                                .addComponent(jGotOrange)
+                                                                .addGap(18, 18, 18)
+                                                                .addComponent(jPlacedOrange))
+                                                        .addGroup(layout.createSequentialGroup()
+                                                                .addComponent(jGotRed)
+                                                                .addGap(18, 18, 18)
+                                                                .addComponent(jPlacedRed))))
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(85, 85, 85)
+                                                .addComponent(jCheckLabel)))
+                                .addGap(132, 132, 132)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jStart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jReset, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
+                                        .addComponent(jQuit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(135, 135, 135)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                                        .addComponent(jAdvance)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jLeft, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(7, 7, 7)
+                                                .addComponent(jStop)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jRight))
+                                        .addComponent(jBack)
+                                        .addComponent(jControlLabel))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                        .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addGroup(layout.createSequentialGroup()
+                                                                .addGap(582, 582, 582)
+                                                                .addComponent(jManuel)
+                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                                .addComponent(jAuto))
+                                                        .addGroup(layout.createSequentialGroup()
+                                                                .addGap(42, 42, 42)
+                                                                .addComponent(jPlay)
+                                                                .addGap(18, 18, 18)
+                                                                .addComponent(jPause))
+                                                        .addGroup(layout.createSequentialGroup()
+                                                                .addGap(93, 93, 93)
+                                                                .addComponent(jVideoLabel)))
+                                                .addGap(0, 0, Short.MAX_VALUE))
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addContainerGap()
+                                                .addComponent(jVideo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addContainerGap())
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jVideo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jVideoLabel)
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jPlay)
-                            .addComponent(jPause))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
-                        .addComponent(jCheckLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jGotBlue)
-                            .addComponent(jPlacedBlue))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jGotOrange)
-                            .addComponent(jPlacedOrange))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jPlacedRed)
-                            .addComponent(jGotRed)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(5, 5, 5)
-                                .addComponent(jControlLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jAdvance, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLeft)
-                                    .addComponent(jRight)
-                                    .addComponent(jStop)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(112, 112, 112)
-                                .addComponent(jBack)
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jAuto)
-                                    .addComponent(jManuel)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(49, 49, 49)
-                                .addComponent(jStart)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jReset)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jQuit)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jVideo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jVideoLabel)
+                                                .addGap(18, 18, 18)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(jPlay)
+                                                        .addComponent(jPause))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                                                .addComponent(jCheckLabel)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(jGotBlue)
+                                                        .addComponent(jPlacedBlue))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(jGotOrange)
+                                                        .addComponent(jPlacedOrange))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(jPlacedRed)
+                                                        .addComponent(jGotRed)))
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addGroup(layout.createSequentialGroup()
+                                                                .addGap(5, 5, 5)
+                                                                .addComponent(jControlLabel)
+                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                .addComponent(jAdvance, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addGap(18, 18, 18)
+                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                                        .addComponent(jLeft)
+                                                                        .addComponent(jRight)
+                                                                        .addComponent(jStop)))
+                                                        .addGroup(layout.createSequentialGroup()
+                                                                .addGap(112, 112, 112)
+                                                                .addComponent(jBack)
+                                                                .addGap(18, 18, 18)
+                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                                        .addComponent(jAuto)
+                                                                        .addComponent(jManuel)))
+                                                        .addGroup(layout.createSequentialGroup()
+                                                                .addGap(49, 49, 49)
+                                                                .addComponent(jStart)
+                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                                .addComponent(jReset)
+                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                                .addComponent(jQuit)))
+                                                .addGap(0, 0, Short.MAX_VALUE)))
+                                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>                        
 
-    private void jBackActionPerformed(java.awt.event.ActionEvent evt) {                                      
+    private void jBackActionPerformed(java.awt.event.ActionEvent evt) {
         // Drive Back
         jManuel.setEnabled(false);      //Deactivate start button
         jAdvance.setEnabled(true);     // Deactivate advance button
@@ -536,9 +530,9 @@ public class Client extends javax.swing.JFrame implements ActionListener{
         jLeft.setEnabled(true);        // Deactivate Left button
         jBack.setEnabled(false);       // Activate Back button
         jStop.setEnabled(true);
-    }                                     
+    }
 
-    private void jLeftActionPerformed(java.awt.event.ActionEvent evt) {                                      
+    private void jLeftActionPerformed(java.awt.event.ActionEvent evt) {
         // Drive Left
         jManuel.setEnabled(false);      //Deactivate start button
         jAdvance.setEnabled(true);     // Deactivate advance button
@@ -546,9 +540,9 @@ public class Client extends javax.swing.JFrame implements ActionListener{
         jLeft.setEnabled(false);       // Activate Left button
         jBack.setEnabled(true);        // Deactivate Back button
         jStop.setEnabled(true);
-    }                                     
+    }
 
-    private void jRightActionPerformed(java.awt.event.ActionEvent evt) {                                       
+    private void jRightActionPerformed(java.awt.event.ActionEvent evt) {
         // Drive Right
         jManuel.setEnabled(false);      //Deactivate start button
         jAdvance.setEnabled(true);     // Deactivate advance button
@@ -556,9 +550,9 @@ public class Client extends javax.swing.JFrame implements ActionListener{
         jLeft.setEnabled(true);        // Deactivate Left button
         jBack.setEnabled(true);        // Deactivate Back button
         jStop.setEnabled(true);
-    }                                      
+    }
 
-    private void jStartActionPerformed(java.awt.event.ActionEvent evt) {                                       
+    private void jStartActionPerformed(java.awt.event.ActionEvent evt) {
         // Start Driving in auto mode.
         jStart.setEnabled(false);
         jManuel.setEnabled(true);
@@ -568,9 +562,9 @@ public class Client extends javax.swing.JFrame implements ActionListener{
         jLeft.setEnabled(false);        // Deactivate Left button
         jBack.setEnabled(false);
         jReset.setEnabled(true);
-    }                                      
+    }
 
-    private void jStopActionPerformed(java.awt.event.ActionEvent evt) {                                      
+    private void jStopActionPerformed(java.awt.event.ActionEvent evt) {
         // Stop Bot driving.
         jManuel.setEnabled(false);
         jAuto.setEnabled(true);
@@ -579,9 +573,9 @@ public class Client extends javax.swing.JFrame implements ActionListener{
         jLeft.setEnabled(true);        // Deactivate Left button
         jBack.setEnabled(true);
         jStop.setEnabled(false);
-    }                                     
+    }
 
-    private void jPlayActionPerformed(java.awt.event.ActionEvent evt) {                                      
+    private void jPlayActionPerformed(java.awt.event.ActionEvent evt) {
         /// start button
         //webSource =new VideoCapture(0); // Video capture from defult cam
 
@@ -592,19 +586,18 @@ public class Client extends javax.swing.JFrame implements ActionListener{
         t.start();                      // Start Thread
         jPlay.setEnabled(false);  //Deactivate play button
         jPause.setEnabled(true);  // activate stop button
-    }                                     
+    }
 
-    private void jPauseActionPerformed(java.awt.event.ActionEvent evt) {                                       
+    private void jPauseActionPerformed(java.awt.event.ActionEvent evt) {
         /// stop button
         myThread.runnable = false;      //stop thread
         jPause.setEnabled(false);     // activate play button
         jPlay.setEnabled(true);      // deactivate stop button
 
         //webSource.release();            // stop capturing from cam
+    }
 
-    }                                      
-
-    private void jManuelActionPerformed(java.awt.event.ActionEvent evt) {                                        
+    private void jManuelActionPerformed(java.awt.event.ActionEvent evt) {
         // Code to enable manuel drive..
         jManuel.setEnabled(false);      //Deactivate start button
         jAuto.setEnabled(true);         // activate stop button
@@ -612,18 +605,18 @@ public class Client extends javax.swing.JFrame implements ActionListener{
         jRight.setEnabled(true);        // Deactivate Right button
         jLeft.setEnabled(true);         // Deactivate Left button
         jBack.setEnabled(true);         // Deactivate Back button
-        
-    }                                       
 
-    private void jPlacedOrangeActionPerformed(java.awt.event.ActionEvent evt) {                                              
+    }
+
+    private void jPlacedOrangeActionPerformed(java.awt.event.ActionEvent evt) {
         // Set true when colored object is in place
         //        if(color == place){
-            //            checkBox = jPlacedOrange.setSelected(true);
-            //        }
+        //            checkBox = jPlacedOrange.setSelected(true);
+        //        }
         System.out.println("Placed Orange");
-    }                                             
+    }
 
-    private void jAutoActionPerformed(java.awt.event.ActionEvent evt) {                                      
+    private void jAutoActionPerformed(java.awt.event.ActionEvent evt) {
         // Code to enable auto drive.
         jManuel.setEnabled(true);       //Deactivate start button
         jAuto.setEnabled(false);        // activate stop button
@@ -631,9 +624,9 @@ public class Client extends javax.swing.JFrame implements ActionListener{
         jRight.setEnabled(false);       // Deactivate Right button
         jLeft.setEnabled(false);        // Deactivate Left button
         jBack.setEnabled(false);        // Deactivate Back button
-    }                                     
+    }
 
-    private void jAdvanceActionPerformed(java.awt.event.ActionEvent evt) {                                         
+    private void jAdvanceActionPerformed(java.awt.event.ActionEvent evt) {
         // Drive Forward
         jManuel.setEnabled(false);      //Deactivate start button
         jAdvance.setEnabled(false);    // Activate advance button
@@ -641,9 +634,9 @@ public class Client extends javax.swing.JFrame implements ActionListener{
         jLeft.setEnabled(true);        // Deactivate Left button
         jBack.setEnabled(true);        // Deactivate Back button
         jStop.setEnabled(true);
-    }                                        
+    }
 
-    private void jResetActionPerformed(java.awt.event.ActionEvent evt) {                                       
+    private void jResetActionPerformed(java.awt.event.ActionEvent evt) {
         // start over
         jReset.setEnabled(false);
         jStart.setEnabled(true);
@@ -659,13 +652,13 @@ public class Client extends javax.swing.JFrame implements ActionListener{
         jPlacedBlue.setSelected(false);
         jPlacedOrange.setSelected(false);
         jPlacedRed.setSelected(false);
-    }                                      
+    }
 
-    private void jQuitActionPerformed(java.awt.event.ActionEvent evt) {                                      
+    private void jQuitActionPerformed(java.awt.event.ActionEvent evt) {
         System.out.println("Quit");
-    }                                     
-    
-    public void SetupGui(){
+    }
+
+    public void SetupGui() {
 //        System.loadLibrary(Core.NATIVE_LIBRARY_NAME); // load native library of opencv
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -690,15 +683,14 @@ public class Client extends javax.swing.JFrame implements ActionListener{
         }
         //</editor-fold>
 
-        /* Create and display the form */ 
+        /* Create and display the form */
     }
-    
-    
-        //Get img(image) From Client and use this method to use video in jVideo(Screen in GUI)
-    public Mat getImage(Mat img){
+
+    //Get img(image) From Client and use this method to use video in jVideo(Screen in GUI)
+    public Mat getImage(Mat img) {
         return img;
     }
-    
+
     // Variables declaration - do not modify                     
     private javax.swing.JButton jAdvance;
     private javax.swing.JButton jAuto;
@@ -723,6 +715,5 @@ public class Client extends javax.swing.JFrame implements ActionListener{
     private javax.swing.JPanel jVideo;
     private javax.swing.JLabel jVideoLabel;
     // End of variables declaration     
-    
-    
+
 } // end of class

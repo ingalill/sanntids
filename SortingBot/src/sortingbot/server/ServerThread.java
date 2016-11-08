@@ -31,7 +31,7 @@ public class ServerThread implements Runnable {
 
     private DataInputStream dataInputStream = null;
     private Socket serverSocket = null;
-    //private BufferedReader infromClient;
+    private BufferedReader infromClient;
     private DataOutputStream outputBuffer;
    // private PrintStream printStream; // write out to itself.
     private CommandHandler command = new CommandHandler();
@@ -48,22 +48,13 @@ public class ServerThread implements Runnable {
 
     @Override
     public void run() {
-
-        String line ="";
         
         try {
 
             outputBuffer = new DataOutputStream(serverSocket.getOutputStream());
-            dataInputStream = new DataInputStream(serverSocket.getInputStream());
-            //infromClient =  new BufferedReader(new InputStreamReader(System.in));
+            dataInputStream = new DataInputStream(serverSocket.getInputStream()); // denne skal brukes
+            infromClient =  new BufferedReader(new InputStreamReader(System.in));
             
-      
-      /*      if(command.check(line).equalsIgnoreCase("quit")){
-                System.out.println("goodbye");
-            } else{
-                System.out.println(command.check(line));
-            }
-        */    
             
             if (serverSocket != null && dataInputStream != null) {
                 try { // send frames skal inn her
@@ -94,8 +85,6 @@ public class ServerThread implements Runnable {
     }
     
     
-  
-
     /*
     *Take an Mat and convert it to an BufferedImage
     *@Param Mat input.

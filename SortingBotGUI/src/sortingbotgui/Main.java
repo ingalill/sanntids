@@ -16,17 +16,25 @@ import org.opencv.core.Core;
  */
 public class Main {
     
-    public static void main(String[] args) {  
+   private static Client client; 
+    public static void main(String[] args) throws InterruptedException {  
     System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
     // Create an objeckt of each  class
+    client = new Client();
+  
    
     
     /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                
-                    //new SortingBotGUI(videoBox).setVisible(true);
-                    new SortingBotGUI().setVisible(true);
+        java.awt.EventQueue.invokeLater(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            // new SortingBotGUI().setVisible(true);
+                            new Client().setVisible(true); // start gui
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                 } 
             
         });
