@@ -33,7 +33,7 @@ public class CommandList {
      * Adding new element in the list.
      */
     private void addCommands(){
-        commandlist.add(new GetFrame());
+      //  commandlist.add(new GetFrame());
         commandlist.add(new GUIButton());
     }
 }

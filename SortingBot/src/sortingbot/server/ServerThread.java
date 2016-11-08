@@ -58,12 +58,12 @@ public class ServerThread implements Runnable {
             //infromClient =  new BufferedReader(new InputStreamReader(System.in));
             
       
-            if(command.check(line).equalsIgnoreCase("quit")){
+      /*      if(command.check(line).equalsIgnoreCase("quit")){
                 System.out.println("goodbye");
             } else{
                 System.out.println(command.check(line));
             }
-            
+        */    
             
             if (serverSocket != null && dataInputStream != null) {
                 try { // send frames skal inn her

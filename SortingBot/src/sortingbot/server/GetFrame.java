@@ -37,7 +37,7 @@ public class GetFrame implements ServerCommand {
     
     @Override 
     public String getLongDesc(){
-        return getShortDesc() + "from the server";
+        return getShortDesc() + " from the server";
     }
     
     
