@@ -22,13 +22,17 @@ public class ArduinoDriver extends Thread{
     private boolean objectCaught;
     private String direction;
     
-    private final String cForward = "w70 "; //Move forward at speed 50
+    private final String cForward = "w100 "; //Move forward 
     private final String cStop="w0 "; //Stop
-    private final String cBackward = "s70 "; //Move backward at speed 50
-    private final String cRight = "d100 "; //Turn right at speed 70
-    private final String cLeft = "a100 "; //Turn left at speed 70
+    private final String cBackward = "s70 "; //Move backward 
+    private final String cRight = "d100 "; //Turn right 
+    private final String cLeft = "a100 "; //Turn left 
     private final String cReadSS = "vss "; //Read value from the short range sensor
     private final String cReadLS = "vls "; //Read value from the long range sensor
+    private final String cRightFast="r100 "; //Set right wheels to full speed
+    private final String cRightSlow="r70 "; //Set right wheels to standard speed
+    private final String cLeftFast="l100 "; //Set left wheels to full speed
+    private final String cLeftSlow="l70 "; //Set left wheels to standard speed
     
     //Todo:
     // Manuel mode
@@ -82,12 +86,12 @@ public class ArduinoDriver extends Thread{
             // the object no longer is in the camera view
              while((commandBox.getObjectFound())&&(!objectCaught)&&(commandBox.isAutoDrive())){
                 if(commandBox.getAdjustedDirection()>4){
-                    communication.sendCommand("r100 ");
-                    communication.sendCommand("l70 ");
+                    communication.sendCommand(cRightFast);
+                    communication.sendCommand(cLeftSlow);
                     //System.out.println("Turn left");
                 } else if(commandBox.getAdjustedDirection()<-4){
-                    communication.sendCommand("l100 ");
-                    communication.sendCommand("r70 ");
+                    communication.sendCommand(cLeftFast);
+                    communication.sendCommand(cRightSlow);
                     //System.out.println("Turn right");
                 } else if((commandBox.getAdjustedDirection()<4)&&(commandBox.getAdjustedDirection()>-4)){
                     communication.sendCommand(cForward);
@@ -114,7 +118,7 @@ public class ArduinoDriver extends Thread{
         while(!located){
             commandBox.setState(3);
             communication.sendCommand(cForward);
-            communication.sendCommand("r70 ");
+            communication.sendCommand(cRightSlow);
             while((!commandBox.isGoalFound()&&(objectCaught)&&(commandBox.isAutoDrive()))){
                 checkIfCaught();
             }
@@ -140,12 +144,12 @@ public class ArduinoDriver extends Thread{
            while((objectCaught)&&(commandBox.isGoalFound())&&(commandBox.isAutoDrive())){
                
                 if(commandBox.getAdjustedDirection()>4){
-                    communication.sendCommand("r70 ");
-                    communication.sendCommand("l50 ");
+                    communication.sendCommand(cRightFast);
+                    communication.sendCommand(cLeftSlow);
                     //System.out.println("Turn left");
                 } else if(commandBox.getAdjustedDirection()<-4){
-                    communication.sendCommand("l70 ");
-                    communication.sendCommand("r50 ");
+                    communication.sendCommand(cLeftFast);
+                    communication.sendCommand(cRightSlow);
                     //System.out.println("Turn right");
                 } else if((commandBox.getAdjustedDirection()<4)&&(commandBox.getAdjustedDirection()>-4)){
                     communication.sendCommand(cForward);
