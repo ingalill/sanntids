@@ -11,7 +11,6 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
-import java.net.DatagramPacket;
 import java.net.Socket;
 import java.util.HashMap;
 import java.util.logging.Level;
@@ -45,7 +44,7 @@ public class ServerThread implements Runnable {
     public ServerThread(Socket serverSocket, VideoBox videoBox) {
         this.serverSocket = serverSocket;
         this.videoBox = videoBox;
-        commands = new HashMap<String, ServerCommand>();
+        commands = new HashMap<>();
     }
 
     @Override

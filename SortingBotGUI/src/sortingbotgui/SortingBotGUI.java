@@ -40,7 +40,7 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
     // definitions
     private DaemonThread myThread = null;
     private Client client;
-        private HashMap<Object, String> controls;
+    private HashMap<Object, String> controls;
     
     int count = 0;
  
@@ -51,10 +51,12 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
     /**
      * Creates new form SortingBotGUI
      */
-    public SortingBotGUI() {
+    public SortingBotGUI() throws InterruptedException {
     
         SetupGui();
         initComponents();
+        controls = new HashMap<>();
+        client = new Client();
         
         //Setup of the buttons that are avaible when starting the program
         // Buttons need .setEnabled() while checkboxes need .setSelected()

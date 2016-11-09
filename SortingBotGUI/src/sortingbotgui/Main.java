@@ -22,7 +22,6 @@ public class Main {
     client = new Client();
     client.run();
 
-   
     
     
     /* Create and display the form */
@@ -31,8 +30,8 @@ public class Main {
                     @Override
                     public void run() {
                         try {
-                            // new SortingBotGUI().setVisible(true);
-                            new Client().setVisible(true); // start gui
+                            new SortingBotGUI().setVisible(true);
+                            //new Client().setVisible(true); // start gui
                             System.out.println("BLIR DETTE KJØRT??? ER PÅ GUI DEL I MAIN");
                             
                         } catch (InterruptedException ex) {
