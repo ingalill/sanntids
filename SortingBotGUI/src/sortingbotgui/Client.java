@@ -45,7 +45,7 @@ public class Client extends javax.swing.JFrame implements ActionListener {
     MatOfByte mem = new MatOfByte();
     // ********* //
 
-    Client() throws InterruptedException {
+    public Client() throws InterruptedException {
 
         controls = new HashMap<Component, String>();
 

@@ -39,7 +39,6 @@ public class ServerThread implements Runnable {
     private VideoBox videoBox;
     
     // test
-    DatagramPacket packet;
 
     public ServerThread(Socket serverSocket, VideoBox videoBox) {
         this.serverSocket = serverSocket;

@@ -5,7 +5,6 @@
  */
 package sortingbotgui;
 
-import java.net.MalformedURLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.opencv.core.Core;
@@ -21,8 +20,6 @@ public class Main {
     System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
     // Create an objeckt of each  class
     client = new Client();
-  
-   
     
     /* Create and display the form */
         java.awt.EventQueue.invokeLater(
