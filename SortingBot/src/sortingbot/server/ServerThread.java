@@ -83,7 +83,6 @@ public class ServerThread implements Runnable {
 
     }
     
-    
     /*
     *Take an Mat and convert it to an BufferedImage
     *@Param Mat input.

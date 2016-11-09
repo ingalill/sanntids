@@ -6,8 +6,8 @@
 package sortingbotgui;
 
 /**
- *
- * @author inga lill bjolstad
+ * 
+ * @author inga lill bjolstad og aleksander
  */
 import java.awt.Component;
 import java.awt.Graphics;
@@ -20,6 +20,8 @@ import java.util.Date;
 import java.util.HashMap;
 //We need a Scanner to receive input from the user
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -87,9 +89,10 @@ public class Client extends javax.swing.JFrame implements ActionListener {
     }
 
     /*
-    
+     * Connects the gui buttons to a string in a HashMap
+     * The String will be the command recognized on the serverside. 
      */
-    public void connectButtons() {
+    public void putButtons() {
         controls.put(jManuel, "move manuel");
         controls.put(jAuto, "move auto");
         controls.put(jAdvance, "move advance");
@@ -132,8 +135,13 @@ public class Client extends javax.swing.JFrame implements ActionListener {
             java.awt.EventQueue.invokeLater(new Runnable() {
                 public void run() {
 
-                    //new SortingBotGUI(videoBox).setVisible(true);
-                    new SortingBotGUI().setVisible(true);
+                    try {
+                       //new SortingBotGUI().setVisible(true);
+                        new Client().setVisible(true);
+                        
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             });
 
@@ -142,7 +150,7 @@ public class Client extends javax.swing.JFrame implements ActionListener {
             while (true) {
 
                 try {
-                    Thread.sleep(10000);
+                    Thread.sleep(1000);
                 } catch (Exception e) {
                 }
                 // Get the first integer, it should be the type of the message

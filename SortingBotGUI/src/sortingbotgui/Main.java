@@ -11,7 +11,7 @@ import org.opencv.core.Core;
 
 /**
  *
- * @author Aleksander
+ * @author Aleksander og inga lill
  */
 public class Main {
     
@@ -20,6 +20,9 @@ public class Main {
     System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
     // Create an objeckt of each  class
     client = new Client();
+
+   
+    
     
     /* Create and display the form */
         java.awt.EventQueue.invokeLater(
@@ -29,6 +32,8 @@ public class Main {
                         try {
                             // new SortingBotGUI().setVisible(true);
                             new Client().setVisible(true); // start gui
+                            
+                            
                         } catch (InterruptedException ex) {
                             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
                         }

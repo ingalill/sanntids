@@ -44,12 +44,13 @@ public class Server extends Thread {
                 output = new PrintWriter(socket.getOutputStream(), true);
             
                 //Tell the client that he/she has connected
-                output.println("You have connected at: " + new Date());
-
+               output.println("You have connected at: " + new Date());
+                                  
+               
                 //test
                 for (int i = 0; i < maxClients; i++) {
                     if (threads[i] == null) {
-                        threads[i] = new ServerThread(socket, videoBox);
+                        threads[i] = new ServerThread(socket, videoBox); // new thread to handle the connection 
                         new Thread(threads[i]).start();
                         break;
                     }
