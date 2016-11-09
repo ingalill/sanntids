@@ -1,7 +1,7 @@
 /*
 * http://stackoverflow.com/questions/24182610/java-socket-server-client-to-client-file-transfer 
 * http://www.codeproject.com/Questions/898073/java-How-to-send-a-multiple-images-over-socket?arn=9 
-*/
+ */
 package sortingbot.server;
 
 import java.awt.image.BufferedImage;
@@ -13,6 +13,7 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.DatagramPacket;
 import java.net.Socket;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.opencv.core.Mat;
@@ -24,42 +25,42 @@ import javax.imageio.ImageIO;
  * @author inga lill bjolstad
  */
 public class ServerThread implements Runnable {
-    // send a frame from the server to the client.
-    // from videograbber/videobox.
-    // get a mat and send it to the client
-    // get Frame from server and send it to client
 
     private DataInputStream dataInputStream = null;
     private Socket serverSocket = null;
     private BufferedReader infromClient;
     private DataOutputStream outputBuffer;
-   // private PrintStream printStream; // write out to itself.
-    private CommandHandler command = new CommandHandler();
+    // private PrintStream printStream; // write out to itself.
 
     private VideoBox videoBox;
-    
-    // test
 
+    private HashMap<String, ServerCommand> commands;
+
+    /**
+     * Constructor
+     *
+     * @param serverSocket
+     * @param videoBox
+     */
     public ServerThread(Socket serverSocket, VideoBox videoBox) {
         this.serverSocket = serverSocket;
         this.videoBox = videoBox;
+        commands = new HashMap<String, ServerCommand>();
     }
 
     @Override
     public void run() {
-        
+
         try {
 
             outputBuffer = new DataOutputStream(serverSocket.getOutputStream());
             dataInputStream = new DataInputStream(serverSocket.getInputStream()); // denne skal brukes
-            infromClient =  new BufferedReader(new InputStreamReader(System.in));
-            
-            
+            infromClient = new BufferedReader(new InputStreamReader(System.in));
+
             if (serverSocket != null && dataInputStream != null) {
                 try { // send frames skal inn her
-                    
-                    
-                   //GetFrame klassen?
+
+                    //GetFrame klassen?
                     int type = 1;
                     System.out.println("Sending type " + type + " to client");
                     outputBuffer.writeInt(type); //  Write type of the message (1 = image)
@@ -69,6 +70,16 @@ public class ServerThread implements Runnable {
                     // SEND SIZE OF THE PACKET!
                     int size = 2; // fiks
 
+                    String line = infromClient.readLine();
+                    CommandParser parser = new CommandParser(line);
+                    
+                    String command = parser.getName(); // eks move
+                    String[] arguments = parser.getArgArray();     // eks left                
+                    ServerCommand cmd = commands.get(command);
+                    if (cmd != null) {
+                        cmd.process(command, arguments);
+                    }
+                 
                     Thread.sleep(1000);
                 } catch (IOException e) {
                     System.err.println("IOException:  " + e);
@@ -76,13 +87,19 @@ public class ServerThread implements Runnable {
                     Logger.getLogger(ServerThread.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-
         } catch (IOException ex) {
             Logger.getLogger(ServerThread.class.getName()).log(Level.SEVERE, null, ex);
         }
+    } // end of run
 
+    /**
+     * Add commands to the hashmap
+     */
+    public void addCommands() {
+        commands.put("move", new MoveCommand());
+        commands.put("video", new VideoCommand());
     }
-    
+
     /*
     *Take an Mat and convert it to an BufferedImage
     *@Param Mat input.

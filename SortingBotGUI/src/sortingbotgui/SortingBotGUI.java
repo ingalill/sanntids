@@ -21,6 +21,7 @@ import org.opencv.core.MatOfByte;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.videoio.VideoCapture;
 import java.net.MalformedURLException;
+import java.util.HashMap;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
@@ -39,10 +40,10 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
     // definitions
     private DaemonThread myThread = null;
     private Client client;
-    private boolean available;
+        private HashMap<Object, String> controls;
     
     int count = 0;
-   // VideoBox cgrabber = null;
+ 
 
     Mat frame = new Mat();
     MatOfByte mem = new MatOfByte();
@@ -51,8 +52,7 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
      * Creates new form SortingBotGUI
      */
     public SortingBotGUI() {
-    //public SortingBotGUI(VideoBox abox)  {
-        //cgrabber = abox;
+    
         SetupGui();
         initComponents();
         
@@ -77,6 +77,7 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
         jBack.addActionListener(this);
         jStop.addActionListener(this);
         jPlay.addActionListener(this);
+        jStart.addActionListener(this);
         jPause.addActionListener(this);
         jReset.addActionListener(this);
         jQuit.addActionListener(this);
@@ -88,6 +89,31 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
         jPlacedRed.addActionListener(this);
        
     }
+    
+      /*
+     * Connects the gui buttons to a string in a HashMap
+     * The String will be the command recognized on the serverside. 
+     */
+    public void putButtons() {
+        controls.put(jManuel, "move manuel");
+        controls.put(jAuto, "move auto");
+        controls.put(jAdvance, "move advance");
+        controls.put(jRight, "move right");
+        controls.put(jLeft, "move left");
+        controls.put(jBack, "move back");
+        controls.put(jStop, "move stop");
+        controls.put(jPlay, "video play");
+        controls.put(jPause, "video pause");
+        controls.put(jStart, " start");
+        controls.put(jReset, "reset");
+        controls.put(jQuit, "quit");
+        controls.put(jGotBlue, "gotblue");
+        controls.put(jGotOrange, "gotorange");
+        controls.put(jGotRed, "gotred");
+        controls.put(jPlacedBlue, "placedblue");
+        controls.put(jPlacedOrange, "placedorange");
+        controls.put(jPlacedRed, "placedred");
+    }
 
     /*
     Each code is performed after one of the button in GUI is pressed
@@ -95,39 +121,44 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
     
     Note To Do. Probebly would behove us to switch to switch case.
     */
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == jPlay){
-        System.out.println("Play With Me <3");
+       @Override
+    public void actionPerformed(ActionEvent e) { // switch case?
+        // add to the queue
+        Object control = e.getSource(); // which button was pressed
+        String commandToSend = controls.get(control);
+        System.out.println("Command to send: " + commandToSend);
+        
+        if (control == jPlay) {
+            System.out.println("Play With Me <3");
         }
-        if(e.getSource() == jAdvance){
+        if (control== jAdvance) {
             System.out.println("Advance");
         }
-        if(e.getSource() == jRight){
+        if (control == jRight) {
             System.out.println("All-Right-y");
         }
-        if(e.getSource() == jLeft){
+        if (control== jLeft) {
             System.out.println("Lefty loosy");
         }
-        if(e.getSource() == jBack){
+        if (control== jBack) {
             System.out.println("Back up");
         }
-        if(e.getSource() == jStop){
+        if (control == jStop) {
             System.out.println("HammerTime");
         }
-        if(e.getSource() == jPause){
+        if (control == jPause) {
             System.out.println("Pause   :|  ");
         }
-        if(e.getSource() == jReset){
+        if (control == jReset) {
             System.out.println("Reset");
         }
-        if(e.getSource() == jQuit){
+        if (control == jQuit) {
             System.out.println("Quiting is for loosers...Looser");
         }
-        if(e.getSource() == jManuel){
+        if (control == jManuel) {
             System.out.println("okay, fuck it, you do it then");
         }
-        if(e.getSource() == jAuto){
+        if (control == jAuto) {
             System.out.println("FINE, I Will do it myself");
         }
     }

@@ -6,7 +6,7 @@
 package sortingbotgui;
 
 /**
- * 
+ *
  * @author inga lill bjolstad og aleksander
  */
 import java.awt.Component;
@@ -30,13 +30,13 @@ import org.opencv.core.Mat;
 import org.opencv.core.MatOfByte;
 import sortingbotgui.SortingBotGUI;
 
-public class Client extends javax.swing.JFrame implements ActionListener {
+public class Client extends javax.swing.JFrame implements ActionListener, Runnable {
 
     // private Mat frames;
     private Socket socket;
     // private PrintWriter output;
     private DataInputStream input;
-    private HashMap<Component, String> controls;
+    private HashMap<Object, String> controls;
 
     // definitions // from SortingBotGUI
     private DaemonThread myThread = null;
@@ -49,11 +49,11 @@ public class Client extends javax.swing.JFrame implements ActionListener {
 
     public Client() throws InterruptedException {
 
-        controls = new HashMap<Component, String>();
+        controls = new HashMap<>();
 
         SetupGui();
         initComponents();
-        run();
+        run(); // run the client
 
         //Setup of the buttons that are avaible when starting the program
         // Buttons need .setEnabled() while checkboxes need .setSelected()
@@ -88,6 +88,67 @@ public class Client extends javax.swing.JFrame implements ActionListener {
         jPlacedRed.addActionListener(this);
     }
 
+    // is going to ask for frames from the server
+    @Override
+    public void run() {
+        //We set up the scanner to receive user input
+        Scanner scanner = new Scanner(System.in);
+        try {
+            socket = new Socket("localhost", 5000);
+            //output = new PrintWriter(socket.getOutputStream(), true);
+            input = new DataInputStream(socket.getInputStream());
+            System.out.println("Client started at: " + new Date());
+
+            /* Create and display the form */
+            /* java.awt.EventQueue.invokeLater(new Runnable() {
+                public void run() {
+
+                    try {
+                       //new SortingBotGUI().setVisible(true);
+                        new Client().setVisible(true);
+                        
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            });*/
+            
+            
+            
+            
+            while (true) {
+
+                try {
+                    Thread.sleep(1000); //wait instead of sleep. consumer
+                } catch (Exception e) {
+                }
+                // Get the first integer, it should be the type of the message
+                // Type 1 means image
+                int msgType = input.readInt();
+
+                System.out.println("Got message type: " + msgType);
+
+//                old way to get imgto mat to GUI side
+//                BufferedImage image = ImageIO.read(socket.getInputStream());
+//                Mat img = imgToMat(image);
+//                Gui.getImage(img);
+            }
+        } catch (IOException exception) {
+            System.out.println("Error client: " + exception);
+        }
+
+    }
+
+    /**
+     * Get the image from the server as a BufferedImage
+     *
+     * @return the image we get from the server
+     * @throws IOException
+     */
+    public BufferedImage putFrame() throws IOException {
+        return ImageIO.read(socket.getInputStream());
+    }
+
     /*
      * Connects the gui buttons to a string in a HashMap
      * The String will be the command recognized on the serverside. 
@@ -111,70 +172,12 @@ public class Client extends javax.swing.JFrame implements ActionListener {
         controls.put(jPlacedBlue, "placedblue");
         controls.put(jPlacedOrange, "placedorange");
         controls.put(jPlacedRed, "placedred");
-
     }
 
-    /*
-        Send commands all the time
+    /**
+     * ***********************************************************************
      */
-    public void sendCommand() {
-
-    }
-
-    // is going to ask for frames from the server
-    public void run() throws InterruptedException {
-        //We set up the scanner to receive user input
-        Scanner scanner = new Scanner(System.in);
-        try {
-            socket = new Socket("localhost", 5000);
-            //output = new PrintWriter(socket.getOutputStream(), true);
-            input = new DataInputStream(socket.getInputStream());
-            System.out.println("Client started at: " + new Date());
-
-            /* Create and display the form */
-            java.awt.EventQueue.invokeLater(new Runnable() {
-                public void run() {
-
-                    try {
-                       //new SortingBotGUI().setVisible(true);
-                        new Client().setVisible(true);
-                        
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-            });
-
-            //Again, here is the code that will run the client, this will continue looking for 
-            //input from the user then it will send that info to the server.
-            while (true) {
-
-                try {
-                    Thread.sleep(1000);
-                } catch (Exception e) {
-                }
-                // Get the first integer, it should be the type of the message
-                // Type 1 means image
-                int msgType = input.readInt();
-
-                System.out.println("Got message type: " + msgType);
-
-//                old way to get imgto mat to GUI side
-//                BufferedImage image = ImageIO.read(socket.getInputStream());
-//                Mat img = imgToMat(image);
-//                Gui.getImage(img);
-            }
-        } catch (IOException exception) {
-            System.out.println("Error client: " + exception);
-        }
-
-    }
-
-    public BufferedImage putFrame() throws IOException {
-        return ImageIO.read(socket.getInputStream());
-    }
-
-    // HERE COMES THE GUUUUI
+    // HERE COMES THE GUUUUI //
     /*
     Each code is performed after one of the button in GUI is pressed
     Change the print statment to do desired code to be executed.
@@ -182,38 +185,43 @@ public class Client extends javax.swing.JFrame implements ActionListener {
     Note To Do. Probebly would behove us to switch to switch case.
      */
     @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == jPlay) {
+    public void actionPerformed(ActionEvent e) { // switch case?
+        // add to the queue
+        Object control = e.getSource(); // which button was pressed
+        String commandToSend = controls.get(control);
+        System.out.println("Command to send: " + commandToSend);
+        
+        if (control == jPlay) {
             System.out.println("Play With Me <3");
         }
-        if (e.getSource() == jAdvance) {
+        if (control== jAdvance) {
             System.out.println("Advance");
         }
-        if (e.getSource() == jRight) {
+        if (control == jRight) {
             System.out.println("All-Right-y");
         }
-        if (e.getSource() == jLeft) {
+        if (control== jLeft) {
             System.out.println("Lefty loosy");
         }
-        if (e.getSource() == jBack) {
+        if (control== jBack) {
             System.out.println("Back up");
         }
-        if (e.getSource() == jStop) {
+        if (control == jStop) {
             System.out.println("HammerTime");
         }
-        if (e.getSource() == jPause) {
+        if (control == jPause) {
             System.out.println("Pause   :|  ");
         }
-        if (e.getSource() == jReset) {
+        if (control == jReset) {
             System.out.println("Reset");
         }
-        if (e.getSource() == jQuit) {
+        if (control == jQuit) {
             System.out.println("Quiting is for loosers...Looser");
         }
-        if (e.getSource() == jManuel) {
+        if (control == jManuel) {
             System.out.println("okay, fuck it, you do it then");
         }
-        if (e.getSource() == jAuto) {
+        if (control == jAuto) {
             System.out.println("FINE, I Will do it myself");
         }
     }

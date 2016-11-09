@@ -8,6 +8,7 @@ package sortingbot.server;
 import java.util.ArrayList;
 
 /**
+ * KAN SLETTES???????
  * @version 01.11.2016
  * @author inga lill bjølstad
  */
@@ -33,7 +34,8 @@ public class CommandList {
      * Adding new element in the list.
      */
     private void addCommands(){
-      //  commandlist.add(new GetFrame());
-        commandlist.add(new GUIButton());
+       commandlist.add(new GetFrame());
+       commandlist.add(new MoveCommand());
+       commandlist.add(new VideoCommand());
     }
 }

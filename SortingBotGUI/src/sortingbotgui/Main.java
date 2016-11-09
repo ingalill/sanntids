@@ -20,6 +20,7 @@ public class Main {
     System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
     // Create an objeckt of each  class
     client = new Client();
+    client.run();
 
    
     
@@ -32,7 +33,7 @@ public class Main {
                         try {
                             // new SortingBotGUI().setVisible(true);
                             new Client().setVisible(true); // start gui
-                            
+                            System.out.println("BLIR DETTE KJØRT??? ER PÅ GUI DEL I MAIN");
                             
                         } catch (InterruptedException ex) {
                             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
