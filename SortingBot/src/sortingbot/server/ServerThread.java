@@ -10,14 +10,13 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.PrintStream;
 import java.net.Socket;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.opencv.core.Mat;
 import sortingbot.VideoBox;
-import javax.imageio.ImageIO;
+
 
 /**
  * @date 18.10.2016
@@ -51,15 +50,13 @@ public class ServerThread implements Runnable {
     public void run() {
 
         try {
-
             outputBuffer = new DataOutputStream(serverSocket.getOutputStream());
             dataInputStream = new DataInputStream(serverSocket.getInputStream()); // denne skal brukes
             infromClient = new BufferedReader(new InputStreamReader(System.in));
 
             if (serverSocket != null && dataInputStream != null) {
-                try { // send frames skal inn her
+                try { 
 
-                    //GetFrame klassen?
                     int type = 1;
                     System.out.println("Sending type " + type + " to client");
                     outputBuffer.writeInt(type); //  Write type of the message (1 = image)
@@ -67,8 +64,7 @@ public class ServerThread implements Runnable {
                     // !!! ImageIO.write(matToImg(videoBox.getFrame()), "png", outputBuffer);
                     //printStream.flush();
                     // SEND SIZE OF THE PACKET!
-                    int size = 2; // fiks
-
+                   
                     String line = infromClient.readLine();
                     CommandParser parser = new CommandParser(line);
                     
@@ -95,8 +91,9 @@ public class ServerThread implements Runnable {
      * Add commands to the hashmap
      */
     public void addCommands() {
-        commands.put("move", new MoveCommand());
+        commands.put("control", new ControlCommand());
         commands.put("video", new VideoCommand());
+        commands.put("frame", new FrameCommand());
     }
 
     /*

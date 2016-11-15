@@ -34,8 +34,8 @@ public class CommandList {
      * Adding new element in the list.
      */
     private void addCommands(){
-       commandlist.add(new GetFrame());
-       commandlist.add(new MoveCommand());
+       commandlist.add(new FrameCommand());
+       commandlist.add(new ControlCommand());
        commandlist.add(new VideoCommand());
     }
 }

@@ -1,10 +1,8 @@
 package sortingbot.server;
 
-import java.awt.image.BufferedImage;
 import java.net.*;
 import java.util.*;
 import java.io.*;
-import org.opencv.core.Mat;
 import sortingbot.VideoBox;
 
 /**
@@ -43,7 +41,7 @@ public class Server extends Thread {
                 //Create the streams
                 output = new PrintWriter(socket.getOutputStream(), true);
             
-                //Tell the client that he/she has connected
+                //Tell the client that he has connected
                output.println("You have connected at: " + new Date());
                                   
                

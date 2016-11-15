@@ -41,11 +41,10 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
     private DaemonThread myThread = null;
     private Client client;
     private HashMap<Object, String> controls;
+ 
     
     int count = 0;
- 
-
-    Mat frame = new Mat();
+     Mat frame = new Mat();
     MatOfByte mem = new MatOfByte();
 
     /**
@@ -97,24 +96,25 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
      * The String will be the command recognized on the serverside. 
      */
     public void putButtons() {
-        controls.put(jManuel, "move manuel");
-        controls.put(jAuto, "move auto");
-        controls.put(jAdvance, "move advance");
-        controls.put(jRight, "move right");
-        controls.put(jLeft, "move left");
-        controls.put(jBack, "move back");
-        controls.put(jStop, "move stop");
-        controls.put(jPlay, "video play");
-        controls.put(jPause, "video pause");
-        controls.put(jStart, " start");
-        controls.put(jReset, "reset");
-        controls.put(jQuit, "quit");
-        controls.put(jGotBlue, "gotblue");
-        controls.put(jGotOrange, "gotorange");
-        controls.put(jGotRed, "gotred");
-        controls.put(jPlacedBlue, "placedblue");
-        controls.put(jPlacedOrange, "placedorange");
-        controls.put(jPlacedRed, "placedred");
+        controls.put(jManuel, "control manuel");
+        controls.put(jAuto,  "control auto");
+        controls.put(jAdvance, "control advance");
+        controls.put(jRight, "control right");
+        controls.put(jLeft,  "control left");
+        controls.put(jBack,  "control back");
+        controls.put(jStop,  "control stop");
+        controls.put(jStart, "control start");
+        controls.put(jReset, "control reset");
+        controls.put(jQuit,  "control quit");
+        
+        controls.put(jPlay,  "video play");
+        controls.put(jPause, "video pause");       
+        controls.put(jGotBlue, "video gotblue");
+        controls.put(jGotOrange, "video gotorange");
+        controls.put(jGotRed, "video gotred");
+        controls.put(jPlacedBlue, "video placedblue");
+        controls.put(jPlacedOrange, "video placedorange");
+        controls.put(jPlacedRed, "video placedred");
     }
 
     /*
@@ -129,7 +129,8 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
         Object control = e.getSource(); // which button was pressed
         String commandToSend = controls.get(control);
         System.out.println("Command to send: " + commandToSend);
-        
+        client.createMessage(controls.get(control));
+         
         if (control == jPlay) {
             System.out.println("Play With Me <3");
         }
