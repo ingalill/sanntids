@@ -17,11 +17,12 @@ public class ControlCommand implements ServerCommand {
 
     @Override
     public String getName() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+      return "control command";
     }
 
     @Override
     public String process(String command, String[] arguments) {
+        
         switch (command) {
             case "manuel":
                 commandbox.setAutoDrive(false);
@@ -64,21 +65,17 @@ public class ControlCommand implements ServerCommand {
                 break;
                 
         }
-
-        // legg inn manuel, aut, advance osv. 
-        // skriver true false inn på commandbox
-        //commandbox.setState(true);
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return command;
     }
 
     @Override
     public String getShortDesc() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       return "This controls the movement.";
     }
 
     @Override
     public String getLongDesc() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+      return "";
     }
 
 }

@@ -5,31 +5,69 @@
  */
 package sortingbot.server;
 
+import sortingbot.Camera;
+import sortingbot.CommandBox;
+
 /**
  *
- * @author ingalill
+ * @author inga lill og aleksander
  */
-public class VideoCommand implements ServerCommand
-{
+public class VideoCommand implements ServerCommand {
+
+    Camera camera;
+    CommandBox commandbox;
 
     @Override
     public String getName() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return "Video command";
     }
 
     @Override
     public String process(String command, String[] arguments) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        switch (command) {
+            case "play":
+                
+                break;
+
+            case "pause":
+                break;
+
+            case "gotblue":
+                commandbox.setObjectFound(true);
+                break;
+
+            case "gotorange":
+                commandbox.setObjectFound(true);
+                break;
+
+            case "gotred":
+                commandbox.setObjectFound(true);
+                break;
+
+            case "placedblue":
+                // TODO: malén og demy
+                break;
+
+            case "placedorange":
+                // TODO: malén og demy
+                break;
+
+            case "placedred":
+                // TODO: malén og demy
+                break;
+        }
+
+        return command;
     }
 
     @Override
     public String getShortDesc() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return "";
     }
 
     @Override
     public String getLongDesc() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return "";
     }
-    
+
 }

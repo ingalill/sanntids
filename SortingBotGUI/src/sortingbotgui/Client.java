@@ -67,18 +67,19 @@ public class Client implements ActionListener, Runnable {
                     Thread.sleep(1000); //wait instead of sleep. consumer
                 } catch (Exception e) {
                 }
-                
+
                 // send the commands 
                 if (buffer.size() != 0) {
                     for (int i = 0; i < buffer.size(); i++) {
+                        outputs.writeBytes("%"); // is the start of a new commando
                         outputs.writeBytes(buffer.get(i));
+                        //outputs.writeBytes("$");
                     }
                     buffer.clear();
-                }
-                else{
+                } else {
                     //send string med get
                 }
-                                   
+
                 // Get the first integer, it should be the type of the message
                 // Type 1 means image
                 int msgType = input.readInt();
@@ -98,6 +99,7 @@ public class Client implements ActionListener, Runnable {
 
     /**
      * Get the image from the server as a BufferedImage
+     *
      * @return the image we get from the server
      * @throws IOException
      */
