@@ -22,11 +22,21 @@ public class VideoCommand implements ServerCommand {
         return "Video command";
     }
 
+    public void setCommandbox(CommandBox commandbox) {
+        this.commandbox = commandbox;
+    }
+    
     @Override
     public String process(String command, String[] arguments) {
-        switch (command) {
+        if (arguments.length < 1) return "err No arguments";
+        
+        String response = "ok";
+        String arg = arguments[0];
+        
+        switch (arg) {
             case "play":
-                 // TODO: malén og demy
+                 // TODO: malén og demy                
+                response = "nextframe";
                 break;
 
             case "pause":
@@ -58,7 +68,7 @@ public class VideoCommand implements ServerCommand {
                 break;
         }
 
-        return command;
+        return response;
     }
 
     @Override

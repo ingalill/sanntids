@@ -3,6 +3,7 @@ package sortingbot.server;
 import java.net.*;
 import java.util.*;
 import java.io.*;
+import sortingbot.CommandBox;
 import sortingbot.VideoBox;
 
 /**
@@ -11,6 +12,7 @@ import sortingbot.VideoBox;
  */
 public class Server extends Thread {
     private VideoBox videoBox;
+    private CommandBox commandBox;
 
     private ServerSocket serverSocket;
     private Socket socket;
@@ -39,16 +41,16 @@ public class Server extends Thread {
                 socket = serverSocket.accept();
 
                 //Create the streams
-                output = new PrintWriter(socket.getOutputStream(), true);
+               // output = new PrintWriter(socket.getOutputStream(), true);
             
                 //Tell the client that he has connected
-               output.println("You have connected at: " + new Date());
+               //output.println("You have connected at: " + new Date());
                                   
                
                 //test
                 for (int i = 0; i < maxClients; i++) {
                     if (threads[i] == null) {
-                        threads[i] = new ServerThread(socket, videoBox); // new thread to handle the connection 
+                        threads[i] = new ServerThread(socket, videoBox, commandBox); // new thread to handle the connection 
                         new Thread(threads[i]).start();
                         break;
                     }
@@ -63,6 +65,10 @@ public class Server extends Thread {
         } catch (IOException exception) {
             System.out.println("Error med tilkobling: " + exception);
         }
+    }
+
+    public void setCommandBox(CommandBox commandBox) {
+        this.commandBox = commandBox;
     }
 
 } // end of class

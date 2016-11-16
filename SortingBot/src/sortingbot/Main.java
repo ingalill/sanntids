@@ -74,18 +74,19 @@ public class Main {
         // Start the server
         server = new Server();
         server.setVideoBox(videoBox);
+        server.setCommandBox(commandBox);
         server.start();
         
         //Start framegrabber with timed intervals
         timer.scheduleAtFixedRate(odroidGrabber, delay*0, timedelay);
         //start gui
-        java.awt.EventQueue.invokeLater(
+        /*java.awt.EventQueue.invokeLater(
             new Runnable() {
             @Override
             public void run() {
                 new Gui(videoBox).setVisible(true);
             }
-        });
+        }); */
         
         
         //REMEMBER: .currentThread().setPriority(Thread.MAX_PRIORITY); //ask demy why

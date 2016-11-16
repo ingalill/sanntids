@@ -27,7 +27,7 @@ import java.util.HashMap;
 public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
     
     // definitions
-    private DaemonThread myThread = null;
+    //private DaemonThread myThread = null;
     private Client client;
     private HashMap<Object, String> controls;
  
@@ -39,12 +39,12 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
     /**
      * Creates new form SortingBotGUI
      */
-    public SortingBotGUI() throws InterruptedException {
+    public SortingBotGUI(Client client) throws InterruptedException {
     
         SetupGui();
         initComponents();
         controls = new HashMap<>();
-        client = new Client();
+        this.client = client;
         
         //Setup of the buttons that are avaible when starting the program
         // Buttons need .setEnabled() while checkboxes need .setSelected()
@@ -77,6 +77,8 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
         jPlacedBlue.addActionListener(this);
         jPlacedOrange.addActionListener(this);
         jPlacedRed.addActionListener(this);
+        
+        putButtons();
        
     }
     
@@ -121,83 +123,91 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
         //adds the control to the Client queue.
         client.createMessage(controls.get(control));
          
-        if (control == jPlay) {
-            System.out.println("Play With Me <3");
-        }
-        if (control== jAdvance) {
-            System.out.println("Advance");
-        }
-        if (control == jRight) {
-            System.out.println("All-Right-y");
-        }
-        if (control== jLeft) {
-            System.out.println("Lefty loosy");
-        }
-        if (control== jBack) {
-            System.out.println("Back up");
-        }
-        if (control == jStop) {
-            System.out.println("HammerTime");
-        }
-        if (control == jPause) {
-            System.out.println("Pause   :|  ");
-        }
-        if (control == jReset) {
-            System.out.println("Reset");
-        }
-        if (control == jQuit) {
-            System.out.println("Quiting is for loosers...Looser");
-        }
-        if (control == jManuel) {
-            System.out.println("okay, fuck it, you do it then");
-        }
-        if (control == jAuto) {
-            System.out.println("FINE, I Will do it myself");
-        }
+//        if (control == jPlay) {
+//            System.out.println("Play With Me <3");
+//        }
+//        if (control== jAdvance) {
+//            System.out.println("Advance");
+//        }
+//        if (control == jRight) {
+//            System.out.println("All-Right-y");
+//        }
+//        if (control== jLeft) {
+//            System.out.println("Lefty loosy");
+//        }
+//        if (control== jBack) {
+//            System.out.println("Back up");
+//        }
+//        if (control == jStop) {
+//            System.out.println("HammerTime");
+//        }
+//        if (control == jPause) {
+//            System.out.println("Pause   :|  ");
+//        }
+//        if (control == jReset) {
+//            System.out.println("Reset");
+//        }
+//        if (control == jQuit) {
+//            System.out.println("Quiting is for loosers...Looser");
+//        }
+//        if (control == jManuel) {
+//            System.out.println("okay, fuck it, you do it then");
+//        }
+//        if (control == jAuto) {
+//            System.out.println("FINE, I Will do it myself");
+//        }
     }
         
     // class of thread
-    class DaemonThread implements Runnable{
-        protected volatile boolean runnable = false;
+//    class DaemonThread implements Runnable{
+//        protected volatile boolean runnable = false;
+//
+//        @Override
+//        public  void run()
+//        {
+//            synchronized(this)
+//            {
+//                while(runnable)
+//                {
+//                    try
+//                    {
+////                       Mat img = client.putFrame();
+////                        //GetFrame Method
+////                        //Use GetImage Method in the bottom to get Mat image
+////                        frame = getImage(img);
+////                        
+////                        //frame = cgrabber.getFrame();
+////                        Imgcodecs.imencode(".bmp", frame, mem);
+////                        Image im = ImageIO.read(new ByteArrayInputStream(mem.toArray()));
+//
+//                        BufferedImage buff = client.getFrame();
+//                        Graphics g=jVideo.getGraphics();
+//
+//                        if (g.drawImage(buff, 0, 0, getWidth(), getHeight() -150 , 0, 0, buff.getWidth(), buff.getHeight(), null))
+//
+//                        if(runnable == false)
+//                        {
+//                            System.out.println("GUI is going to wait()");
+//                            this.wait();
+//                        }
+//                     }
+//                     catch(Exception ex)
+//                     {
+//                        System.out.println("Error, GUI image processing failed\n");
+//                     }
+//                }
+//            }
+//         }
+//   } // end of deamonThread
 
-        @Override
-        public  void run()
-        {
-            synchronized(this)
-            {
-                while(runnable)
-                {
-                    try
-                    {
-//                       Mat img = client.putFrame();
-//                        //GetFrame Method
-//                        //Use GetImage Method in the bottom to get Mat image
-//                        frame = getImage(img);
-//                        
-//                        //frame = cgrabber.getFrame();
-//                        Imgcodecs.imencode(".bmp", frame, mem);
-//                        Image im = ImageIO.read(new ByteArrayInputStream(mem.toArray()));
-
-                        BufferedImage buff = client.getFrame();
-                        Graphics g=jVideo.getGraphics();
-
-                        if (g.drawImage(buff, 0, 0, getWidth(), getHeight() -150 , 0, 0, buff.getWidth(), buff.getHeight(), null))
-
-                        if(runnable == false)
-                        {
-                            System.out.println("GUI is going to wait()");
-                            this.wait();
-                        }
-                     }
-                     catch(Exception ex)
-                     {
-                        System.out.println("Error, GUI image processing failed\n");
-                     }
-                }
-            }
-         }
-   } // end of deamonThread
-
+    /**
+     * Show the latest image frame on GUI panel
+     * @param buff 
+     */
+    public void setVideoFrame(BufferedImage buff) {
+        Graphics g = jVideo.getGraphics();
+        g.drawImage(buff, 0, 0, getWidth(), getHeight() -150 , 0, 0, buff.getWidth(), buff.getHeight(), null);
+    }
     
     // COPIEAL ALL A
     /**
@@ -533,18 +543,18 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
         /// start button
         //webSource =new VideoCapture(0); // Video capture from defult cam
 
-        myThread = new DaemonThread(); // creat object of thread class
-        Thread t = new Thread(myThread);
-        t.setDaemon(true);
-        myThread.runnable = true;
-        t.start();                      // Start Thread
+//        myThread = new DaemonThread(); // creat object of thread class
+//        Thread t = new Thread(myThread);
+//        t.setDaemon(true);
+//        myThread.runnable = true;
+//        t.start();                      // Start Thread
         jPlay.setEnabled(false);  //Deactivate play button
         jPause.setEnabled(true);  // activate stop button
     }//GEN-LAST:event_jPlayActionPerformed
 
     private void jPauseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPauseActionPerformed
         /// stop button
-        myThread.runnable = false;      //stop thread
+       // myThread.runnable = false;      //stop thread
         jPause.setEnabled(false);     // activate play button
         jPlay.setEnabled(true);      // deactivate stop button
 

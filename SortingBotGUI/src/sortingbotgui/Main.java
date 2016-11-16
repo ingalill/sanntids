@@ -20,7 +20,7 @@ public class Main {
     System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
     // Create an objeckt of each  class
     client = new Client();
-    client.run();
+    new Thread(client).start();
 
     
     
@@ -30,7 +30,7 @@ public class Main {
                     @Override
                     public void run() {
                         try {
-                            new SortingBotGUI().setVisible(true);
+                            new SortingBotGUI(client).setVisible(true);
                             //new Client().setVisible(true); // start gui
                             System.out.println("BLIR DETTE KJØRT??? ER PÅ GUI DEL I MAIN");
                             
@@ -39,6 +39,6 @@ public class Main {
                         }
                 } 
             
-        });
+        }); 
     }
 }

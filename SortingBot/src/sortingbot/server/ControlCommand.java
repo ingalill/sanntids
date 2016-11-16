@@ -22,8 +22,12 @@ public class ControlCommand implements ServerCommand {
 
     @Override
     public String process(String command, String[] arguments) {
+          if (arguments.length < 1) return "err No arguments";
         
-        switch (command) {
+        String response = "ok";
+        String arg = arguments[0];
+        
+        switch (arg) {
             case "manuel":
                 commandbox.setAutoDrive(false);
                 break;
@@ -65,7 +69,7 @@ public class ControlCommand implements ServerCommand {
                 break;
                 
         }
-        return command;
+        return response;
     }
 
     @Override
