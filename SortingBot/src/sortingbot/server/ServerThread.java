@@ -14,6 +14,7 @@ import java.net.Socket;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import org.opencv.core.Mat;
 import sortingbot.VideoBox;
 
@@ -61,7 +62,7 @@ public class ServerThread implements Runnable {
                     System.out.println("Sending type " + type + " to client");
                     outputBuffer.writeInt(type); //  Write type of the message (1 = image)
                     outputBuffer.flush();
-                    // !!! ImageIO.write(matToImg(videoBox.getFrame()), "png", outputBuffer);
+                    ImageIO.write(matToImg(videoBox.getFrame()), "png", outputBuffer);
                     //printStream.flush();
                     // SEND SIZE OF THE PACKET!
                    

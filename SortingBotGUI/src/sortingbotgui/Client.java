@@ -103,7 +103,7 @@ public class Client implements ActionListener, Runnable {
      * @return the image we get from the server
      * @throws IOException
      */
-    public BufferedImage putFrame() throws IOException {
+    public BufferedImage getFrame() throws IOException {
         return ImageIO.read(socket.getInputStream());
     }
 

@@ -26,10 +26,11 @@ public class VideoCommand implements ServerCommand {
     public String process(String command, String[] arguments) {
         switch (command) {
             case "play":
-                
+                 // TODO: malén og demy
                 break;
 
             case "pause":
+                 // TODO: malén og demy
                 break;
 
             case "gotblue":

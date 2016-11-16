@@ -9,21 +9,10 @@ package sortingbotgui;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import javax.imageio.ImageIO;
-import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfByte;
-//import org.opencv.highgui.Highgui;
-//import org.opencv.highgui.VideoCapture;
-import org.opencv.imgcodecs.Imgcodecs;
-import org.opencv.videoio.VideoCapture;
-import java.net.MalformedURLException;
 import java.util.HashMap;
-import javax.swing.JButton;
-import javax.swing.JLabel;
 
 
 /**
@@ -91,7 +80,7 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
        
     }
     
-      /*
+     /*
      * Connects the gui buttons to a string in a HashMap
      * The String will be the command recognized on the serverside. 
      */
@@ -129,6 +118,7 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
         Object control = e.getSource(); // which button was pressed
         String commandToSend = controls.get(control);
         System.out.println("Command to send: " + commandToSend);
+        //adds the control to the Client queue.
         client.createMessage(controls.get(control));
          
         if (control == jPlay) {
@@ -188,7 +178,7 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
 //                        Imgcodecs.imencode(".bmp", frame, mem);
 //                        Image im = ImageIO.read(new ByteArrayInputStream(mem.toArray()));
 
-                        BufferedImage buff = client.putFrame();
+                        BufferedImage buff = client.getFrame();
                         Graphics g=jVideo.getGraphics();
 
                         if (g.drawImage(buff, 0, 0, getWidth(), getHeight() -150 , 0, 0, buff.getWidth(), buff.getHeight(), null))
