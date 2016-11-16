@@ -33,7 +33,7 @@ public class Client implements ActionListener, Runnable {
 
     public Client() throws InterruptedException {
         buffer = new ArrayList<>();
-        run(); // run the client
+        //run(); // run the client
     }
 
     // is going to ask for frames from the server
