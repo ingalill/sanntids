@@ -32,7 +32,6 @@ public class Main {
                         try {
                             new SortingBotGUI(client).setVisible(true);
                             //new Client().setVisible(true); // start gui
-                            System.out.println("BLIR DETTE KJØRT??? ER PÅ GUI DEL I MAIN");
                             
                         } catch (InterruptedException ex) {
                             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);

@@ -66,7 +66,7 @@ public class CommandParser {
     public String getName() {
         return name;
     }
-
+   
     /**
      * Get all the arguments as a Collection
      * @return 

@@ -1,6 +1,6 @@
 /*
-* http://stackoverflow.com/questions/24182610/java-socket-server-client-to-client-file-transfer 
-* http://www.codeproject.com/Questions/898073/java-How-to-send-a-multiple-images-over-socket?arn=9 
+ * http://stackoverflow.com/questions/24182610/java-socket-server-client-to-client-file-transfer 
+ * http://www.codeproject.com/Questions/898073/java-How-to-send-a-multiple-images-over-socket?arn=9 
  */
 package sortingbot.server;
 
@@ -65,19 +65,20 @@ public class ServerThread implements Runnable {
                     try {
 
                         /* int type = 1;
-                        System.out.println("Sending type " + type + " to client");
-                        outputBuffer.writeInt(type); //  Write type of the message (1 = image)
-                        outputBuffer.flush();
-                        ImageIO.write(matToImg(videoBox.getFrame()), "png", outputBuffer);
-                        //printStream.flush();
-                        // SEND SIZE OF THE PACKET!
+                         System.out.println("Sending type " + type + " to client");
+                         outputBuffer.writeInt(type); //  Write type of the message (1 = image)
+                         outputBuffer.flush();
+                         ImageIO.write(matToImg(videoBox.getFrame()), "png", outputBuffer);
+                         //printStream.flush();
+                         // SEND SIZE OF THE PACKET!
                          */
                         String line = infromClient.readLine();
                         CommandParser parser = new CommandParser(line);
 
                         String command = parser.getName(); // eks move
-                        String[] arguments = parser.getArgArray();     // eks left                
-                        System.out.println("Command: " + command);
+                        String[] arguments = parser.getArgArray();     // eks left   
+                        
+                        System.out.println("Command: " + parser.getAllArgs());
                         ServerCommand cmd = commands.get(command);
                         if (cmd != null) {
                             String reply = cmd.process(command, arguments);
@@ -95,7 +96,27 @@ public class ServerThread implements Runnable {
 //                                ByteArrayOutputStream tmp = new ByteArrayOutputStream();                                
 //                                tmp.close();
 //                                Integer imageSize = tmp.size();
-                                outputBuffer.writeBytes("nextframe " + sizeInBytes 
+//
+                                // Attampting to seperate packages ALEKSANDER!!!! 
+                                // not sure if needed...
+                                switch(parser.getName()) {
+                                    case "control":
+                                        System.out.println("Got command, reply = " + reply);
+                                        System.out.println("in the switch case now.");
+
+                                        break;
+
+                                    case "Video":
+                                        outputBuffer.writeBytes("nextframe " + sizeInBytes
+                                                + " " + imgWidth + " " + imgHeight);
+                                        outputBuffer.writeBytes("\n");
+                                        outputBuffer.write(imgBytes);
+                                        outputBuffer.flush();
+                                        System.out.println("in the switch case now.");
+                                        break;
+                                }
+
+                                outputBuffer.writeBytes("nextframe " + sizeInBytes
                                         + " " + imgWidth + " " + imgHeight);
                                 outputBuffer.writeBytes("\n");
                                 outputBuffer.write(imgBytes);
@@ -132,9 +153,9 @@ public class ServerThread implements Runnable {
     }
 
     /*
-    *Take an Mat and convert it to an BufferedImage
-    *@Param Mat input.
-    *@Return BufferedImage output.
+     *Take an Mat and convert it to an BufferedImage
+     *@Param Mat input.
+     *@Return BufferedImage output.
      */
     public static BufferedImage matToImg(Mat in) {
         BufferedImage out;
@@ -151,11 +172,11 @@ public class ServerThread implements Runnable {
         out.getRaster().setDataElements(0, 0, in.height(), in.width(), data);
         return out;
     }
-    
+
     public static byte[] matToByteArray(Mat in) {
         byte[] data = new byte[in.height() * in.width() * (int) in.elemSize()];
         in.get(0, 0, data);
         return data;
-    }    
+    }
 
 }

@@ -578,7 +578,6 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
         //        if(color == place){
             //            checkBox = jPlacedOrange.setSelected(true);
             //        }
-        System.out.println("Placed Orange");
     }//GEN-LAST:event_jPlacedOrangeActionPerformed
 
     private void jAutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jAutoActionPerformed
