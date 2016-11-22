@@ -29,6 +29,7 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener 
     //private DaemonThread myThread = null;
     private Client client;
     private HashMap<Object, String> controls;
+    public boolean playPause;
 
     int count = 0;
     Mat frame = new Mat();
@@ -77,8 +78,6 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener 
         jPlacedRed.addActionListener(this);
 
         putButtons();
-        
-        
 
     }
 
@@ -115,7 +114,7 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener 
      Note To Do. Probebly would behove us to switch to switch case.
      */
     @Override
-    public void actionPerformed(ActionEvent e) { // switch case?
+    public void actionPerformed(ActionEvent e) {
         // add to the queue
         Object control = e.getSource(); // which button was pressed
         String commandToSend = controls.get(control);
@@ -123,39 +122,9 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener 
         //adds the control to the Client queue.
         client.createMessage(controls.get(control));
 
-//        if (control == jPlay) {
-//            System.out.println("Play With Me <3");
-//        }
-//        if (control== jAdvance) {
-//            System.out.println("Advance");
-//        }
-//        if (control == jRight) {
-//            System.out.println("All-Right-y");
-//        }
-//        if (control== jLeft) {
-//            System.out.println("Lefty loosy");
-//        }
-//        if (control== jBack) {
-//            System.out.println("Back up");
-//        }
-//        if (control == jStop) {
-//            System.out.println("HammerTime");
-//        }
-//        if (control == jPause) {
-//            System.out.println("Pause   :|  ");
-//        }
-//        if (control == jReset) {
-//            System.out.println("Reset");
-//        }
-//        if (control == jQuit) {
-//            System.out.println("Quiting is for loosers...Looser");
-//        }
-//        if (control == jManuel) {
-//            System.out.println("okay, fuck it, you do it then");
-//        }
-//        if (control == jAuto) {
-//            System.out.println("FINE, I Will do it myself");
-//        }
+        if (control == jPlay) {
+            setVideoFrame();
+        }
     }
 
     // class of thread
@@ -206,9 +175,11 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener 
      */
     public void setVideoFrame() {
         BufferedImage buff = client.getBuffImg();
-        if (!(buff == null)) {
-            Graphics g = jVideo.getGraphics();
-            g.drawImage(buff, 0, 0, getWidth(), getHeight() - 150, 0, 0, buff.getWidth(), buff.getHeight(), null);
+        if (playPause == true) {
+            if (!(buff == null)) {
+                Graphics g = jVideo.getGraphics();
+                g.drawImage(buff, 0, 0, getWidth(), getHeight() - 150, 0, 0, buff.getWidth(), buff.getHeight(), null);
+            }
         }
     }
 
@@ -553,6 +524,7 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener 
 //        t.start();                      // Start Thread
         jPlay.setEnabled(false);  //Deactivate play button
         jPause.setEnabled(true);  // activate stop button
+        playPause = true;
     }//GEN-LAST:event_jPlayActionPerformed
 
     private void jPauseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPauseActionPerformed
@@ -560,6 +532,7 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener 
         // myThread.runnable = false;      //stop thread
         jPause.setEnabled(false);     // activate play button
         jPlay.setEnabled(true);      // deactivate stop button
+        playPause = false;
 
         //webSource.release();            // stop capturing from cam
 
