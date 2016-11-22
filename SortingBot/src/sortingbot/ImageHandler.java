@@ -110,7 +110,7 @@ public class ImageHandler {
                 radiuss.add(radius);
             }
         }
-        //finn største sirkelen og dens plassering i arrayen
+        //find the position of the biggest circle in the array
         float previous = 0;
         int biggestRad = 0;
         for(int i=0; radiuss.size() > i; i++){
@@ -119,8 +119,8 @@ public class ImageHandler {
                 biggestRad = i;
             }
         }
-        //send signal til CommandBox
-        
+
+        //Decide the speed the robot has to turn with
         int horizontalSpeed = 0;
         if(centers.size() > 0){
             comBox.setObjectFound(true);
