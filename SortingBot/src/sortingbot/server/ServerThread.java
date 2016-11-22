@@ -22,7 +22,7 @@ import sortingbot.VideoBox;
 
 /**
  * @date 18.10.2016
- * @author inga lill bjolstad
+ * @author inga lill bjolstad og aleksander
  */
 public class ServerThread implements Runnable {
 
@@ -78,7 +78,7 @@ public class ServerThread implements Runnable {
                         String command = parser.getName(); // eks move
                         String[] arguments = parser.getArgArray();     // eks left   
                         
-                        System.out.println("Command: " + parser.getAllArgs());
+                        System.out.println("Command: " + command + " " + parser.getAllArgs());
                         ServerCommand cmd = commands.get(command);
                         if (cmd != null) {
                             String reply = cmd.process(command, arguments);

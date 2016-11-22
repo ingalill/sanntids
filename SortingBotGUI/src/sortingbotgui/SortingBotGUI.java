@@ -13,39 +13,37 @@ import java.awt.image.BufferedImage;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfByte;
 import java.util.HashMap;
-
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  *
  * @author Aleksander
- * 
- * Client Lager et objekt av GUI
- * GUI skal si ifra når den får en innput of skal trigge Client til 
- * å sende verdien.
+ *
+ * Client Lager et objekt av GUI GUI skal si ifra når den får en innput of skal
+ * trigge Client til å sende verdien.
  */
+public class SortingBotGUI extends javax.swing.JFrame implements ActionListener {
 
-public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
-    
     // definitions
     //private DaemonThread myThread = null;
     private Client client;
     private HashMap<Object, String> controls;
- 
-    
+
     int count = 0;
-     Mat frame = new Mat();
+    Mat frame = new Mat();
     MatOfByte mem = new MatOfByte();
 
     /**
      * Creates new form SortingBotGUI
      */
     public SortingBotGUI(Client client) throws InterruptedException {
-    
+
         SetupGui();
         initComponents();
         controls = new HashMap<>();
         this.client = client;
-        
+
         //Setup of the buttons that are avaible when starting the program
         // Buttons need .setEnabled() while checkboxes need .setSelected()
         jManuel.setEnabled(false);
@@ -57,7 +55,7 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
         jPause.setEnabled(false);
         jStop.setEnabled(false);
         jReset.setEnabled(false);
-        
+
         // Adding Actionlisteners to the necesary buttons/all the buttons
         jManuel.addActionListener(this);
         jAuto.addActionListener(this);
@@ -77,29 +75,31 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
         jPlacedBlue.addActionListener(this);
         jPlacedOrange.addActionListener(this);
         jPlacedRed.addActionListener(this);
-        
+
         putButtons();
-       
+        
+        
+
     }
-    
-     /*
+
+    /*
      * Connects the gui buttons to a string in a HashMap
      * The String will be the command recognized on the serverside. 
      */
     public void putButtons() {
         controls.put(jManuel, "control manuel");
-        controls.put(jAuto,  "control auto");
+        controls.put(jAuto, "control auto");
         controls.put(jAdvance, "control advance");
         controls.put(jRight, "control right");
-        controls.put(jLeft,  "control left");
-        controls.put(jBack,  "control back");
-        controls.put(jStop,  "control stop");
+        controls.put(jLeft, "control left");
+        controls.put(jBack, "control back");
+        controls.put(jStop, "control stop");
         controls.put(jStart, "control start");
         controls.put(jReset, "control reset");
-        controls.put(jQuit,  "control quit");
-        
-        controls.put(jPlay,  "video play");
-        controls.put(jPause, "video pause");       
+        controls.put(jQuit, "control quit");
+
+        controls.put(jPlay, "video play");
+        controls.put(jPause, "video pause");
         controls.put(jGotBlue, "video gotblue");
         controls.put(jGotOrange, "video gotorange");
         controls.put(jGotRed, "video gotred");
@@ -109,12 +109,12 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
     }
 
     /*
-    Each code is performed after one of the button in GUI is pressed
-    Change the print statment to do desired code to be executed.
+     Each code is performed after one of the button in GUI is pressed
+     Change the print statment to do desired code to be executed.
     
-    Note To Do. Probebly would behove us to switch to switch case.
-    */
-       @Override
+     Note To Do. Probebly would behove us to switch to switch case.
+     */
+    @Override
     public void actionPerformed(ActionEvent e) { // switch case?
         // add to the queue
         Object control = e.getSource(); // which button was pressed
@@ -122,7 +122,7 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
         System.out.println("Command to send: " + commandToSend);
         //adds the control to the Client queue.
         client.createMessage(controls.get(control));
-         
+
 //        if (control == jPlay) {
 //            System.out.println("Play With Me <3");
 //        }
@@ -157,7 +157,7 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
 //            System.out.println("FINE, I Will do it myself");
 //        }
     }
-        
+
     // class of thread
 //    class DaemonThread implements Runnable{
 //        protected volatile boolean runnable = false;
@@ -199,16 +199,19 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
 //            }
 //         }
 //   } // end of deamonThread
-
     /**
      * Show the latest image frame on GUI panel
-     * @param buff 
+     *
+     * @param buff
      */
-    public void setVideoFrame(BufferedImage buff) {
-        Graphics g = jVideo.getGraphics();
-        g.drawImage(buff, 0, 0, getWidth(), getHeight() -150 , 0, 0, buff.getWidth(), buff.getHeight(), null);
+    public void setVideoFrame() {
+        BufferedImage buff = client.getBuffImg();
+        if (!(buff == null)) {
+            Graphics g = jVideo.getGraphics();
+            g.drawImage(buff, 0, 0, getWidth(), getHeight() - 150, 0, 0, buff.getWidth(), buff.getHeight(), null);
+        }
     }
-    
+
     // COPIEAL ALL A
     /**
      * This method is called from within the constructor to initialize the form.
@@ -554,7 +557,7 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
 
     private void jPauseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPauseActionPerformed
         /// stop button
-       // myThread.runnable = false;      //stop thread
+        // myThread.runnable = false;      //stop thread
         jPause.setEnabled(false);     // activate play button
         jPlay.setEnabled(true);      // deactivate stop button
 
@@ -570,14 +573,14 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
         jRight.setEnabled(true);        // Deactivate Right button
         jLeft.setEnabled(true);         // Deactivate Left button
         jBack.setEnabled(true);         // Deactivate Back button
-        
+
     }//GEN-LAST:event_jManuelActionPerformed
 
     private void jPlacedOrangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPlacedOrangeActionPerformed
         // Set true when colored object is in place
         //        if(color == place){
-            //            checkBox = jPlacedOrange.setSelected(true);
-            //        }
+        //            checkBox = jPlacedOrange.setSelected(true);
+        //        }
     }//GEN-LAST:event_jPlacedOrangeActionPerformed
 
     private void jAutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jAutoActionPerformed
@@ -620,9 +623,10 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
 
     private void jQuitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jQuitActionPerformed
         System.out.println("Quit");
+        System.exit(0);
     }//GEN-LAST:event_jQuitActionPerformed
-    
-    public void SetupGui(){
+
+    public void SetupGui() {
 //        System.loadLibrary(Core.NATIVE_LIBRARY_NAME); // load native library of opencv
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -647,15 +651,14 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener{
         }
         //</editor-fold>
 
-        /* Create and display the form */ 
+        /* Create and display the form */
     }
-    
-    
-        //Get img(image) From Client and use this method to use video in jVideo(Screen in GUI)
-    public Mat getImage(Mat img){
+
+    //Get img(image) From Client and use this method to use video in jVideo(Screen in GUI)
+    public Mat getImage(Mat img) {
         return img;
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jAdvance;
     private javax.swing.JButton jAuto;

@@ -30,9 +30,11 @@ public class Client implements ActionListener, Runnable {
     //private BufferedReader infromServer;
     private DataInputStream input;
     private ArrayList<String> buffer;
+    private ArrayList<BufferedImage> bufferImg;
 
     public Client() throws InterruptedException {
         buffer = new ArrayList<>();
+        bufferImg = new ArrayList<>();
     }
 
     // is going to ask for frames from the server
@@ -41,6 +43,8 @@ public class Client implements ActionListener, Runnable {
         //We set up the scanner to receive user input
         //Scanner scanner = new Scanner(System.in);
         try {
+            
+            createMessage("video play");
             socket = new Socket("localhost", 5000);
             output = new PrintWriter(socket.getOutputStream(), true);
             outputs = new DataOutputStream(socket.getOutputStream());
@@ -49,18 +53,20 @@ public class Client implements ActionListener, Runnable {
             System.out.println("Client started at: " + new Date());
 
             while (true) {
-
-                synchronized (this) {
-                    while (buffer.isEmpty()) {
-                        try {
-                            wait();
-                        } catch (InterruptedException ex) {
-                            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                    }
+                if (buffer.isEmpty()) {
+                    createMessage("video play");
                 }
+//                synchronized (this) {
+//                    while (buffer.isEmpty()) {
+//                        try {
+//                            wait();
+//
+//                        } catch (InterruptedException ex) {
+//                            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+//                        }
+//                    }
+//                }
 
-                // send the commands 
                 for (int i = 0; i < buffer.size(); i++) {
                     String sendByte = buffer.get(i);
                     //outputs.writeBytes("%"); // is the start of a new commando
@@ -70,7 +76,7 @@ public class Client implements ActionListener, Runnable {
                     String reply = input.readLine();
                     System.out.println("Reply from the server: " + reply + "\n");
                     CommandParser parser = new CommandParser(reply);
-                    
+
                     // Send/get frames
                     if (parser.getName().equals("nextframe")) {
                         fetchNextFrame(parser);
@@ -137,18 +143,31 @@ public class Client implements ActionListener, Runnable {
             Mat mat;
             mat = new Mat(imgWidth, imgHeight, CvType.CV_8UC3);
             mat.put(0, 0, imgBytes);
-            BufferedImage buff = matToImg(mat);
-            
+            addBuffFrame(matToImg(mat));
+
         } catch (IOException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
+    
+    public BufferedImage getBuffImg(){
+        if(!bufferImg.isEmpty())
+    return bufferImg.get(0);
+        return null;
+}
+    
+    /*
+     *
+     */
+    public void addBuffFrame(BufferedImage BuffImg) {
+        bufferImg.add(BuffImg);
+    }
 
     /*
-    *Take an Mat and convert it to an BufferedImage
-    *@Param Mat input.
-    *@Return BufferedImage output.
+     *Take an Mat and convert it to an BufferedImage
+     *@Param Mat input.
+     *@Return BufferedImage output.
      */
     public static BufferedImage matToImg(Mat in) {
         BufferedImage out;
@@ -165,5 +184,5 @@ public class Client implements ActionListener, Runnable {
         out.getRaster().setDataElements(0, 0, in.height(), in.width(), data);
         return out;
     }
-    
+
 } // end of class

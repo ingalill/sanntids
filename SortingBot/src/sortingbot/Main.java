@@ -80,13 +80,13 @@ public class Main {
         //Start framegrabber with timed intervals
         timer.scheduleAtFixedRate(odroidGrabber, delay*0, timedelay);
         //start gui
-        /*java.awt.EventQueue.invokeLater(
-            new Runnable() {
-            @Override
-            public void run() {
-                new Gui(videoBox).setVisible(true);
-            }
-        }); */
+//        java.awt.EventQueue.invokeLater(
+//            new Runnable() {
+//            @Override
+//            public void run() {
+//                new Gui(videoBox).setVisible(true);
+//            }
+//        }); 
         
         
         //REMEMBER: .currentThread().setPriority(Thread.MAX_PRIORITY); //ask demy why
