@@ -29,7 +29,7 @@ public class ControlCommand implements ServerCommand {
         
         switch (arg) {
             case "manuel":
-                //commandbox.setAutoDrive(false);
+                commandbox.setAutoDrive(false);
                 System.out.println("Hello from ControlCommand");
                 break;
                 

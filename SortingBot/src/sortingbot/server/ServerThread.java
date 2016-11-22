@@ -37,6 +37,7 @@ public class ServerThread implements Runnable {
     private HashMap<String, ServerCommand> commands;
     private VideoCommand videoCommand;
     private CommandBox commandBox;
+    public boolean playPause;
 
     /**
      * Constructor
@@ -50,6 +51,7 @@ public class ServerThread implements Runnable {
         this.commandBox = commandBox;
         commands = new HashMap<>();
         addCommands();
+        playPause = false;
     }
 
     @Override
@@ -84,6 +86,7 @@ public class ServerThread implements Runnable {
                             String reply = cmd.process(command, arguments);
                             System.out.println("Got command, reply = " + reply + "\n");
                             // Handle special case - next image frame
+                            if(playPause == true){
                             if (cmd == videoCommand && "nextframe".equals(reply)) {
                                 // Send the next frame to the client
                                 // TODO - send size of next frames
@@ -101,7 +104,8 @@ public class ServerThread implements Runnable {
                                 outputBuffer.writeBytes("\n");
                                 outputBuffer.write(imgBytes);
                                 outputBuffer.flush();
-                            } else {
+                            }}
+                            else {
                                 outputBuffer.writeBytes(reply);
                                 outputBuffer.writeBytes("\n");
                             }
