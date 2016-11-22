@@ -177,8 +177,17 @@ public class Client implements ActionListener, Runnable {
 
         if (in.channels() == 0) {
             type = BufferedImage.TYPE_BYTE_GRAY;
+            
+            
         } else {
             type = BufferedImage.TYPE_3BYTE_BGR;
+            
+//            byte b;
+//            for(int i = 0; 1 < data.length; 1 = i + 3){
+//                b = data[i];
+//                data[i] = data[i + 2];
+//                data[i + 2] = b;
+//            }
         }
         out = new BufferedImage(in.height(), in.width(), type);
         out.getRaster().setDataElements(0, 0, in.height(), in.width(), data);
