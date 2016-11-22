@@ -72,6 +72,7 @@ public class ArduinoCommunication implements SerialPortEventListener {
 		}
 		if (portId == null) {
 			System.out.println("Could not find COM port.");
+                        System.exit(1);
 			return;
 		}
 
