@@ -14,25 +14,24 @@ import java.io.OutputStream;
  */
 public class ArduinoDriver extends Thread{
      
-    private static BufferedReader input;
-    private static OutputStream output;
     private final ArduinoCommunication communication;
     private final CommandBox commandBox;
     
     private boolean objectCaught;
     private String direction;
+    private boolean restart;
     
     private final String cForward = "w100 "; //Move forward 
     private final String cStop="w0 "; //Stop
-    private final String cBackward = "s70 "; //Move backward 
-    private final String cRight = "d100 "; //Turn right 
-    private final String cLeft = "a100 "; //Turn left 
+    private final String cBackward = "s100 "; //Move backward 
+    private final String cRight = "d120 "; //Turn right 
+    private final String cLeft = "a120 "; //Turn left 
     private final String cReadSS = "vss "; //Read value from the short range sensor
     private final String cReadLS = "vls "; //Read value from the long range sensor
-    private final String cRightFast="r100 "; //Set right wheels to full speed
-    private final String cRightSlow="r70 "; //Set right wheels to standard speed
-    private final String cLeftFast="l100 "; //Set left wheels to full speed
-    private final String cLeftSlow="l70 "; //Set left wheels to standard speed
+    private final String cRightFast="r120 "; //Set right wheels to full speed
+    private final String cRightSlow="r100 "; //Set right wheels to standard speed
+    private final String cLeftFast="l120 "; //Set left wheels to full speed
+    private final String cLeftSlow="l100 "; //Set left wheels to standard speed
     
     //Todo:
     // Manuel mode
@@ -41,13 +40,14 @@ public class ArduinoDriver extends Thread{
         this.commandBox=box;
         objectCaught=false;
         direction="";
-
+        restart=false;
         //this.start(); // start this thread
     }
     
     public void run() {   
        while(true){
             while(commandBox.isAutoDrive()){
+                restart=false;
                 seek();
                 if(!commandBox.isAutoDrive()) break;
                 getObject();
@@ -67,22 +67,20 @@ public class ArduinoDriver extends Thread{
     public void seek(){
         System.out.println("1");
         commandBox.setState(1);
-        //Tells the arduino to turn in a circle
+        //Tells the arduino to turn in a circle while the object is not found
         communication.sendCommand(cRight);
         while((!commandBox.getObjectFound())&&(commandBox.isAutoDrive()));
-            //System.out.println("seeking...");
-        
         communication.sendCommand(cStop);
         System.out.println("object found...");
        
     }
     public void getObject(){
-        // Use sensors and camera to go and get the object
+        // Use sensors and camera to drive to the object
         System.out.println("2");
         boolean done=false;
-        while((!done)&&(commandBox.isAutoDrive())){
-            commandBox.setState(2);
-            // while object not caught and objectFound is still true, object found is set false when
+        commandBox.setState(2);
+        while((!done)&&(commandBox.isAutoDrive())&&(!restart)){
+            // while object is not caught and objectFound is still true, object found is set false when
             // the object no longer is in the camera view
              while((commandBox.getObjectFound())&&(!objectCaught)&&(commandBox.isAutoDrive())){
                 if(commandBox.getAdjustedDirection()>4){
@@ -103,7 +101,7 @@ public class ArduinoDriver extends Thread{
             communication.sendCommand(cStop);
             //if object not found and not not caught, seek() again.
             if((!commandBox.getObjectFound())&&(!objectCaught)){
-                seek();
+                restart=true;
             } else {
                 done=true;
             }
@@ -115,7 +113,7 @@ public class ArduinoDriver extends Thread{
         //Find the right area to place current object
         System.out.println("3");
         boolean located=false;
-        while(!located){
+        while((!located)&&(!restart)){
             commandBox.setState(3);
             communication.sendCommand(cForward);
             communication.sendCommand(cRightSlow);
@@ -124,20 +122,18 @@ public class ArduinoDriver extends Thread{
             }
             communication.sendCommand(cStop);
             if(!objectCaught){
-                seek();
-                getObject();
+                restart=true;
             } else if((objectCaught)&&(commandBox.isGoalFound())){
                 located=true;
             }
         }
-        System.out.println("goal located");
     }
     public void placeObject() {
         //Drive the object to its target
         System.out.println("4");
         
         boolean goalReached=false;
-        while((!goalReached)&&(commandBox.isAutoDrive())){
+        while((!goalReached)&&(commandBox.isAutoDrive())&&(!restart)){
             commandBox.setState(4);
             int distanceFromGoal;
             // while object i still caught and goal is still in view
@@ -153,7 +149,7 @@ public class ArduinoDriver extends Thread{
                     //System.out.println("Turn right");
                 } else if((commandBox.getAdjustedDirection()<4)&&(commandBox.getAdjustedDirection()>-4)){
                     communication.sendCommand(cForward);
-                    distanceFromGoal=Integer.parseInt(communication.getInput(cReadLS));
+                    distanceFromGoal=commandBox.getGoalDistance();
                     //System.out.println("Drive forward");
                     System.out.print("Distance from goal: ");
                     System.out.println(distanceFromGoal);
@@ -162,18 +158,17 @@ public class ArduinoDriver extends Thread{
                 checkIfCaught();
             }
            
-           if((!objectCaught)&&(commandBox.isAutoDrive())){
-               seek();
-               getObject();
-               locateGoal();
+           if(!objectCaught){
+               restart=true;
            } else if((commandBox.isGoalFound())&&(objectCaught)&&(commandBox.isAutoDrive())){
+               goalReached=true;
                System.out.println("goal reached");
                communication.sendCommand(cBackward);
                while((true)&&(commandBox.isAutoDrive())){
-                    distanceFromGoal=Integer.parseInt(communication.getInput(cReadLS));
+                    distanceFromGoal=commandBox.getGoalDistance();
                     if(distanceFromGoal>40) break;
                }
-               goalReached=true;
+               
            }
         }
         objectCaught=false;

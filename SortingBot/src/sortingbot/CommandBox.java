@@ -22,6 +22,7 @@ public class CommandBox {
     boolean stop;
     boolean goalFound;
     int state;
+    int distanceGoal;
     
     // TODOOOOOOOOOOOO
     // -Vi treng noko som kan gir kommando at roboten skal stoppe (men kan fortsette der den slapp, så det blir ei slags pause funksjon)
@@ -42,6 +43,7 @@ public class CommandBox {
         left=false;
         back=false;
         stop=false;
+        distanceGoal=100;
     }
     public synchronized void setObjectFound(boolean objectFound){
         while(!objectFoundAvailable){
@@ -130,4 +132,10 @@ public class CommandBox {
        }
        return dir;
     }
+   public void setGoalDistance(int aDist){
+       distanceGoal=aDist;
+   }
+   public int getGoalDistance(){
+       return distanceGoal;
+   }
 }
