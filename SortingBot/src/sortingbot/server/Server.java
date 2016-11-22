@@ -61,8 +61,10 @@ public class Server extends Thread {
                         socket.close();
                     }
                 }
+                socket.close();
             }
-        } catch (IOException exception) {
+        }
+        catch (IOException exception) {
             System.out.println("Error med tilkobling: " + exception);
         }
     }

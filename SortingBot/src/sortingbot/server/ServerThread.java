@@ -22,7 +22,7 @@ import sortingbot.VideoBox;
 
 /**
  * @date 18.10.2016
- * @author inga lill bjolstad og aleksander
+ * @author inga lill bjolstad
  */
 public class ServerThread implements Runnable {
 
@@ -96,27 +96,6 @@ public class ServerThread implements Runnable {
 //                                ByteArrayOutputStream tmp = new ByteArrayOutputStream();                                
 //                                tmp.close();
 //                                Integer imageSize = tmp.size();
-//
-                                // Attampting to seperate packages. ALEKSANDER!!!!
-                                // not sure if needed...
-                                // need help getting in the switch case....!!!!!!
-                                // yea all bullshit!
-//                                switch(command) {
-//                                    case "control":
-//                                        System.out.println("Got command, reply = " + reply);
-//                                        System.out.println("in the switch case now.");
-//
-//                                        break;
-//
-//                                    case "Video":
-//                                        outputBuffer.writeBytes("nextframe " + sizeInBytes
-//                                                + " " + imgWidth + " " + imgHeight);
-//                                        outputBuffer.writeBytes("\n");
-//                                        outputBuffer.write(imgBytes);
-//                                        outputBuffer.flush();
-//                                        System.out.println("in the switch case now.");
-//                                        break;
-//                                }
                                 outputBuffer.writeBytes("nextframe " + sizeInBytes
                                         + " " + imgWidth + " " + imgHeight);
                                 outputBuffer.writeBytes("\n");

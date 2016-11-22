@@ -13,8 +13,6 @@ import java.awt.image.BufferedImage;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfByte;
 import java.util.HashMap;
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  *
@@ -174,6 +172,7 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener 
      * @param buff
      */
     public void setVideoFrame() {
+        playPause = false;
         BufferedImage buff = client.getBuffImg();
         if (playPause == true) {
             if (!(buff == null)) {
