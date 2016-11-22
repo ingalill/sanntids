@@ -82,7 +82,7 @@ public class ServerThread implements Runnable {
                         ServerCommand cmd = commands.get(command);
                         if (cmd != null) {
                             String reply = cmd.process(command, arguments);
-                            System.out.println("Got command, reply = " + reply);
+                            System.out.println("Got command, reply = " + reply + "\n");
                             // Handle special case - next image frame
                             if (cmd == videoCommand && "nextframe".equals(reply)) {
                                 // Send the next frame to the client
@@ -97,25 +97,26 @@ public class ServerThread implements Runnable {
 //                                tmp.close();
 //                                Integer imageSize = tmp.size();
 //
-                                // Attampting to seperate packages ALEKSANDER!!!! 
+                                // Attampting to seperate packages. ALEKSANDER!!!!
                                 // not sure if needed...
-                                switch(parser.getName()) {
-                                    case "control":
-                                        System.out.println("Got command, reply = " + reply);
-                                        System.out.println("in the switch case now.");
-
-                                        break;
-
-                                    case "Video":
-                                        outputBuffer.writeBytes("nextframe " + sizeInBytes
-                                                + " " + imgWidth + " " + imgHeight);
-                                        outputBuffer.writeBytes("\n");
-                                        outputBuffer.write(imgBytes);
-                                        outputBuffer.flush();
-                                        System.out.println("in the switch case now.");
-                                        break;
-                                }
-
+                                // need help getting in the switch case....!!!!!!
+                                // yea all bullshit!
+//                                switch(command) {
+//                                    case "control":
+//                                        System.out.println("Got command, reply = " + reply);
+//                                        System.out.println("in the switch case now.");
+//
+//                                        break;
+//
+//                                    case "Video":
+//                                        outputBuffer.writeBytes("nextframe " + sizeInBytes
+//                                                + " " + imgWidth + " " + imgHeight);
+//                                        outputBuffer.writeBytes("\n");
+//                                        outputBuffer.write(imgBytes);
+//                                        outputBuffer.flush();
+//                                        System.out.println("in the switch case now.");
+//                                        break;
+//                                }
                                 outputBuffer.writeBytes("nextframe " + sizeInBytes
                                         + " " + imgWidth + " " + imgHeight);
                                 outputBuffer.writeBytes("\n");

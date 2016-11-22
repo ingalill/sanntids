@@ -65,11 +65,13 @@ public class Client implements ActionListener, Runnable {
                     String sendByte = buffer.get(i);
                     //outputs.writeBytes("%"); // is the start of a new commando
                     outputs.writeBytes(sendByte);
-                    System.out.println("Sending byte from client :" + sendByte);
+                    System.out.println("Sending byte from client: " + sendByte);
                     outputs.writeBytes("\n");
                     String reply = input.readLine();
-                    System.out.println("Reply from the server: " + reply);
+                    System.out.println("Reply from the server: " + reply + "\n");
                     CommandParser parser = new CommandParser(reply);
+                    
+                    // Send/get frames
                     if (parser.getName().equals("nextframe")) {
                         fetchNextFrame(parser);
                     }
