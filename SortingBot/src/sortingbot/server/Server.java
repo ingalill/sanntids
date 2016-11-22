@@ -61,7 +61,6 @@ public class Server extends Thread {
                         socket.close();
                     }
                 }
-                socket.close();
             }
         }
         catch (IOException exception) {

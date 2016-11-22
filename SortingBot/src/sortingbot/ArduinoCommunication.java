@@ -33,7 +33,7 @@ public class ArduinoCommunication implements SerialPortEventListener {
 			"/dev/tty.usbserial-A9007UX1", // Mac OS X
                         "/dev/ttyACM0", // Raspberry Pi
 			"/dev/ttyUSB0", // Linux
-			"COM3",  // Windows
+			"COM5",  // Windows
                         "/dev/cu.usbmodem1411",// Mac
                         "/dev/cu.usbmodem1421"// Mac
 	};

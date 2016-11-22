@@ -76,7 +76,7 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener 
         jPlacedRed.addActionListener(this);
 
         putButtons();
-
+        playPause = false;
     }
 
     /*
@@ -172,9 +172,9 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener 
      * @param buff
      */
     public void setVideoFrame() {
-        playPause = false;
-        BufferedImage buff = client.getBuffImg();
+        
         if (playPause == true) {
+            BufferedImage buff = client.getBuffImg();
             if (!(buff == null)) {
                 Graphics g = jVideo.getGraphics();
                 g.drawImage(buff, 0, 0, getWidth(), getHeight() - 150, 0, 0, buff.getWidth(), buff.getHeight(), null);
