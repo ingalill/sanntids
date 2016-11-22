@@ -68,8 +68,9 @@ public class Main {
         handler = new ImageHandler(commandBox);
         //start a framegrabber for the gui
         //vGrabber = new FrameGrabber(camera,handler,grabber); //for use for testing the processing
-        //vGrabber = new FrameGrabber(camera,grabber);
-        odroidGrabber = new FrameGrabber(camera,handler,videoBox,true);
+        vGrabber = new FrameGrabber(camera,videoBox);
+        //odroidGrabber = new FrameGrabber(camera,handler,videoBox,true);
+        //odroidGrabber = new FrameGrabber(camera,handler);
         
         // Start the server
         server = new Server();
@@ -78,7 +79,8 @@ public class Main {
         server.start();
         
         //Start framegrabber with timed intervals
-        timer.scheduleAtFixedRate(odroidGrabber, delay*0, timedelay);
+        //timer.scheduleAtFixedRate(odroidGrabber, delay*0, timedelay);
+        
         //start gui
 //        java.awt.EventQueue.invokeLater(
 //            new Runnable() {

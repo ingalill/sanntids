@@ -24,10 +24,9 @@ public class FrameGrabber extends TimerTask {
     private Mat currentFrame;
     private int frameGrabberMode;//is this thread going to generate a video stream(1) or process an image(0)?
     
-    public FrameGrabber(Camera cam, ImageHandler imgH, VideoBox vidG){
+    public FrameGrabber(Camera cam, VideoBox vidG){
         this.camera = cam.getCam();
         currentFrame = new Mat();
-        this.handler = imgH;
         this.box = vidG;
         frameGrabberMode = 1;
         //implement runnable

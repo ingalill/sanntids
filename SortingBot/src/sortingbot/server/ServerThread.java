@@ -128,12 +128,13 @@ public class ServerThread implements Runnable {
                             }
                         }
 
-                        Thread.sleep(1000);
+                        //Thread.sleep(1000);
                     } catch (IOException e) {
                         System.err.println("IOException:  " + e);
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(ServerThread.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                    } 
+//                    catch (InterruptedException ex) {
+//                        Logger.getLogger(ServerThread.class.getName()).log(Level.SEVERE, null, ex);
+//                    }
                 }
             }
         } catch (IOException ex) {

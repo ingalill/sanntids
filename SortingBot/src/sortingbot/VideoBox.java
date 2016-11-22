@@ -29,6 +29,7 @@ public class VideoBox{
             catch (InterruptedException e) {
             }
         }
+        System.out.println("5678");
         // put the value in the VideoBox(as storagebox)
         this.frame = frame;
         available = true;

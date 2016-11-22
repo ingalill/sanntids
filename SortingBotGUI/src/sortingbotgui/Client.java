@@ -152,9 +152,13 @@ public class Client implements ActionListener, Runnable {
     }
     
     public BufferedImage getBuffImg(){
+        BufferedImage tempImg = null;
         if(!bufferImg.isEmpty())
-    return bufferImg.get(0);
-        return null;
+        {
+            tempImg = bufferImg.get(0);
+            bufferImg.remove(0);
+        }
+        return tempImg;
 }
     
     /*
