@@ -6,7 +6,6 @@ package sortingbot.server;
 
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -15,7 +14,6 @@ import java.net.Socket;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 import org.opencv.core.Mat;
 import sortingbot.CommandBox;
 import sortingbot.VideoBox;
@@ -30,10 +28,7 @@ public class ServerThread implements Runnable {
     private Socket serverSocket = null;
     private BufferedReader infromClient;
     private DataOutputStream outputBuffer;
-
-    // private PrintStream printStream; // write out to itself.
     private VideoBox videoBox;
-
     private HashMap<String, ServerCommand> commands;
     private VideoCommand videoCommand;
     private CommandBox commandBox;
@@ -66,14 +61,6 @@ public class ServerThread implements Runnable {
                 while (true) {
                     try {
 
-                        /* int type = 1;
-                         System.out.println("Sending type " + type + " to client");
-                         outputBuffer.writeInt(type); //  Write type of the message (1 = image)
-                         outputBuffer.flush();
-                         ImageIO.write(matToImg(videoBox.getFrame()), "png", outputBuffer);
-                         //printStream.flush();
-                         // SEND SIZE OF THE PACKET!
-                         */
                         String line = infromClient.readLine();
                         CommandParser parser = new CommandParser(line);
 
