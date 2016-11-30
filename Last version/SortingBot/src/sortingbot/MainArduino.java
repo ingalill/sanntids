@@ -2,7 +2,7 @@
 package sortingbot;
 
 /**
- * A class for testing the arduino part
+ * A class for testing and debugging the arduino part
  * @author Malen
  */
 public class MainArduino {

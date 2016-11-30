@@ -53,8 +53,7 @@ public class Main {
         server.setVideoBox(videoBox);
         server.setCommandBox(commandBox);
         server.start();
-
-        System.out.println("test");
+        
         //explaination of classes:
         // Camera() : class that starts a connection with a camera
         // FrameGrabber() : a thread that takes a single frame from the opened camera for each run (can be used for both camera feedback to the gui and image processing)
@@ -63,7 +62,6 @@ public class Main {
         // Server() : creates sockets for each client and sends info
         // VideoBox() : Handles the total input stream from the camera by use of a FrameGrabber class and sends the video stream to the client
         // ArduinoHandler() : creates an Serial connection with arduino board
-        // MORE TO COME
 
         //start camera from Camera class
         camera = new Camera();
@@ -77,22 +75,22 @@ public class Main {
         //start imageHandler to prosess images
         handler = new ImageHandler(commandBox);
         //start a framegrabber for the gui
-//        vGrabber = new FrameGrabber(camera,videoBox);
-        debugGrabber = new FrameGrabber(camera, handler, videoBox, true);
-//        odroidGrabber = new FrameGrabber(camera,handler);
+        vGrabber = new FrameGrabber(camera,videoBox);
+//        debugGrabber = new FrameGrabber(camera, handler, videoBox, true);     //debug
+        odroidGrabber = new FrameGrabber(camera,handler);
 
         //Start framegrabber with timed intervals
-//        timer.scheduleAtFixedRate(odroidGrabber, delay, timedelay);
-        timer.scheduleAtFixedRate(debugGrabber, delay, timedelay);
+        timer.scheduleAtFixedRate(odroidGrabber, delay, timedelay);
+//        timer.scheduleAtFixedRate(debugGrabber, delay, timedelay);            //debug
 
-        //start gui
-        java.awt.EventQueue.invokeLater(
-                new Runnable() {
-            @Override
-            public void run() {
-                new Gui(videoBox).setVisible(true);
-            }
-        });
+        //Debug GUI
+//        java.awt.EventQueue.invokeLater(
+//                new Runnable() {
+//            @Override
+//            public void run() {
+//                new Gui(videoBox).setVisible(true);
+//            }
+//        });
 
     }
 
