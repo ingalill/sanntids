@@ -9,7 +9,6 @@ import sortingbot.Camera;
 import sortingbot.CommandBox;
 
 /**
- *
  * @author inga lill og aleksander
  */
 public class VideoCommand implements ServerCommand {
@@ -88,7 +87,6 @@ public class VideoCommand implements ServerCommand {
     }
 
     /**
-     * 
      * @return string of long description
      */
     @Override

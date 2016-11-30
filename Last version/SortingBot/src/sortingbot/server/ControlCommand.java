@@ -14,34 +14,40 @@ import sortingbot.CommandBox;
 public class ControlCommand implements ServerCommand {
 
     private CommandBox commandbox;
-    
+
     /**
      * Set commandBox
-     * @param commandbox 
+     *
+     * @param commandbox
      */
     public void setCommandbox(CommandBox commandbox) {
         this.commandbox = commandbox;
     }
-    
+
     /**
      * Get name method
+     *
      * @return string
      */
     @Override
     public String getName() {
-      return "control command";
+        return "control command";
     }
 
     /**
-     * Process what argument have been sent and decides what to do based on the argument.
+     * Process what argument have been sent and decides what to do based on the
+     * argument.
+     *
      * @param command
      * @param arguments
-     * @return 
+     * @return
      */
     @Override
     public String process(String command, String[] arguments) {
-          if (arguments.length < 1) return "err No arguments";
-        
+        if (arguments.length < 1) {
+            return "err No arguments";
+        }
+
         String response = "ok";
         String arg = arguments[0];
         switch (arg) {
@@ -49,23 +55,23 @@ public class ControlCommand implements ServerCommand {
                 commandbox.setAutoDrive(false);
                 System.out.println("Hello from ControlCommand");
                 break;
-                
+
             case "auto":
                 commandbox.setAutoDrive(true);
                 break;
-                
+
             case "advance":
-               commandbox.setDirection("w");
+                commandbox.setDirection("w");
                 break;
-                
+
             case "left":
                 commandbox.setDirection("a");
                 break;
-                
+
             case "right":
                 commandbox.setDirection("d");
                 break;
-                
+
             case "back":
                 commandbox.setDirection("s");
                 break;
@@ -85,27 +91,25 @@ public class ControlCommand implements ServerCommand {
             case "quit":
                 System.exit(0);
                 break;
-                
         }
         return response;
     }
 
     /**
-     * 
+     *
      * @return string of a short description
      */
     @Override
     public String getShortDesc() {
-       return "This controls the movement.";
+        return "This controls the movement.";
     }
 
-     /**
-     * 
+    /**
      * @return string of a Long description
      */
     @Override
     public String getLongDesc() {
-      return "Movements the control are able to do";
+        return "Movements the control are able to do";
     }
 
 }

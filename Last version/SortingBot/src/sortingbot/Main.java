@@ -6,7 +6,6 @@
 package sortingbot;
 
 /**
- *
  * @author Demy Patrick Gielesen og Inga Lill Bjølstad
  */
 import java.util.Timer;
@@ -23,35 +22,38 @@ public class Main {
     private static VideoBox videoBox;
     private static ImageHandler handler;
     private static FrameGrabber vGrabber;//framegrabber for video
-    private static FrameGrabber odroidGrabber; 
-    private static FrameGrabber debugGrabber; 
+    private static FrameGrabber odroidGrabber;
+    private static FrameGrabber debugGrabber;
     private static Server server;
     private static Timer timer;
     private static ArduinoCommunication communication;
     private static ArduinoDriver driver;
     private static CommandBox commandBox;
-    
+
     public static void main(String[] args) {
         //load the necessary libraries:
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         long timedelay = 1; // repeat every 500ms
         long delay = 0;    // starts after 1 seond. 
         timer = new Timer();
-        try{Thread.sleep(2000);}catch(Exception e){}
-           
+        try {
+            Thread.sleep(2000);
+        } catch (Exception e) {
+        }
+
         //Creating  a new command box for handling communication between ArduinoDriver
         // and the rest of the project
-        commandBox= new CommandBox();
-        
+        commandBox = new CommandBox();
+
         //start videograbber as an storagebox for frames
         videoBox = new VideoBox();
-        
+
         // Start the server
         server = new Server();
         server.setVideoBox(videoBox);
         server.setCommandBox(commandBox);
         server.start();
-        
+
         System.out.println("test");
         //explaination of classes:
         // Camera() : class that starts a connection with a camera
@@ -63,25 +65,21 @@ public class Main {
         // ArduinoHandler() : creates an Serial connection with arduino board
         // MORE TO COME
 
-
-
         //start camera from Camera class
         camera = new Camera();
         //Starting communication with the arduino
         communication = new ArduinoCommunication();
 
         //Creates the arduino driver
-        driver = new ArduinoDriver(communication,commandBox);
+        driver = new ArduinoDriver(communication, commandBox);
         //start the arduino driver thread
         driver.start();
         //start imageHandler to prosess images
         handler = new ImageHandler(commandBox);
         //start a framegrabber for the gui
 //        vGrabber = new FrameGrabber(camera,videoBox);
-        debugGrabber = new FrameGrabber(camera,handler,videoBox,true);
+        debugGrabber = new FrameGrabber(camera, handler, videoBox, true);
 //        odroidGrabber = new FrameGrabber(camera,handler);
-
-
 
         //Start framegrabber with timed intervals
 //        timer.scheduleAtFixedRate(odroidGrabber, delay, timedelay);
@@ -89,15 +87,13 @@ public class Main {
 
         //start gui
         java.awt.EventQueue.invokeLater(
-            new Runnable() {
+                new Runnable() {
             @Override
             public void run() {
                 new Gui(videoBox).setVisible(true);
             }
-        }); 
-        
+        });
+
     }
-    
-    
-    
+
 }
