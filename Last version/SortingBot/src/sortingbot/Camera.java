@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package sortingbot;
 
 /**
@@ -27,7 +22,7 @@ public class Camera {
     
     private void startCamera(){
         try{
-            this.camera = new VideoCapture(-1); //-1 for odroid.
+            this.camera = new VideoCapture(-1); //-1 for odroid. -1 means to search for the nearest working camera
         }
         catch(Exception e){
             System.err.println("Native core libraries not loaded");
@@ -41,7 +36,7 @@ public class Camera {
         cameraReady = true;
     }
     
-    //synchronized because multiple threads are gonna ask for acces to the camera
+    //synchronized because multiple threads are gonna ask for access to the camera
     public synchronized VideoCapture getCam(){
         if(!cameraReady){//make threads wait until the camera has been started 
             try{
@@ -57,6 +52,7 @@ public class Camera {
         return null;
     }
     
+    //returns a single frame which is read from the video stream
     public synchronized Mat getFrame(){
         getCam().read(temp);
         return temp;

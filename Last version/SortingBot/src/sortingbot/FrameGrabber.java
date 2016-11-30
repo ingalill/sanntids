@@ -1,13 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package sortingbot;
 
 /**
  *
- * @author Demy og inga
+ * @author Demy
  */
 
 
@@ -25,6 +20,7 @@ public class FrameGrabber extends TimerTask {
     private Mat currentFrame;
     private int frameGrabberMode;//is this thread going to generate a video stream(1) or process an image(0)?
     
+    //a framegrabber to be used for sending storing images in a videobox only
     public FrameGrabber(Camera cam, VideoBox vidG){
         this.cam = cam;
         this.camera = cam.getCam();
@@ -36,6 +32,7 @@ public class FrameGrabber extends TimerTask {
         frameGrabber.start(); // start this thread
     }
     
+    //a framegrabber for debugging, it stores processed images in the videobox
     public FrameGrabber(Camera cam, ImageHandler imgH, VideoBox vidG, boolean Debug){
         this.cam = cam;
         this.camera = cam.getCam();
@@ -46,6 +43,7 @@ public class FrameGrabber extends TimerTask {
         Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
     }
     
+    //a framegrabber that processes the images and calculates coordinates
     public FrameGrabber(Camera cam, ImageHandler imgH){
         this.cam = cam;
         this.camera = cam.getCam();
@@ -72,6 +70,7 @@ public class FrameGrabber extends TimerTask {
         }
     }
     
+    //Get the next frame from the camera
     private Mat getFrame(){
         if (camera.isOpened())
         {
