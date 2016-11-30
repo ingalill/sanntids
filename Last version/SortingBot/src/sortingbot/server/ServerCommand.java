@@ -13,7 +13,6 @@ public interface ServerCommand {
 
     /**
      * Command name, should be lowercase
-     *
      * @return
      */
     String getName();

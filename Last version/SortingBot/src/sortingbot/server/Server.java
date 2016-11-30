@@ -16,13 +16,11 @@ public class Server extends Thread {
     private CommandBox commandBox;
     private ServerSocket serverSocket;
     private Socket socket;
-    private PrintWriter output;
     private static final int maxClients = 10;
     private static final ServerThread[] threads = new ServerThread[maxClients];
 
     /**
      * Get videoBox
-     *
      * @return videoBox
      */
     public VideoBox getVideograbber() {
@@ -31,7 +29,6 @@ public class Server extends Thread {
 
     /**
      * Set videoBox
-     *
      * @param videoBox
      */
     public void setVideoBox(VideoBox videoBox) {

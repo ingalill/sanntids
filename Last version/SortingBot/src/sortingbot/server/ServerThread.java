@@ -28,19 +28,16 @@ public class ServerThread extends Thread {
     private BufferedReader infromClient;
     private DataOutputStream outputBuffer;
     private DataInputStream dataInputStream = null;
-
     private VideoCommand videoCommand;
     private ControlCommand controlCommand ;
     private final VideoBox videoBox;
     private final CommandBox commandBox;
-    
     private HashMap<String, ServerCommand> commands;
     
     public boolean playPause;
     
     /**
      * Constructor
-     *
      * @param serverSocket
      * @param videoBox
      */
