@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package sortingbotgui;
 
 import java.util.Timer;
@@ -17,7 +12,7 @@ import org.opencv.core.Core;
  */
 public class Main {
     private static SortingBotGUI gui;
-   private static Client client; 
+    private static Client client; 
     public static void main(String[] args) throws InterruptedException {  
     System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
     // Create an objeckt of each  class
@@ -26,7 +21,7 @@ public class Main {
 
     
     
-    /* Create and display the form */
+    /* Create and display the form of GUI */
         java.awt.EventQueue.invokeLater(
                 new Runnable() {
                     @Override
@@ -35,7 +30,6 @@ public class Main {
                             
                             gui = new SortingBotGUI(client);
                             gui.setVisible(true);
-                            //new Client().setVisible(true); // start gui
                             new Timer().scheduleAtFixedRate(new VideoStreamTimer(gui), 0, 30);
                         } catch (InterruptedException ex) {
                             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
@@ -46,6 +40,9 @@ public class Main {
     }
 }
 
+/**
+ * A Timer used fot cideo stream
+ */
 class VideoStreamTimer extends TimerTask{
     private SortingBotGUI gui;
     public VideoStreamTimer(SortingBotGUI gui){

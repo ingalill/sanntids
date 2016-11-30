@@ -1,11 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package sortingbotgui;
 
-// Libaries
+// Liberaries
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Graphics;
@@ -24,7 +19,6 @@ import java.util.HashMap;
 public class SortingBotGUI extends javax.swing.JFrame implements ActionListener {
 
     // definitions
-    //private DaemonThread myThread = null;
     private Client client;
     private HashMap<Object, String> controls;
     public boolean playPause;
@@ -124,48 +118,6 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener 
             setVideoFrame();
         }
     }
-
-    // class of thread
-//    class DaemonThread implements Runnable{
-//        protected volatile boolean runnable = false;
-//
-//        @Override
-//        public  void run()
-//        {
-//            synchronized(this)
-//            {
-//                while(runnable)
-//                {
-//                    try
-//                    {
-////                       Mat img = client.putFrame();
-////                        //GetFrame Method
-////                        //Use GetImage Method in the bottom to get Mat image
-////                        frame = getImage(img);
-////                        
-////                        //frame = cgrabber.getFrame();
-////                        Imgcodecs.imencode(".bmp", frame, mem);
-////                        Image im = ImageIO.read(new ByteArrayInputStream(mem.toArray()));
-//
-//                        BufferedImage buff = client.getFrame();
-//                        Graphics g=jVideo.getGraphics();
-//
-//                        if (g.drawImage(buff, 0, 0, getWidth(), getHeight() -150 , 0, 0, buff.getWidth(), buff.getHeight(), null))
-//
-//                        if(runnable == false)
-//                        {
-//                            System.out.println("GUI is going to wait()");
-//                            this.wait();
-//                        }
-//                     }
-//                     catch(Exception ex)
-//                     {
-//                        System.out.println("Error, GUI image processing failed\n");
-//                     }
-//                }
-//            }
-//         }
-//   } // end of deamonThread
     /**
      * Show the latest image frame on GUI panel
      *
@@ -181,7 +133,6 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener 
         }
     }
 
-    // COPIEAL ALL A
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -504,54 +455,38 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener 
         // Stop Bot driving.
         jManuel.setEnabled(false);
         jAuto.setEnabled(true);
-        jAdvance.setEnabled(true);     // Deactivate advance button
-        jRight.setEnabled(true);       // Deactivate Right button
-        jLeft.setEnabled(true);        // Deactivate Left button
+        jAdvance.setEnabled(true);
+        jRight.setEnabled(true);
+        jLeft.setEnabled(true); 
         jBack.setEnabled(true);
         jStop.setEnabled(false);
     }//GEN-LAST:event_jStopActionPerformed
 
     private void jPlayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPlayActionPerformed
-        /// start button
-        //webSource =new VideoCapture(0); // Video capture from defult cam
-
-//        myThread = new DaemonThread(); // creat object of thread class
-//        Thread t = new Thread(myThread);
-//        t.setDaemon(true);
-//        myThread.runnable = true;
-//        t.start();                      // Start Thread
         jPlay.setEnabled(false);  //Deactivate play button
         jPause.setEnabled(true);  // activate stop button
         playPause = true;
     }//GEN-LAST:event_jPlayActionPerformed
 
     private void jPauseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPauseActionPerformed
-        /// stop button
-        // myThread.runnable = false;      //stop thread
         jPause.setEnabled(false);     // activate play button
         jPlay.setEnabled(true);      // deactivate stop button
         playPause = false;
-
-        //webSource.release();            // stop capturing from cam
-
     }//GEN-LAST:event_jPauseActionPerformed
 
     private void jManuelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jManuelActionPerformed
-        // Code to enable manuel drive..
-        jManuel.setEnabled(false);      //Deactivate start button
-        jAuto.setEnabled(true);         // activate stop button
-        jAdvance.setEnabled(true);      // Activate advance button
-        jRight.setEnabled(true);        // Deactivate Right button
-        jLeft.setEnabled(true);         // Deactivate Left button
-        jBack.setEnabled(true);         // Deactivate Back button
+        // Code to enable manuel drive and deactivate 
+        jManuel.setEnabled(false);
+        jAuto.setEnabled(true);
+        jAdvance.setEnabled(true);
+        jRight.setEnabled(true);
+        jLeft.setEnabled(true);
+        jBack.setEnabled(true);
 
     }//GEN-LAST:event_jManuelActionPerformed
 
     private void jPlacedOrangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPlacedOrangeActionPerformed
-        // Set true when colored object is in place
-        //        if(color == place){
-        //            checkBox = jPlacedOrange.setSelected(true);
-        //        }
+        // Not used....
     }//GEN-LAST:event_jPlacedOrangeActionPerformed
 
     private void jAutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jAutoActionPerformed
@@ -592,11 +527,18 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener 
         jPlacedRed.setSelected(false);
     }//GEN-LAST:event_jResetActionPerformed
 
+    /**
+     * When the Quit button i s pushed the system will exit the GUI.
+     * @param evt 
+     */
     private void jQuitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jQuitActionPerformed
         System.out.println("Quit");
         System.exit(0);
     }//GEN-LAST:event_jQuitActionPerformed
 
+    /**
+     * Sets up the Enitre Gui
+     */
     public void SetupGui() {
 //        System.loadLibrary(Core.NATIVE_LIBRARY_NAME); // load native library of opencv
         /* Set the Nimbus look and feel */

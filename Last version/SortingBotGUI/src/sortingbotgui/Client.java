@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package sortingbotgui;
 
 /**
@@ -37,11 +32,9 @@ public class Client implements ActionListener, Runnable {
         bufferImg = new ArrayList<>();
     }
 
-    // is going to ask for frames from the server
+    // This asks for frames from the server
     @Override
     public void run() {
-        //We set up the scanner to receive user input
-        //Scanner scanner = new Scanner(System.in);
         try {
             
             createMessage("video play");
@@ -73,16 +66,8 @@ public class Client implements ActionListener, Runnable {
                         fetchNextFrame(parser);
                     }
                 }
+                // clears the buffer so the lates frame is shown next.
                 buffer.clear();
-
-                // Get the first integer, it should be the type of the message
-                // Type 1 means image
-                //int msgType = input.readInt();
-                //System.out.println("Got message type: " + msgType);
-//                old way to get imgto mat to GUI side
-//                BufferedImage image = ImageIO.read(socket.getInputStream());
-//                Mat img = imgToMat(image);
-//                Gui.getImage(img);
             }
         } catch (IOException exception) {
             System.out.println("Error client: " + exception);
@@ -100,24 +85,25 @@ public class Client implements ActionListener, Runnable {
         return ImageIO.read(socket.getInputStream());
     }
 
+    /**
+     * 
+     * @param args 
+     */
     public synchronized void createMessage(String args) {
         buffer.add(args);
         notifyAll();
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+    /**
+     * Gets the next frame and adds it to a buffer
+     * @param parser 
+     */
     private void fetchNextFrame(CommandParser parser) {
         String[] args = parser.getArgArray();
         if (args == null || args.length < 3) {
             System.out.println("NextFrame command lacking arguments");
             return;
         }
-
-        // TODO - get the next frame from the stream, it will be Mat
         int imgSizeBytes = Integer.valueOf(args[0]);
         int imgWidth = Integer.valueOf(args[1]);
         int imgHeight = Integer.valueOf(args[2]);
@@ -142,6 +128,10 @@ public class Client implements ActionListener, Runnable {
 
     }
     
+    /**
+     *  Gives the buffered image and removes the old image from the  buffer
+     * @return tempImg 
+     */
     public BufferedImage getBuffImg(){
         BufferedImage tempImg = null;
         if(!bufferImg.isEmpty())
@@ -152,8 +142,9 @@ public class Client implements ActionListener, Runnable {
         return tempImg;
 }
     
-    /*
-     *
+    /**
+     * Adds BuffImg to bufferImg from BuferedImage
+     * @param BuffImg 
      */
     public void addBuffFrame(BufferedImage BuffImg) {
         bufferImg.add(BuffImg);
@@ -177,6 +168,7 @@ public class Client implements ActionListener, Runnable {
         } else {
             type = BufferedImage.TYPE_3BYTE_BGR;
             
+            // Arange the colors from BGR to RGB
             byte b;
             for(int i = 0; i < data.length; i = i + 3){
                 b = data[i];
