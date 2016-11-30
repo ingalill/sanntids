@@ -15,15 +15,29 @@ public class ControlCommand implements ServerCommand {
 
     private CommandBox commandbox;
     
+    /**
+     * Set commandBox
+     * @param commandbox 
+     */
     public void setCommandbox(CommandBox commandbox) {
         this.commandbox = commandbox;
     }
     
+    /**
+     * Get name method
+     * @return string
+     */
     @Override
     public String getName() {
       return "control command";
     }
 
+    /**
+     * Process what argument have been sent and decides what to do based on the argument.
+     * @param command
+     * @param arguments
+     * @return 
+     */
     @Override
     public String process(String command, String[] arguments) {
           if (arguments.length < 1) return "err No arguments";
@@ -76,14 +90,22 @@ public class ControlCommand implements ServerCommand {
         return response;
     }
 
+    /**
+     * 
+     * @return string of a short description
+     */
     @Override
     public String getShortDesc() {
        return "This controls the movement.";
     }
 
+     /**
+     * 
+     * @return string of a Long description
+     */
     @Override
     public String getLongDesc() {
-      return "";
+      return "Movements the control are able to do";
     }
 
 }

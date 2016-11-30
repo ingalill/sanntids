@@ -17,11 +17,19 @@ public class VideoCommand implements ServerCommand {
     Camera camera;
     CommandBox commandbox;
 
+    /**
+     * Get name of the argument eks. play
+     * @return string of video command
+     */
     @Override
     public String getName() {
         return "Video command";
     }
 
+    /**
+     * set commandBox
+     * @param commandbox 
+     */
     public void setCommandbox(CommandBox commandbox) {
         this.commandbox = commandbox;
     }
@@ -67,18 +75,24 @@ public class VideoCommand implements ServerCommand {
                 // TODO: malén og demy
                 break;
         }
-
         return response;
     }
 
+    /**
+     * 
+     * @return string of short description
+     */
     @Override
     public String getShortDesc() {
-        return "";
+        return "Class for video commands";
     }
 
+    /**
+     * 
+     * @return string of long description
+     */
     @Override
     public String getLongDesc() {
-        return "";
+        return "This class is used for telling what each of the command arguments do";
     }
-
 }

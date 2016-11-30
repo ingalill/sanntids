@@ -20,11 +20,19 @@ public class Server extends Thread {
 
     private static final int maxClients = 10;
     private static final ServerThread[] threads = new ServerThread[maxClients];
-
+    
+    /**
+     * Get videoBox
+     * @return videoBox
+     */
     public VideoBox getVideograbber() {
         return videoBox;
     }
 
+    /**
+     * Set videoBox
+     * @param videoBox 
+     */
     public void setVideoBox(VideoBox videoBox) {
         this.videoBox = videoBox;
     }
@@ -40,20 +48,14 @@ public class Server extends Thread {
                 //Wait for a client to connect
                 socket = serverSocket.accept();
 
-                //Create the streams
-               // output = new PrintWriter(socket.getOutputStream(), true);
-            
-                //Tell the client that he has connected
-               //output.println("You have connected at: " + new Date());
-                                  
-               
-                //test
+                // makes a new thread as long as there are not max numbers of clients for clients.
                 for (int i = 0; i < maxClients; i++) {
                     if (threads[i] == null) {
                         threads[i] = new ServerThread(socket, videoBox, commandBox); // new thread to handle the connection 
                         new Thread(threads[i]).start();
                         break;
                     }
+                    // to many users/clients prints statement
                     if (i == maxClients) {
                         try (PrintStream printSt = new PrintStream(socket.getOutputStream())) {
                             printSt.println("Server is busy, come back later");
@@ -68,6 +70,9 @@ public class Server extends Thread {
         }
     }
 
+    /*
+    * Set command for commandBox
+    */
     public void setCommandBox(CommandBox commandBox) {
         this.commandBox = commandBox;
     }

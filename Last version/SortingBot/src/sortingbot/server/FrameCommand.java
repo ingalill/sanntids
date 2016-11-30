@@ -11,7 +11,8 @@ import sortingbot.VideoBox;
 
 /**
  * @version 01.11.2016
- * @author inga lill bjølstad
+ * @author inga lill bjølstad og aleksander
+ *  BRUKER VI DENNE KLASSEN EGENTLIG? INGA LILL? TROR VI KAN SLETTE DEN.
  */
 public class FrameCommand implements ServerCommand {
     

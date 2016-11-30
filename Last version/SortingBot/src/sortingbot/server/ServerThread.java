@@ -20,22 +20,22 @@ import sortingbot.VideoBox;
 
 /**
  * @date 18.10.2016
- * @author inga lill bjolstad
+ * @author inga lill bjolstad, aleksander og demy
  */
 public class ServerThread extends Thread {
 
-    private DataInputStream dataInputStream = null;
     private Socket serverSocket = null;
     private BufferedReader infromClient;
     private DataOutputStream outputBuffer;
+    private DataInputStream dataInputStream = null;
 
-    // private PrintStream printStream; // write out to itself.
-    private final VideoBox videoBox;
-    private ControlCommand controlCommand ;
-
-    private HashMap<String, ServerCommand> commands;
     private VideoCommand videoCommand;
+    private ControlCommand controlCommand ;
+    private final VideoBox videoBox;
     private final CommandBox commandBox;
+    
+    private HashMap<String, ServerCommand> commands;
+    
     public boolean playPause;
     
     /**
@@ -48,6 +48,7 @@ public class ServerThread extends Thread {
         this.serverSocket = serverSocket;
         this.videoBox = videoBox;
         this.commandBox = commandBox;
+        
         commands = new HashMap<>();
         addCommands();
         playPause = false;
@@ -57,6 +58,7 @@ public class ServerThread extends Thread {
     public void run() {
 
         try {
+            // Create data Strems and a buffered reader
             outputBuffer = new DataOutputStream(serverSocket.getOutputStream());
             dataInputStream = new DataInputStream(serverSocket.getInputStream()); // denne skal brukes
             infromClient = new BufferedReader(new InputStreamReader(serverSocket.getInputStream()));
@@ -64,41 +66,24 @@ public class ServerThread extends Thread {
             if (serverSocket != null && dataInputStream != null) {
                 while (true) {
                     try {
-
-                        /* int type = 1;
-                         System.out.println("Sending type " + type + " to client");
-                         outputBuffer.writeInt(type); //  Write type of the message (1 = image)
-                         outputBuffer.flush();
-                         ImageIO.write(matToImg(videoBox.getFrame()), "png", outputBuffer);
-                         //printStream.flush();
-                         // SEND SIZE OF THE PACKET!
-                         */
                         String line = infromClient.readLine();
                         CommandParser parser = new CommandParser(line);
 
                         String command = parser.getName(); // eks move
                         String[] arguments = parser.getArgArray();     // eks left   
                         
-                        //System.out.println("Command: " + command + " " + parser.getAllArgs());
                         ServerCommand cmd = commands.get(command);
                         if (cmd != null) {
                             String reply = cmd.process(command, arguments);
-                            //System.out.println(reply);
-                            //System.out.println("Got command, reply = " + reply + "\n");
-                            // Handle special case - next image frame
                             
+                            // If the entered command has something to do with Video it goes inn this loop
                             if (cmd == videoCommand && "nextframe".equals(reply)) {
-                                // Send the next frame to the client
-                                // TODO - send size of next frames
                                 Mat imgMat = videoBox.getFrame();
                                 byte[] imgBytes = matToByteArray(imgMat);
                                 int sizeInBytes = imgBytes.length;
                                 int imgWidth = imgMat.width();
                                 int imgHeight = imgMat.height();
-//                                BufferedImage img = matToImg(imgMat);
-//                                ByteArrayOutputStream tmp = new ByteArrayOutputStream();                                
-//                                tmp.close();
-//                                Integer imageSize = tmp.size();
+                                
                                 outputBuffer.writeBytes("nextframe " + sizeInBytes
                                         + " " + imgWidth + " " + imgHeight);
                                 outputBuffer.writeBytes("\n");
@@ -110,14 +95,9 @@ public class ServerThread extends Thread {
                                 outputBuffer.writeBytes("\n");
                             }
                         }
-
-                        //Thread.sleep(1000);
                     } catch (IOException e) {
                         System.err.println("IOException:  " + e);
                     } 
-//                    catch (InterruptedException ex) {
-//                        Logger.getLogger(ServerThread.class.getName()).log(Level.SEVERE, null, ex);
-//                    }
                 }
             }
         } catch (IOException ex) {
@@ -160,10 +140,14 @@ public class ServerThread extends Thread {
         return out;
     }
 
+    /**
+     * Take a mat and converte it to byte array
+     * @param Mat input
+     * @return data of byte array
+     */
     public static byte[] matToByteArray(Mat in) {
         byte[] data = new byte[in.height() * in.width() * (int) in.elemSize()];
         in.get(0, 0, data);
         return data;
     }
-
 }
