@@ -10,15 +10,17 @@ package sortingbot.server;
  * @author inga lill bjølstad
  */
 public interface ServerCommand {
-    
-      /**
+
+    /**
      * Command name, should be lowercase
-     * @return 
+     *
+     * @return
      */
     String getName();
 
     /**
      * Process a command with specified arguments, return response
+     *
      * @param command command received from the user/client
      * @param arguments optional arguments supplied with the command
      * @return Output of the command
@@ -27,14 +29,16 @@ public interface ServerCommand {
 
     /**
      * Short description of the command (max one line)
-     * @return 
+     *
+     * @return
      */
     String getShortDesc();
 
     /**
      * Long description of the command
-     * @return 
+     *
+     * @return
      */
     String getLongDesc();
-    
+
 }

@@ -11,18 +11,18 @@ import sortingbot.VideoBox;
  * @author inga lill bjolstad
  */
 public class Server extends Thread {
+
     private VideoBox videoBox;
     private CommandBox commandBox;
-
     private ServerSocket serverSocket;
     private Socket socket;
     private PrintWriter output;
-
     private static final int maxClients = 10;
     private static final ServerThread[] threads = new ServerThread[maxClients];
-    
+
     /**
      * Get videoBox
+     *
      * @return videoBox
      */
     public VideoBox getVideograbber() {
@@ -31,7 +31,8 @@ public class Server extends Thread {
 
     /**
      * Set videoBox
-     * @param videoBox 
+     *
+     * @param videoBox
      */
     public void setVideoBox(VideoBox videoBox) {
         this.videoBox = videoBox;
@@ -42,7 +43,7 @@ public class Server extends Thread {
         //We need a try-catch because lots of errors can be thrown
         try {
             serverSocket = new ServerSocket(5000);
-                System.out.println("Server started at: " + new Date());
+            System.out.println("Server started at: " + new Date());
             while (true) {
 
                 //Wait for a client to connect
@@ -64,15 +65,14 @@ public class Server extends Thread {
                     }
                 }
             }
-        }
-        catch (IOException exception) {
+        } catch (IOException exception) {
             System.out.println("Error med tilkobling: " + exception);
         }
     }
 
     /*
     * Set command for commandBox
-    */
+     */
     public void setCommandBox(CommandBox commandBox) {
         this.commandBox = commandBox;
     }
