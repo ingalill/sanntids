@@ -76,6 +76,7 @@ public class Main {
         handler = new ImageHandler(commandBox);
         //start a framegrabber for the gui
         vGrabber = new FrameGrabber(camera,videoBox);
+        timer.schedule(vGrabber, 0); //Start the videograbber as timerTask, instead of casting it as thread
 //        debugGrabber = new FrameGrabber(camera, handler, videoBox, true);     //debug
         odroidGrabber = new FrameGrabber(camera,handler);
 

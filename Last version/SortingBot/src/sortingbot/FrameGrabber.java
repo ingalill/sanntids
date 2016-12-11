@@ -27,9 +27,6 @@ public class FrameGrabber extends TimerTask {
         currentFrame = new Mat();
         this.box = vidG;
         frameGrabberMode = 1;
-        //implement runnable
-        frameGrabber = new Thread(this); // create a thread
-        frameGrabber.start(); // start this thread
     }
     
     //a framegrabber for debugging, it stores processed images in the videobox
