@@ -120,7 +120,7 @@ public class SortingBotGUI extends javax.swing.JFrame implements ActionListener 
     }
     /**
      * Show the latest image frame on GUI panel
-     *
+     * This methods should be made syncrhonized. 
      * @param buff
      */
     public void setVideoFrame() {

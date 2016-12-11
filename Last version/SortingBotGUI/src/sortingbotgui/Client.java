@@ -1,7 +1,6 @@
 package sortingbotgui;
 
 /**
- *
  * @author inga lill bjolstad og aleksander
  */
 import java.awt.event.ActionEvent;
@@ -22,7 +21,6 @@ public class Client implements ActionListener, Runnable {
     private Socket socket;
     private PrintWriter output;
     private DataOutputStream outputs;
-    //private BufferedReader infromServer;
     private DataInputStream input;
     private ArrayList<String> buffer;
     private ArrayList<BufferedImage> bufferImg;
@@ -53,7 +51,6 @@ public class Client implements ActionListener, Runnable {
 
                 for (int i = 0; i < buffer.size(); i++) {
                     String sendByte = buffer.get(i);
-                    //outputs.writeBytes("%"); // is the start of a new commando
                     outputs.writeBytes(sendByte);
                     System.out.println("Sending byte from client: " + sendByte);
                     outputs.writeBytes("\n");
@@ -77,7 +74,7 @@ public class Client implements ActionListener, Runnable {
 
     /**
      * Get the image from the server as a BufferedImage
-     *
+     * Should be synchronized.
      * @return the image we get from the server
      * @throws IOException
      */
@@ -86,15 +83,16 @@ public class Client implements ActionListener, Runnable {
     }
 
     /**
-     * 
+     * Create message to send. 
      * @param args 
      */
     public synchronized void createMessage(String args) {
         buffer.add(args);
-        notifyAll();
+       // notifyAll();
     }
 
     /**
+     * Should be synchronized.
      * Gets the next frame and adds it to a buffer
      * @param parser 
      */
@@ -129,7 +127,8 @@ public class Client implements ActionListener, Runnable {
     }
     
     /**
-     *  Gives the buffered image and removes the old image from the  buffer
+     * Should be synchronized.
+     * Gives the buffered image and removes the old image from the  buffer
      * @return tempImg 
      */
     public BufferedImage getBuffImg(){
@@ -143,6 +142,7 @@ public class Client implements ActionListener, Runnable {
 }
     
     /**
+   '  * Should be synchronized.
      * Adds BuffImg to bufferImg from BuferedImage
      * @param BuffImg 
      */
