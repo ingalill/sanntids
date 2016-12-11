@@ -3,8 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/odroid/Documents/netbeans/sanntids/SortingBot/src/sortingbot/Main.java</file>
-            <file>file:/home/odroid/Documents/netbeans/sanntids/SortingBot/src/sortingbot/ImageHandler.java</file>
+            <file>file:/Users/ingalill/Dropbox/Data_skole/sanntids_datateknikk/SortBot/Last%20version/SortingBot/src/sortingbot/server/ServerThread.java</file>
+            <file>file:/Users/ingalill/Dropbox/Data_skole/sanntids_datateknikk/SortBot/Last%20version/SortingBot/src/sortingbot/CommandBox.java</file>
+            <file>file:/Users/ingalill/Dropbox/Data_skole/sanntids_datateknikk/SortBot/Last%20version/SortingBot/src/sortingbot/ArduinoCommunication.java</file>
+            <file>file:/Users/ingalill/Dropbox/Data_skole/sanntids_datateknikk/SortBot/Last%20version/SortingBot/src/sortingbot/server/VideoCommand.java</file>
+            <file>file:/Users/ingalill/Dropbox/Data_skole/sanntids_datateknikk/SortBot/Last%20version/SortingBot/src/sortingbot/VideoBox.java</file>
+            <file>file:/Users/ingalill/Dropbox/Data_skole/sanntids_datateknikk/SortBot/Last%20version/SortingBot/src/sortingbot/ArduinoDriver.java</file>
+            <file>file:/Users/ingalill/Dropbox/Data_skole/sanntids_datateknikk/SortBot/Last%20version/SortingBot/src/sortingbot/server/Server.java</file>
+            <file>file:/Users/ingalill/Dropbox/Data_skole/sanntids_datateknikk/SortBot/Last%20version/SortingBot/src/sortingbot/Main.java</file>
         </group>
     </open-files>
 </project-private>

@@ -68,7 +68,7 @@ public class Server extends Thread {
     }
 
     /*
-    * Set command for commandBox
+     * Set command for commandBox
      */
     public void setCommandBox(CommandBox commandBox) {
         this.commandBox = commandBox;

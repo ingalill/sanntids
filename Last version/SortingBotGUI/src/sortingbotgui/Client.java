@@ -181,4 +181,8 @@ public class Client implements ActionListener, Runnable {
         return out;
     }
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 } // end of class

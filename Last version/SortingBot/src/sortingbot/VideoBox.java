@@ -7,8 +7,6 @@ package sortingbot;
  *
  * @author Demy
  */
-import java.awt.image.BufferedImage;
-import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 
 public class VideoBox{

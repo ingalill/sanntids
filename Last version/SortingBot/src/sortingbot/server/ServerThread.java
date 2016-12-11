@@ -113,7 +113,6 @@ public class ServerThread extends Thread {
         controlCommand.setCommandbox(commandBox);
         commands.put("control",controlCommand);
         commands.put("video", videoCommand);
-        commands.put("frame", new FrameCommand());
     }
 
     /*

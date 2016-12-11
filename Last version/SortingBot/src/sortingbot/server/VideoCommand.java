@@ -78,7 +78,6 @@ public class VideoCommand implements ServerCommand {
     }
 
     /**
-     * 
      * @return string of short description
      */
     @Override
